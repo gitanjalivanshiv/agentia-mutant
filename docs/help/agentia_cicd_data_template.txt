@@ -1,0 +1,16 @@
+Manage Copado data templates
+
+USAGE
+  $ agentia cicd data template COMMAND
+
+COMMANDS
+  cicd data template convert-old  Convert a legacy data template graph to v2
+  cicd data template create       Create a Copado data template
+  cicd data template delete       Delete a Copado data template
+  cicd data template get          Get a data template export graph (selected
+                                  columns only)
+  cicd data template get-detail   Get the raw v2 data template detail payload
+  cicd data template list         List Copado data templates
+  cicd data template open         Open a Copado data template in the browser
+  cicd data template save-detail  Save a v2 data template detail payload
+

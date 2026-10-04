@@ -1,0 +1,21 @@
+Open a Copado project in the browser
+
+USAGE
+  $ agentia cicd project open [ID] [--json]
+
+ARGUMENTS
+  [ID]  Copado project ID (defaults to the configured project default)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a Copado project in the browser
+
+EXAMPLES
+  $ agentia cicd project open
+
+  $ agentia cicd project open a0wKC000000CmZ2AU
+
+  $ agentia cicd project open a0wKC000000CmZ2AU --json
+

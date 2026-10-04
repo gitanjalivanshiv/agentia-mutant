@@ -1,0 +1,38 @@
+Run a Copado Function script locally in Docker (no CICD gateway). Override --image when the Copado registry is unavailable.
+
+USAGE
+  $ agentia cicd function run-local SCRIPT [--json] [--cwd <value>] [-i <value>]
+    [--parameter <value>...] [--platform <value>] [--runtime bash|node|python]
+
+ARGUMENTS
+  SCRIPT  Path to the local function script (.sh, .js, or .py)
+
+FLAGS
+  -i, --image=<value>         [default: copado-function-core:v1] Docker image
+                              used to run the function. Override when the Copado
+                              image registry is unavailable (e.g. for partners).
+      --cwd=<value>           Host directory bind-mounted at /app inside the
+                              container (defaults to the current working
+                              directory)
+      --parameter=<value>...  Environment variable for the script as key=value
+                              (repeatable)
+      --platform=<value>      Docker --platform value (e.g. linux/amd64 on Apple
+                              Silicon)
+      --runtime=<option>      Override runtime detection from the script
+                              extension
+                              <options: bash|node|python>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Run a Copado Function script locally in Docker (no CICD gateway). Override
+  --image when the Copado registry is unavailable.
+
+EXAMPLES
+  $ agentia cicd function run-local copado/functions/myFunction.sh
+
+  $ agentia cicd function run-local ./myFunction.js --cwd . --image my-registry/function-core:v1 --parameter ENV=dev --json
+
+  $ agentia cicd function run-local ./myFunction.py --runtime python --platform linux/amd64
+

@@ -1,0 +1,20 @@
+List Copado Robotic Testing jobs/tests in a project
+
+USAGE
+  $ agentia testing job list -p <value> [--json] [--name <value>]
+
+FLAGS
+  -p, --project=<value>  (required) CRT project ID.
+      --name=<value>     Case-insensitive exact job name to match client-side.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado Robotic Testing jobs/tests in a project
+
+EXAMPLES
+  $ agentia testing job list --project <project-id>
+
+  $ agentia testing job list --project <project-id> --name "Smoke" --json
+

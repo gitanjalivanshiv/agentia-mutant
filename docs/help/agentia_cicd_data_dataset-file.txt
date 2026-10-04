@@ -1,0 +1,10 @@
+Inspect data commit dataset files
+
+USAGE
+  $ agentia cicd data dataset-file COMMAND
+
+COMMANDS
+  cicd data dataset-file content  Get dataset file content by ContentVersion Id
+  cicd data dataset-file list     List dataset files for a user story data
+                                  commit
+

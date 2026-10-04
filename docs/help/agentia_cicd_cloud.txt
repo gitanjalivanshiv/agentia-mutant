@@ -1,0 +1,15 @@
+Run Copado cloud commit and promotion operations
+
+USAGE
+  $ agentia cicd cloud COMMAND
+
+COMMANDS
+  cicd cloud commit   Create a Copado cloud metadata commit for a user story.
+                      Preflights the story, submits POST /release/commit, and
+                      polls the job monitor by default. For local Git work, use
+                      git add/commit then `cicd work publish`. Permission and
+                      full-metadata selections belong on `cicd work publish`.
+  cicd cloud promote  Promote the explicit or active User Story through its
+                      Copado Promotion. Selects promote-only unless --deploy is
+                      passed.
+

@@ -1,0 +1,38 @@
+List Copado Functions
+
+USAGE
+  $ agentia cicd function list [--json] [--cursor <value>] [--page-size <value>]
+    [--image-name <value>] [--name <value>] [--size <value>] [--type custom|all]
+
+FLAGS
+  --cursor=<value>      Opaque pagination cursor from a previous list response
+                        (nextCursor)
+  --image-name=<value>  Filter by function container image
+  --name=<value>        Filter by name
+  --page-size=<value>   Number of records per page (1-200)
+  --size=<value>        Filter by function size
+  --type=<option>       [default: custom] List Custom functions only, or all
+                        functions
+                        <options: custom|all>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado Functions
+
+EXAMPLES
+  $ agentia cicd function list
+
+  $ agentia cicd function list --type all
+
+  $ agentia cicd function list --name MyFunction --size S
+
+  $ agentia cicd function list --image-name copado-function-core:v1
+
+  $ agentia cicd function list --page-size 50
+
+  $ agentia cicd function list --cursor NEXT --json
+
+  $ agentia cicd function list --json
+

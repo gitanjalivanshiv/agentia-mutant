@@ -1,0 +1,14 @@
+Manage Copado AI workspaces
+
+USAGE
+  $ agentia ai workspace COMMAND
+
+TOPICS
+  ai workspace member  Manage Copado AI workspace members
+
+COMMANDS
+  ai workspace create  Create a Copado AI workspace
+  ai workspace get     Get a Copado AI workspace
+  ai workspace list    List Copado AI workspaces
+  ai workspace update  Update a Copado AI workspace
+

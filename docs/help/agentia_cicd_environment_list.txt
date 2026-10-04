@@ -1,0 +1,31 @@
+List Copado environments
+
+USAGE
+  $ agentia cicd environment list [--json] [--cursor <value>] [--page-size <value>]
+    [--name <value>] [--org-id <value>] [--platform <value>] [--type
+    Production/Developer|Sandbox|Scratch Org|Custom Domain]
+
+FLAGS
+  --cursor=<value>     Opaque pagination cursor from a previous list response
+                       (nextCursor)
+  --name=<value>       Filter by name
+  --org-id=<value>     Filter by Salesforce org ID
+  --page-size=<value>  Number of records per page (1-200)
+  --platform=<value>   Filter by platform
+  --type=<option>      Environment type
+                       <options: Production/Developer|Sandbox|Scratch Org|Custom
+                       Domain>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado environments
+
+EXAMPLES
+  $ agentia cicd environment list
+
+  $ agentia cicd environment list --name Dev --org-id 00D000000000000 --platform SFDX --type Sandbox
+
+  $ agentia cicd environment list --json
+

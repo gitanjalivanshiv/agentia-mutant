@@ -1,0 +1,28 @@
+Resolve a promotion merge conflict automatically or from a file
+
+USAGE
+  $ agentia cicd promotion conflict resolve ID --mode auto|manual -p <value> [--json] [--file
+    <value>]
+
+ARGUMENTS
+  ID  Conflict attachment Id
+
+FLAGS
+  -p, --promotion=<value>  (required) Copado promotion Id
+      --file=<value>       Path to manually resolved conflict content
+      --mode=<option>      (required) Conflict resolution mode
+                           <options: auto|manual>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Resolve a promotion merge conflict automatically or from a file
+
+EXAMPLES
+  $ agentia cicd promotion conflict resolve <conflict-id> --promotion <promotion-id> --mode auto
+
+  $ agentia cicd promotion conflict resolve <conflict-id> -p <promotion-id> --mode manual --file ./MyClass.cls
+
+  $ agentia cicd promotion conflict resolve <conflict-id> -p <promotion-id> --mode auto --json
+

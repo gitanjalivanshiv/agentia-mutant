@@ -1,0 +1,23 @@
+List Git branches and tags for a Copado Robotic Testing job/test
+
+USAGE
+  $ agentia testing job refs ID -p <value> [--json] [--shared-credentials]
+
+ARGUMENTS
+  ID  CRT job/test ID.
+
+FLAGS
+  -p, --project=<value>          (required) CRT project ID.
+      --[no-]shared-credentials  Use shared stored Git credentials.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Git branches and tags for a Copado Robotic Testing job/test
+
+EXAMPLES
+  $ agentia testing job refs <job-id> --project <project-id>
+
+  $ agentia testing job refs <job-id> --project <project-id> --shared-credentials --json
+

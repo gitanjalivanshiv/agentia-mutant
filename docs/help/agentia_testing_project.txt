@@ -1,0 +1,17 @@
+Create a Copado Robotic Testing project
+
+USAGE
+  $ agentia testing project COMMAND
+
+TOPICS
+  testing project permission  Get the caller's permission on a Copado Robotic
+                              Testing project
+
+COMMANDS
+  testing project create  Create a Copado Robotic Testing project
+  testing project delete  Delete a Copado Robotic Testing project
+  testing project get     Get a Copado Robotic Testing project from the project
+                          list
+  testing project list    List Copado Robotic Testing projects
+  testing project update  Update a Copado Robotic Testing project
+

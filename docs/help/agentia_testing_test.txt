@@ -1,0 +1,14 @@
+Create a Copado Robotic Testing job/test from uploaded files or Git storage
+
+USAGE
+  $ agentia testing test COMMAND
+
+COMMANDS
+  testing test create  Create a Copado Robotic Testing job/test from uploaded
+                       files or Git storage
+  testing test logs    Get logs for a Copado Robotic Testing run
+  testing test run     Run a Copado Robotic Testing test
+  testing test status  List Copado Robotic Testing run status
+  testing test update  Update a Copado Robotic Testing test by uploading file
+                       operations
+

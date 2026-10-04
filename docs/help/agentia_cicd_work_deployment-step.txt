@@ -1,0 +1,21 @@
+Manage user story deployment steps
+
+USAGE
+  $ agentia cicd work deployment-step COMMAND
+
+COMMANDS
+  cicd work deployment-step create            Create a deployment step for a
+                                              user story
+  cicd work deployment-step delete            Delete a user story deployment
+                                              step
+  cicd work deployment-step list              List deployment steps for a user
+                                              story
+  cicd work deployment-step reorder           Replace the complete deployment
+                                              step order
+  cicd work deployment-step salesforce-flows  List Salesforce Flows available to
+                                              deployment steps in the Copado org
+  cicd work deployment-step types             List available deployment step
+                                              types
+  cicd work deployment-step update            Update a user story deployment
+                                              step
+

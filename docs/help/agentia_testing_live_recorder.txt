@@ -1,0 +1,23 @@
+Record CRT live interactions as bounded Robot Framework lines
+
+USAGE
+  $ agentia testing live recorder [JOB-ID] -p <value> [--debug] [--no-enable] [-o
+    <value>] [--session-id <value>]
+
+ARGUMENTS
+  [JOB-ID]  Optional CRT job/test ID guard.
+
+FLAGS
+  -o, --output=<value>      Explicit .robot file to append recorded keywords to.
+  -p, --project=<value>     (required) CRT project ID.
+      --debug               Print frame sizes and event types without frame
+                            bodies.
+      --no-enable           Do not manage the server recorder toggle.
+      --session-id=<value>  Guard that must match the active CRT live session.
+
+DESCRIPTION
+  Record CRT live interactions as bounded Robot Framework lines
+
+EXAMPLES
+  $ agentia testing live recorder --project <project-id> --output recorded.robot
+

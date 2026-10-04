@@ -1,0 +1,9 @@
+Manage Copado AI workspace members
+
+USAGE
+  $ agentia ai workspace member COMMAND
+
+COMMANDS
+  ai workspace member invite  Invite a member to a Copado AI workspace
+  ai workspace member list    List members for a Copado AI workspace
+

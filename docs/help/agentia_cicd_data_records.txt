@@ -1,0 +1,9 @@
+Search and match data template records
+
+USAGE
+  $ agentia cicd data records COMMAND
+
+COMMANDS
+  cicd data records match   Match a source data record to a destination org
+  cicd data records search  Search data records for a data template
+

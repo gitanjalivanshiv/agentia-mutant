@@ -1,0 +1,23 @@
+Delete a Copado Robotic Testing variable/secret
+
+USAGE
+  $ agentia testing variable delete ID -p <value> [--json] [-y]
+
+ARGUMENTS
+  ID  CRT variable/secret ID.
+
+FLAGS
+  -p, --project=<value>  (required) CRT project ID.
+  -y, --yes              Skip the destructive confirmation prompt.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a Copado Robotic Testing variable/secret
+
+EXAMPLES
+  $ agentia testing variable delete <variable-id> --project <project-id> --yes
+
+  $ agentia testing variable delete <variable-id> --project <project-id> --yes --json
+

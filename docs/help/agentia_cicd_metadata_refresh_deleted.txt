@@ -1,0 +1,28 @@
+Refresh the deleted metadata index via the CICD gateway
+
+USAGE
+  $ agentia cicd metadata refresh deleted [--json] [--env <value>] [--module-type
+    vlocity|data_cloud] [--source-credential-id <value>] [--source-org-id
+    <value>]
+
+FLAGS
+  --env=<value>                   Copado environment Id used to resolve the
+                                  credential
+  --module-type=<option>          Optional addon module type
+                                  <options: vlocity|data_cloud>
+  --source-credential-id=<value>  Override source credential Id resolved from
+                                  --env
+  --source-org-id=<value>         Override source org Id resolved from --env
+                                  validation
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Refresh the deleted metadata index via the CICD gateway
+
+EXAMPLES
+  $ agentia cicd metadata refresh deleted --env <environment-id>
+
+  $ agentia cicd metadata refresh deleted --env <environment-id> --module-type vlocity --json
+

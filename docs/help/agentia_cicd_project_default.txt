@@ -1,0 +1,13 @@
+Manage local Agentia project defaults
+
+USAGE
+  $ agentia cicd project default COMMAND
+
+COMMANDS
+  cicd project default get    Show project default values for the current
+                              project or globally
+  cicd project default set    Set project default values for the current project
+                              or globally
+  cicd project default unset  Remove project default values from the current
+                              project or globally
+

@@ -1,0 +1,19 @@
+Delete a Copado Git repository by ID
+
+USAGE
+  $ agentia cicd repository delete ID [--json]
+
+ARGUMENTS
+  ID  Copado Git repository ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a Copado Git repository by ID
+
+EXAMPLES
+  $ agentia cicd repository delete repo-001
+
+  $ agentia cicd repository delete repo-001 --json
+

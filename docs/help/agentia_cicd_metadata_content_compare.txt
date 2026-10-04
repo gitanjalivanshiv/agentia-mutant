@@ -1,0 +1,47 @@
+Compare metadata file content between two orgs or Git branches
+
+USAGE
+  $ agentia cicd metadata content compare --api-name <value> --metadata-type <value>
+    [--json] [--file-name <value>] [--pipeline-id <value>] [--source
+    ENVIRONMENT|REPOSITORY|GIT_MIRROR|ORG_CACHE] [--source-branch <value>]
+    [--source-credential-id <value>] [--source-org-id <value>] [--target-branch
+    <value>] [--target-credential-id <value>] [--target-org-id <value>]
+    [--target-source ENVIRONMENT|REPOSITORY|GIT_MIRROR|ORG_CACHE]
+
+FLAGS
+  --api-name=<value>              (required) Metadata API name
+  --file-name=<value>             Optional metadata file name
+  --metadata-type=<value>         (required) Metadata type, for example
+                                  ApexClass
+  --pipeline-id=<value>           Pipeline Id
+  --source=<option>               [default: ENVIRONMENT] Content source for the
+                                  source side
+                                  <options:
+                                  ENVIRONMENT|REPOSITORY|GIT_MIRROR|ORG_CACHE>
+  --source-branch=<value>         Git branch for the source side when source is
+                                  REPOSITORY or GIT_MIRROR
+  --source-credential-id=<value>  Source org credential Id
+  --source-org-id=<value>         Source org Id
+  --target-branch=<value>         Git branch for the target side when target
+                                  source is REPOSITORY or GIT_MIRROR
+  --target-credential-id=<value>  Target org credential Id; defaults to the
+                                  source credential
+  --target-org-id=<value>         Target org Id
+  --target-source=<option>        [default: ENVIRONMENT] Content source for the
+                                  target side
+                                  <options:
+                                  ENVIRONMENT|REPOSITORY|GIT_MIRROR|ORG_CACHE>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Compare metadata file content between two orgs or Git branches
+
+EXAMPLES
+  $ agentia cicd metadata content compare --metadata-type ApexClass --api-name MyClass --pipeline-id <id> --source-org-id <id> --source-credential-id <id> --target-org-id <id>
+
+  $ agentia cicd metadata content compare --metadata-type ApexClass --api-name MyClass --source REPOSITORY --source-branch feature/us-123 --target-source REPOSITORY --target-branch main
+
+  $ agentia cicd metadata content compare --metadata-type ApexClass --api-name MyClass --json
+

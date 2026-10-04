@@ -1,0 +1,20 @@
+Preview data template updates from metadata commit changes
+
+USAGE
+  $ agentia cicd data sync preview-updates [--json] [-f <value> | --stdin]
+
+FLAGS
+  -f, --file=<value>  Path to a JSON file body
+      --stdin         Read the JSON body from stdin
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Preview data template updates from metadata commit changes
+
+EXAMPLES
+  $ agentia cicd data sync preview-updates --file preview.json
+
+  $ agentia cicd data sync preview-updates --stdin --json
+

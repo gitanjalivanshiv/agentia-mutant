@@ -1,0 +1,19 @@
+Delete a Copado data template
+
+USAGE
+  $ agentia cicd data template delete ID [--json]
+
+ARGUMENTS
+  ID  Data template Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a Copado data template
+
+EXAMPLES
+  $ agentia cicd data template delete a0X000000000001
+
+  $ agentia cicd data template delete a0X000000000001 --json
+

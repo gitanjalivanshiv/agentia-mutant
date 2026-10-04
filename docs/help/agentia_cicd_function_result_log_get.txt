@@ -1,0 +1,24 @@
+Get log output for a Copado Function result
+
+USAGE
+  $ agentia cicd function result log get RESULT-ID [--json] [--type <value>]
+
+ARGUMENTS
+  RESULT-ID  Function result Id
+
+FLAGS
+  --type=<value>  Optional log file type filter
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get log output for a Copado Function result
+
+EXAMPLES
+  $ agentia cicd function result log get <result-id>
+
+  $ agentia cicd function result log get <result-id> --type stdout
+
+  $ agentia cicd function result log get <result-id> --json
+

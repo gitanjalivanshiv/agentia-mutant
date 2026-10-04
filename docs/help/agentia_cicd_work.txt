@@ -1,0 +1,157 @@
+Manage Copado user stories
+
+USAGE
+  $ agentia cicd work COMMAND
+
+TOPICS
+  cicd work deployment-step  Manage user story deployment steps
+  cicd work test             Run quality gates and Apex tests for a work item
+
+COMMANDS
+  cicd work create
+      Create a Copado user story
+
+  cicd work delete
+      Delete a Copado user story by ID
+
+  cicd work done
+      Alias of cicd work submit --done. Matches Copado UI Submit when promoting
+      (not validate-only). Prefer: agentia cicd work submit --done.
+
+  cicd work environment-sync
+      Sync committed metadata from the next environment onto the destination
+      environment (or current feature branch). Back-promotes every user story
+      behind the destination environment from the next environment branch. GET
+      user stories ahead and behind. If none are behind, log that and stop.
+      Otherwise create a back-promotion and POST those behind stories onto the
+      promotion. Resolves the next-environment Git branch from
+      --destination-environment or --dev-org-branch (the dest pipeline connection
+      destinationBranch, or that destination environment's outbound branch).
+      Merges origin/<next-env> with --no-ff --no-commit, restores every other path
+      from HEAD, commits the guessed pathspecs, and pushes the dest org branch
+      (and the feature branch when HEAD starts with feature/). If guessed
+      pathspecs still conflict, PATCH the back-promotion status to Merge Conflict,
+      resolve the files, and re-run with --promotion and --continue. The promotion
+      destination environment supplies the dest org branch and the next-env
+      branch. To discard a conflicted merge, re-run with --promotion and --abort
+      (runs git merge --abort and sets the back-promotion status to Draft). After
+      a successful sync, PATCH the back-promotion status to Completed.
+
+  cicd work get
+      Get a Copado user story by ID
+
+  cicd work list
+      List Copado user stories
+
+  cicd work open
+      Open a Copado user story in the browser
+
+  cicd work promote
+      Experimental: skips Quality Gates. Requires enableLocalPromote true in
+      .agentia/config.json. Create a promotion for one or more user stories and
+      merge each feature/<name> branch into promotion/<promotionName>. The
+      promotion branch is created from the destination environment branch. Without
+      --backpromote, the stories promote forward from their source environment to
+      the next pipeline environment. With --backpromote, pass
+      --destination-branch. The destination environment is the pipeline
+      environment whose connection branch matches that name, and the source is the
+      next environment above it. Story merges stop at the first conflict and the
+      promotion status is set to Merge Conflict. Resolve those files, then re-run
+      with --promotion=<name-or-id> --continue to commit the merge, merge any
+      remaining stories, and finish the promotion. To discard a conflicted merge,
+      re-run with --promotion=<name-or-id> --abort (runs git merge --abort and
+      sets the promotion status to Draft). That continue command repeats
+      --validate or --deploy and --sf-alias when the original command used them.
+      After every story merges, the promotion branch is pushed. Without --validate
+      or --deploy, the promotion status is set to Completed. With --validate or
+      --deploy, --sf-alias is required. The command writes a temporary package.xml
+      and postdestructivechanges.xml from the promotion metadata and runs sf
+      project deploy start --test-level NoTestRun -o <alias>. --validate adds
+      --dry-run, does not merge the destination branch, and sets the promotion
+      status to Validated. --deploy merges the promotion branch into the
+      destination branch and sets the promotion status to Completed only after
+      that deployment succeeds. User story records are not updated.
+
+  cicd work publish
+      Publish the current feature/<lastWorkItem> branch and register commits with
+      Copado. Requires a clean working tree, base branch, and dev org branch from
+      `.agentia/config.user.json`. Fetches origin/<lastBaseBranch>, then registers
+      only commits in origin/<lastBaseBranch>..HEAD and diffs nested parent XML at
+      merge-base(origin/<lastBaseBranch>, HEAD) versus HEAD, so origin/base-only
+      history is ignored. When there are no commits since origin/<lastBaseBranch>,
+      or origin already has HEAD, fails with "No changes to publish" unless
+      `--permissions` and/or `--full-metadata` is set, in which case it creates an
+      empty commit so a tip commit id exists. Applies Copado environment-variable
+      then yaml replacements to the added and modified files in
+      origin/<lastBaseBranch>..HEAD (passed to the jars as `--include`; yaml `-b`
+      is the feature branch, matching Copado Commit), commits both as a single
+      follow-up commit, locks the tip commit, runs `git push origin <branch>`,
+      reports the nested metadata changed across the branch, such as the
+      CustomField behind a profile field-permission edit, plus the parent
+      components it would ignore, calls headless work/push with one
+      changeListUpdate list of Action:MetadataType:MetadataName corrections:
+      lastPermissionSelected and --permissions plus the nested metadata of the
+      changed profiles and permission sets as RetrieveOnly,
+      lastFullMetadataSelected and --full-metadata plus brand-new nested parent
+      files as fullMetadata, the ignored parents as unchanged, the nested metadata
+      deleted on the branch as Del, and the remaining nested metadata as Add, then
+      merges the feature branch into the recorded dev org branch. The changed
+      profiles and permission sets themselves are never sent as corrections, so
+      they stay in the change list and deploy only the permissions their
+      RetrieveOnly entries select. Brand-new nested parent files are an exception:
+      they are sent as fullMetadata so the complete file travels. `cicd work push`
+      is a compatibility alias of this command.
+
+  cicd work push
+      Alias of cicd work publish. Publishes the current feature/<lastWorkItem>
+      branch and registers commits with Copado. Prefer: agentia cicd work publish.
+
+  cicd work set
+      Set the active work item and prepare a local feature branch. Calls the CICD
+      gateway work/set endpoint, requires a clean tracked working tree, fetches
+      the work item base branch from origin, fetches the feature branch when it
+      exists on origin, then creates or checks out feature/<user-story-name> from
+      the remote feature branch when present, otherwise from the base branch. A
+      gateway warning prints the message, skips git, clears
+      lastBaseBranch/lastDevOrgBranch/lastPullRequestBaseUrl, and records
+      lastWorkItemId/lastWorkItem/lastWorkItemTitle from the returned work item.
+      After work/set returns, compares the Story source credential with the CICD
+      project default: warns when the default or Story credential is missing, and
+      warns without changing the Story when they differ (shows the current
+      credential and environment; use work update to change it). With --none,
+      clears every last* key from `.agentia/config.user.json` and checks out the
+      previous lastBaseBranch when present, else main, else master, else stays
+      put.
+
+  cicd work status
+      Get status for a work item, including related job executions. Includes local
+      branch metadata when lastBaseBranch is recorded by `work set`. Uses the
+      given user story ID/name, or the last work item from `agentia cicd work
+      set`. Use --metadata-list-only to retrieve only local branch metadata
+      without an API call.
+
+  cicd work submit
+      Submit the current feature/<lastWorkItem> work item for pipeline quality
+      gates and validation. Runs project-root .agentia_quality_gates.sh
+      (macOS/Linux) or .agentia_quality_gates.cmd (Windows) when present, pushes
+      and registers commits when the branch is ahead of origin, then calls
+      headless work/submit (Promote Action with validate=true). When the last
+      pending related job template name contains Commit, waits up to 5 minutes for
+      that job before submitting. Before submit or promote, counts user stories
+      ahead and behind between the source environment and the next pipeline
+      environment, and warns when stories behind might cause promotion conflicts.
+      With --done or --deploy, matches Copado UI Submit when promoting
+      (validate=false / headless work/done). cicd work done is a compatibility
+      alias of this command with --done.
+
+  cicd work test
+      Run quality gates for the current work item. With --local (the default) it
+      runs project-root .agentia_quality_gates.sh (macOS/Linux) or
+      .agentia_quality_gates.cmd (Windows) when present. When no project script
+      exists it warns, runs the stock Agentia setup sample from a temporary file,
+      then deletes that file. With --cloud it runs remote Copado quality gates
+      (not implemented yet).
+
+  cicd work update
+      Update a Copado user story by ID
+

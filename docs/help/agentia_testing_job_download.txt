@@ -1,0 +1,27 @@
+Download files from a Copado Robotic Testing job/test
+
+USAGE
+  $ agentia testing job download ID -p <value> -f <value>... [--json] [--branch
+    <value>] [--output-dir <value>]
+
+ARGUMENTS
+  ID  CRT job/test ID.
+
+FLAGS
+  -f, --file=<value>...     (required) Remote CRT file path to download. Can be
+                            provided multiple times.
+  -p, --project=<value>     (required) CRT project ID.
+      --branch=<value>      Optional CRT branch name for file operations.
+      --output-dir=<value>  Directory to write downloaded files.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Download files from a Copado Robotic Testing job/test
+
+EXAMPLES
+  $ agentia testing job download <job-id> --project <project-id> --file tests.robot
+
+  $ agentia testing job download <job-id> --project <project-id> --file tests.robot --output-dir ./crt-files --json
+

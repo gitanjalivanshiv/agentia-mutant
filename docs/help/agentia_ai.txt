@@ -1,0 +1,10 @@
+Use Copado AI agents
+
+USAGE
+  $ agentia ai COMMAND
+
+TOPICS
+  ai agent      Prompt and chat with Copado AI agents
+  ai quota      Inspect Copado AI quota
+  ai workspace  Manage Copado AI workspaces
+

@@ -1,0 +1,23 @@
+Replace the complete deployment step order
+
+USAGE
+  $ agentia cicd work deployment-step reorder [--json] [--file <value> | --stdin] [--user-story
+    <value>]
+
+FLAGS
+  --file=<value>        Path to a complete deployment step order JSON file
+  --stdin               Read the complete deployment step order from stdin
+  --user-story=<value>  User story ID (defaults to the active work item from
+                        `work set`)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Replace the complete deployment step order
+
+EXAMPLES
+  $ agentia cicd work deployment-step reorder --file order.json
+
+  cat order.json | agentia cicd work deployment-step reorder --stdin --json
+

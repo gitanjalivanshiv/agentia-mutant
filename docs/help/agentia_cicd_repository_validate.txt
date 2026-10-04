@@ -1,0 +1,19 @@
+Validate Copado Git repository authentication
+
+USAGE
+  $ agentia cicd repository validate ID [--json]
+
+ARGUMENTS
+  ID  Copado Git repository ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Validate Copado Git repository authentication
+
+EXAMPLES
+  $ agentia cicd repository validate repo-001
+
+  $ agentia cicd repository validate repo-001 --json
+

@@ -1,0 +1,23 @@
+Inspect sanitized status for the active CRT live session
+
+USAGE
+  $ agentia testing live status [JOB-ID] -p <value> [--json] [--session-id
+    <value>]
+
+ARGUMENTS
+  [JOB-ID]  Optional CRT job/test ID guard.
+
+FLAGS
+  -p, --project=<value>     (required) CRT project ID.
+      --session-id=<value>  Guard that must match the locally active CRT live
+                            session.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Inspect sanitized status for the active CRT live session
+
+EXAMPLES
+  $ agentia testing live status --project <project-id> --json
+

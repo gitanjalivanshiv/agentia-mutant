@@ -1,0 +1,26 @@
+Scaffold default Copado Function metadata and script without writing to Salesforce
+
+USAGE
+  $ agentia cicd function defaults --name <value> [--json] [--image-name <value>]
+    [--runtime bash|node|python]
+
+FLAGS
+  --image-name=<value>  [default: copado-function-core:v1] Function container
+                        image
+  --name=<value>        (required) Function display name used to scaffold
+                        defaults
+  --runtime=<option>    [default: bash] Script runtime
+                        <options: bash|node|python>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Scaffold default Copado Function metadata and script without writing to
+  Salesforce
+
+EXAMPLES
+  $ agentia cicd function defaults --name MyFunction
+
+  $ agentia cicd function defaults --name MyFunction --runtime python --json
+

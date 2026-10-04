@@ -1,0 +1,19 @@
+Open a Copado data template in the browser
+
+USAGE
+  $ agentia cicd data template open ID [--json]
+
+ARGUMENTS
+  ID  Data template Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a Copado data template in the browser
+
+EXAMPLES
+  $ agentia cicd data template open a0X000000000001
+
+  $ agentia cicd data template open a0X000000000001 --json
+

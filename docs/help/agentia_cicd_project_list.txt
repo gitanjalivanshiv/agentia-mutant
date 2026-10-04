@@ -1,0 +1,35 @@
+List Copado projects
+
+USAGE
+  $ agentia cicd project list [--json] [--cursor <value>] [--page-size <value>]
+    [--end-date-from <value>] [--end-date-to <value>] [--mine] [--name <value>]
+    [--start-date-from <value>] [--start-date-to <value>] [--status <value>]
+
+FLAGS
+  --cursor=<value>           Opaque pagination cursor from a previous list
+                             response (nextCursor)
+  --end-date-from=<value>    Filter by end date (inclusive, YYYY-MM-DD)
+  --end-date-to=<value>      Filter by end date (inclusive, YYYY-MM-DD)
+  --mine                     List only projects owned by or related to the
+                             current user
+  --name=<value>             Filter by name (partial match)
+  --page-size=<value>        Number of records per page (1-200)
+  --start-date-from=<value>  Filter by start date (inclusive, YYYY-MM-DD)
+  --start-date-to=<value>    Filter by start date (inclusive, YYYY-MM-DD)
+  --status=<value>           Filter by project status
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado projects
+
+EXAMPLES
+  $ agentia cicd project list
+
+  $ agentia cicd project list --mine
+
+  $ agentia cicd project list --name Gateway
+
+  $ agentia cicd project list --mine --json
+

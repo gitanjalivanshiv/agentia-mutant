@@ -1,0 +1,9 @@
+Inspect Copado metadata dependencies
+
+USAGE
+  $ agentia cicd metadata dependency COMMAND
+
+COMMANDS
+  cicd metadata dependency list  Retrieve metadata dependencies via the CICD
+                                 gateway
+

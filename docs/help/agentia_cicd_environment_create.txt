@@ -1,0 +1,60 @@
+Create a Copado environment
+
+USAGE
+  $ agentia cicd environment create NAME [--json] [--enable-rollback]
+    [--index-back-promotion-metadata] [--run-local-tests] [--apex-test-level
+    <value>] [--namespace <value>] [--promotion-default-credential <value>]
+    [--run-specified-tests <value>] [--validation-promotion-default-credential
+    <value>] [--platform <value>] [--type Production/Developer|Sandbox|Scratch
+    Org|Custom Domain]
+
+ARGUMENTS
+  NAME  Name of the environment to create
+
+FLAGS
+  --apex-test-level=<value>
+      Apex test level
+
+  --[no-]enable-rollback
+      Enable rollback
+
+  --[no-]index-back-promotion-metadata
+      Index back promotion metadata
+
+  --namespace=<value>
+      Environment namespace
+
+  --platform=<value>
+      [default: SFDX] Environment platform
+
+  --promotion-default-credential=<value>
+      Default credential for promotions
+
+  --[no-]run-local-tests
+      Run local tests
+
+  --run-specified-tests=<value>
+      Specified tests to run
+
+  --type=<option>
+      [default: Production/Developer] Environment type
+      <options: Production/Developer|Sandbox|Scratch Org|Custom Domain>
+
+  --validation-promotion-default-credential=<value>
+      Default credential for validation promotions
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado environment
+
+EXAMPLES
+  $ agentia cicd environment create Dev
+
+  $ agentia cicd environment create Dev --type Sandbox --platform SFDX
+
+  $ agentia cicd environment create Dev --run-local-tests --apex-test-level "No Test Run"
+
+  $ agentia cicd environment create Dev --json
+

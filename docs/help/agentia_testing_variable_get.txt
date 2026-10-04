@@ -1,0 +1,22 @@
+Get a Copado Robotic Testing variable/secret
+
+USAGE
+  $ agentia testing variable get ID -p <value> [--json]
+
+ARGUMENTS
+  ID  CRT variable/secret ID.
+
+FLAGS
+  -p, --project=<value>  (required) CRT project ID.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado Robotic Testing variable/secret
+
+EXAMPLES
+  $ agentia testing variable get <variable-id> --project <project-id>
+
+  $ agentia testing variable get <variable-id> --project <project-id> --json
+

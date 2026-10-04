@@ -1,0 +1,33 @@
+Update a user story deployment step
+
+USAGE
+  $ agentia cicd work deployment-step update --step <value> [--json] [--clear-queue-name |
+    --queue-name <value>] [--clear-skip-condition | --skip-condition <value>]
+    [--config-file <value> | --config-json <value>] [--name <value>]
+    [--run-on-validation] [--skip-back-promotion] [--user-story <value>]
+
+FLAGS
+  --clear-queue-name          Clear the queue name
+  --clear-skip-condition      Clear the skip condition
+  --config-file=<value>       Path to deployment step config JSON
+  --config-json=<value>       Inline deployment step config JSON
+  --name=<value>              Deployment step name
+  --queue-name=<value>        Queue name
+  --[no-]run-on-validation    Run or skip the step during validation
+  --[no-]skip-back-promotion  Skip or include the step during back promotion
+  --skip-condition=<value>    Deployment step skip condition
+  --step=<value>              (required) Deployment step ID
+  --user-story=<value>        User story ID (defaults to the active work item
+                              from `work set`)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a user story deployment step
+
+EXAMPLES
+  $ agentia cicd work deployment-step update --step a2D... --name "Updated step"
+
+  $ agentia cicd work deployment-step update --step a2D... --clear-queue-name --json
+

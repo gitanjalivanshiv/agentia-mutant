@@ -1,0 +1,23 @@
+Add an advanced filter to a data template
+
+USAGE
+  $ agentia cicd data filter add DATATEMPLATEID [--json] [-f <value> | --stdin]
+
+ARGUMENTS
+  DATATEMPLATEID  Data template Id
+
+FLAGS
+  -f, --file=<value>  Path to a JSON file body
+      --stdin         Read the JSON body from stdin
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Add an advanced filter to a data template
+
+EXAMPLES
+  $ agentia cicd data filter add a0X000000000001 --file filter.json
+
+  $ agentia cicd data filter add a0X000000000001 --stdin --json
+

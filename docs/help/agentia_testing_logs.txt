@@ -1,0 +1,32 @@
+Get logs for a Copado Robotic Testing run
+
+USAGE
+  $ agentia testing logs ID -p <value> -j <value> [--json] [--container
+    <value>] [--limit-bytes <value>] [--pretty] [--since-seconds <value>]
+    [--tail-lines <value>] [--timestamps] [-o <value>]
+
+ARGUMENTS
+  ID  CRT build/run ID.
+
+FLAGS
+  -j, --job=<value>            (required) CRT job/test ID.
+  -o, --output=<value>         Write raw output to this file path.
+  -p, --project=<value>        (required) CRT project ID.
+      --container=<value>      Read a specific CRT log stream/container.
+      --limit-bytes=<value>    Limit fetched log data to this many bytes.
+      --pretty                 Request readable log formatting.
+      --since-seconds=<value>  Fetch log lines from the last N seconds.
+      --tail-lines=<value>     Return only the last N log lines.
+      --timestamps             Add timestamps to log lines.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get logs for a Copado Robotic Testing run
+
+EXAMPLES
+  $ agentia testing logs <build-id> --project <project-id> --job <job-id>
+
+  $ agentia testing logs <build-id> --project <project-id> --job <job-id> --output log.html --json
+

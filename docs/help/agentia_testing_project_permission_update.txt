@@ -1,0 +1,26 @@
+Update a user or group permission on a Copado Robotic Testing project
+
+USAGE
+  $ agentia testing project permission update PROJECT [--json] [--edit] [--group <value> |
+    --user <value>] [--view]
+
+ARGUMENTS
+  PROJECT  CRT project ID.
+
+FLAGS
+  --edit           Set edit access.
+  --group=<value>  Platform group ID.
+  --user=<value>   Platform user ID.
+  --view           Set view access.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a user or group permission on a Copado Robotic Testing project
+
+EXAMPLES
+  $ agentia testing project permission update <project-id> --user <user-id> --view --edit
+
+  $ agentia testing project permission update <project-id> --group <group-id> --view --json
+

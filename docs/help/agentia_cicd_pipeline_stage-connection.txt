@@ -1,0 +1,14 @@
+Create a pipeline stage connection
+
+USAGE
+  $ agentia cicd pipeline stage-connection COMMAND
+
+COMMANDS
+  cicd pipeline stage-connection create  Create a pipeline stage connection
+  cicd pipeline stage-connection delete  Delete a pipeline stage connection
+  cicd pipeline stage-connection list    List stage connections for a Copado
+                                         pipeline
+  cicd pipeline stage-connection open    Open a pipeline stage connection in the
+                                         browser
+  cicd pipeline stage-connection update  Update a pipeline stage connection
+

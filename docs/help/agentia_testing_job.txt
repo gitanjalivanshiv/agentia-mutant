@@ -1,0 +1,24 @@
+Create a Copado Robotic Testing job/test from uploaded files or Git storage
+
+USAGE
+  $ agentia testing job COMMAND
+
+TOPICS
+  testing job schedule  Get the schedule for a Copado Robotic Testing job/test
+
+COMMANDS
+  testing job create    Create a Copado Robotic Testing job/test from uploaded
+                        files or Git storage
+  testing job delete    Delete a Copado Robotic Testing job/test
+  testing job download  Download files from a Copado Robotic Testing job/test
+  testing job files     List files for a Copado Robotic Testing job/test
+  testing job get       Get a Copado Robotic Testing job/test from the project
+                        job list
+  testing job list      List Copado Robotic Testing jobs/tests in a project
+  testing job refs      List Git branches and tags for a Copado Robotic Testing
+                        job/test
+  testing job run       Run a Copado Robotic Testing job/test
+  testing job update    Update Copado Robotic Testing job/test metadata
+  testing job upload    Upload file operations to a Copado Robotic Testing
+                        job/test
+

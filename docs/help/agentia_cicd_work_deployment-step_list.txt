@@ -1,0 +1,20 @@
+List deployment steps for a user story
+
+USAGE
+  $ agentia cicd work deployment-step list [--json] [--user-story <value>]
+
+FLAGS
+  --user-story=<value>  User story ID (defaults to the active work item from
+                        `work set`)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List deployment steps for a user story
+
+EXAMPLES
+  $ agentia cicd work deployment-step list
+
+  $ agentia cicd work deployment-step list --user-story a16P700000000001AAA --json
+

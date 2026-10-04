@@ -1,0 +1,10 @@
+Manage record matching formulas
+
+USAGE
+  $ agentia cicd data formula COMMAND
+
+COMMANDS
+  cicd data formula create  Create a record matching formula for a data template
+  cicd data formula list    List record matching formulas for an sObject
+  cicd data formula update  Update a record matching formula
+

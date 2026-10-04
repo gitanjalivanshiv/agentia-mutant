@@ -1,0 +1,8 @@
+Get log output for a Copado Function result
+
+USAGE
+  $ agentia cicd function result log COMMAND
+
+COMMANDS
+  cicd function result log get  Get log output for a Copado Function result
+

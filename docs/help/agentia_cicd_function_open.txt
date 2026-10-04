@@ -1,0 +1,19 @@
+Open a Copado Function in the browser
+
+USAGE
+  $ agentia cicd function open ID [--json]
+
+ARGUMENTS
+  ID  Function ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a Copado Function in the browser
+
+EXAMPLES
+  $ agentia cicd function open <function-id>
+
+  $ agentia cicd function open <function-id> --json
+

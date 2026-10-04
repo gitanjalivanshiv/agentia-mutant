@@ -1,0 +1,25 @@
+Get a Copado Robotic Testing build/run
+
+USAGE
+  $ agentia testing build get ID -p <value> -j <value> [--json] [--full]
+
+ARGUMENTS
+  ID  CRT build/run ID.
+
+FLAGS
+  -j, --job=<value>      (required) CRT job/test ID.
+  -p, --project=<value>  (required) CRT project ID.
+      --full             Fetch the full build result instead of the compact
+                         summary.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado Robotic Testing build/run
+
+EXAMPLES
+  $ agentia testing build get <build-id> --project <project-id> --job <job-id>
+
+  $ agentia testing build get <build-id> --project <project-id> --job <job-id> --full --json
+

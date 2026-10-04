@@ -1,0 +1,30 @@
+List Copado pipelines
+
+USAGE
+  $ agentia cicd pipeline list [--json] [--cursor <value>] [--page-size <value>]
+    [--active] [--name <value>] [--platform
+    Salesforce|SFDX|Heroku|Mulesoft|Marketing|Other]
+
+FLAGS
+  --[no-]active        Filter by active status
+  --cursor=<value>     Opaque pagination cursor from a previous list response
+                       (nextCursor)
+  --name=<value>       Filter by pipeline name
+  --page-size=<value>  Number of records per page (1-200)
+  --platform=<option>  Filter by pipeline platform
+                       <options:
+                       Salesforce|SFDX|Heroku|Mulesoft|Marketing|Other>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado pipelines
+
+EXAMPLES
+  $ agentia cicd pipeline list
+
+  $ agentia cicd pipeline list --name "Dev Pipeline" --active --platform SFDX
+
+  $ agentia cicd pipeline list --json
+

@@ -1,0 +1,11 @@
+Manage data template advanced filters
+
+USAGE
+  $ agentia cicd data filter COMMAND
+
+COMMANDS
+  cicd data filter add     Add an advanced filter to a data template
+  cicd data filter delete  Delete an advanced filter from a data template
+  cicd data filter list    List advanced filters for a data template
+  cicd data filter update  Update an advanced filter on a data template
+

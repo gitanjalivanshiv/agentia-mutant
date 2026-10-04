@@ -1,0 +1,28 @@
+Open a Copado environment or credential in the browser
+
+USAGE
+  $ agentia cicd environment open [ID] [--json] [--credentialid <value>]
+
+ARGUMENTS
+  [ID]  Copado environment ID (defaults to the configured project default
+        environment)
+
+FLAGS
+  --credentialid=<value>  Credential ID to open instead of the environment
+                          record
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a Copado environment or credential in the browser
+
+EXAMPLES
+  $ agentia cicd environment open
+
+  $ agentia cicd environment open a0SKC000000CmZ2AU
+
+  $ agentia cicd environment open --credentialid <credential-id>
+
+  $ agentia cicd environment open a0SKC000000CmZ2AU --credentialid <credential-id> --json
+

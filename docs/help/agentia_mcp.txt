@@ -1,0 +1,8 @@
+Start a local Model Context Protocol server for MCP-compatible clients
+
+USAGE
+  $ agentia mcp COMMAND
+
+COMMANDS
+  mcp start  Start the local Agentia MCP server over stdio
+

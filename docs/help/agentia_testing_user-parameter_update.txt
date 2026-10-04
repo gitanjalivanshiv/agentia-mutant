@@ -1,0 +1,34 @@
+Update an account-scoped Copado Robotic Testing user parameter
+
+USAGE
+  $ agentia testing user-parameter update ID [--json] [--description <value>] [--key
+    <value>] [--unique] [--no-trim | --trim] [--value <value> | --value-file
+    <value> | --value-stdin]
+
+ARGUMENTS
+  ID  CRT user-parameter ID.
+
+FLAGS
+  --description=<value>  New parameter description.
+  --key=<value>          New parameter key.
+  --no-trim              Preserve leading and trailing whitespace in the
+                         supplied value.
+  --trim                 Trim leading and trailing whitespace (the default
+                         policy).
+  --unique               Reject another parameter with the same new key.
+  --value=<value>        Value supplied directly. Prefer file/stdin for
+                         sensitive values.
+  --value-file=<value>   Read the value from a bounded regular file.
+  --value-stdin          Read the value from stdin.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update an account-scoped Copado Robotic Testing user parameter
+
+EXAMPLES
+  $ agentia testing user-parameter update <parameter-id> --description "Updated"
+
+  $ agentia testing user-parameter update <parameter-id> --value-file ./value.txt --no-trim --json
+

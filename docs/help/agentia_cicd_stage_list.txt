@@ -1,0 +1,21 @@
+List Copado stages
+
+USAGE
+  $ agentia cicd stage list [--json] [--cursor <value>] [--page-size <value>]
+
+FLAGS
+  --cursor=<value>     Opaque pagination cursor from a previous list response
+                       (nextCursor)
+  --page-size=<value>  Number of records per page (1-200)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado stages
+
+EXAMPLES
+  $ agentia cicd stage list
+
+  $ agentia cicd stage list --json
+

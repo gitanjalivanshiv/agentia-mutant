@@ -1,0 +1,20 @@
+Create a pipeline stage connection
+
+USAGE
+  $ agentia cicd pipeline stage-connection create --pipeline-id <value> [--json]
+    [--next-pipeline-stage-connection-id <value>] [--stage-id <value>]
+
+FLAGS
+  --next-pipeline-stage-connection-id=<value>  Next pipeline stage connection ID
+  --pipeline-id=<value>                        (required) Pipeline ID
+  --stage-id=<value>                           Stage ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a pipeline stage connection
+
+EXAMPLES
+  $ agentia cicd pipeline stage-connection create --pipeline-id pipeline-1 --stage-id stage-1
+

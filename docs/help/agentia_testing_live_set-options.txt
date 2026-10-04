@@ -1,0 +1,31 @@
+Set the complete validated CRT live recorder option block
+
+USAGE
+  $ agentia testing live set-options [JOB-ID] -p <value> [--json] [--session-id
+    <value>] [--enable] [--healing-context] [--hover-text] [--scroll-text]
+    [--system-state] [--table-keywords] [--verify-text]
+
+ARGUMENTS
+  [JOB-ID]  Optional CRT job/test ID guard.
+
+FLAGS
+  -p, --project=<value>       (required) CRT project ID.
+      --[no-]enable           Enable or disable interaction recording.
+      --[no-]healing-context  Capture recorder healing context.
+      --[no-]hover-text       Capture HoverText interactions.
+      --[no-]scroll-text      Capture ScrollText interactions.
+      --session-id=<value>    Guard that must match the locally active CRT live
+                              session.
+      --[no-]system-state     Capture console/network system state.
+      --[no-]table-keywords   Prefer table-aware interaction keywords.
+      --[no-]verify-text      Capture VerifyText interactions.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Set the complete validated CRT live recorder option block
+
+EXAMPLES
+  $ agentia testing live set-options --project <project-id> --enable --scroll-text --table-keywords
+

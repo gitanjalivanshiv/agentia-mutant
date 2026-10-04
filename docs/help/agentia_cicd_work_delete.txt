@@ -1,0 +1,19 @@
+Delete a Copado user story by ID
+
+USAGE
+  $ agentia cicd work delete ID [--json]
+
+ARGUMENTS
+  ID  User story ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a Copado user story by ID
+
+EXAMPLES
+  $ agentia cicd work delete a0SKC000000CmZ2AU
+
+  $ agentia cicd work delete a0SKC000000CmZ2AU --json
+

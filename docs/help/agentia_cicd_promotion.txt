@@ -1,0 +1,18 @@
+Manage Copado promotions
+
+USAGE
+  $ agentia cicd promotion COMMAND
+
+TOPICS
+  cicd promotion conflict  Manage Copado promotion conflicts
+  cicd promotion job-step  Manage Copado promotion job steps
+
+COMMANDS
+  cicd promotion get   Get a Copado promotion by ID
+  cicd promotion list  List Copado promotions
+  cicd promotion open  Open a Copado promotion in the browser
+  cicd promotion run   Preflight, start, and optionally wait for a Copado
+                       promotion execution. Use --resume to continue an existing
+                       failed or conflict-resolved execution without starting a
+                       duplicate promotion.
+

@@ -1,0 +1,25 @@
+Update a Copado stage
+
+USAGE
+  $ agentia cicd stage update ID [--json] [--meta-stage <value>] [--name
+    <value>]
+
+ARGUMENTS
+  ID  Stage ID
+
+FLAGS
+  --meta-stage=<value>  Meta stage (common values: Build, Test, Production;
+                        custom values are allowed)
+  --name=<value>        Stage name
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a Copado stage
+
+EXAMPLES
+  $ agentia cicd stage update <stage-id> --name QA
+
+  $ agentia cicd stage update <stage-id> --meta-stage Test
+

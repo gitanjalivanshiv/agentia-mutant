@@ -1,0 +1,13 @@
+Start the local Agentia MCP server over stdio
+
+USAGE
+  $ agentia mcp start
+
+DESCRIPTION
+  Start the local Agentia MCP server over stdio
+
+EXAMPLES
+  $ agentia mcp start
+
+  $ agentia mcp start # long-running stdio MCP server for Cursor and other clients
+

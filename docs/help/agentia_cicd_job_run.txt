@@ -1,0 +1,22 @@
+Run all steps for a Copado job execution
+
+USAGE
+  $ agentia cicd job run ID [--json] [--restart]
+
+ARGUMENTS
+  ID  JobExecution Id
+
+FLAGS
+  --restart  Restart the job run (gateway compatibility flag)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Run all steps for a Copado job execution
+
+EXAMPLES
+  $ agentia cicd job run <job-id>
+
+  $ agentia cicd job run <job-id> --restart --json
+

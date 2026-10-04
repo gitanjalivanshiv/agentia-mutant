@@ -1,0 +1,22 @@
+List members for a Copado AI workspace
+
+USAGE
+  $ agentia ai workspace member list WORKSPACE [--json] [--timeout <value>]
+
+ARGUMENTS
+  WORKSPACE  Copado AI workspace UUID.
+
+FLAGS
+  --timeout=<value>  AI gateway timeout in seconds.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List members for a Copado AI workspace
+
+EXAMPLES
+  $ agentia ai workspace member list 42d0b908-37b7-4565-9ec9-86eda40c9782
+
+  $ agentia ai workspace member list 42d0b908-37b7-4565-9ec9-86eda40c9782 --json
+

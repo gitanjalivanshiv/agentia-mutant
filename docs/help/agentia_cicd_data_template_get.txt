@@ -1,0 +1,19 @@
+Get a data template export graph (selected columns only)
+
+USAGE
+  $ agentia cicd data template get ID [--json]
+
+ARGUMENTS
+  ID  Data template Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a data template export graph (selected columns only)
+
+EXAMPLES
+  $ agentia cicd data template get a0X000000000001
+
+  $ agentia cicd data template get a0X000000000001 --json
+

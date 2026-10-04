@@ -1,0 +1,13 @@
+Create a Copado Robotic Testing data table
+
+USAGE
+  $ agentia testing data-table COMMAND
+
+COMMANDS
+  testing data-table create  Create a Copado Robotic Testing data table
+  testing data-table delete  Delete a Copado Robotic Testing data table
+  testing data-table export  Export a Copado Robotic Testing data table
+  testing data-table get     Get a Copado Robotic Testing data table
+  testing data-table list    List Copado Robotic Testing data tables
+  testing data-table update  Update a Copado Robotic Testing data table
+

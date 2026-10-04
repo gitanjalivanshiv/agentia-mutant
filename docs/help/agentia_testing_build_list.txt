@@ -1,0 +1,32 @@
+List Copado Robotic Testing builds/runs
+
+USAGE
+  $ agentia testing build list -p <value> [--json] [--count] [--job <value>]
+    [--page <value>] [--page-size <value>] [--result-size compact] [--status
+    aborted|executing|failed|finished|queued|succeeded]
+
+FLAGS
+  -p, --project=<value>       (required) CRT project ID.
+      --count                 Return only the number of builds. Requires --job.
+      --job=<value>           Limit builds to one CRT job/test ID.
+      --page=<value>          CRT build page number.
+      --page-size=<value>     Number of CRT builds per page.
+      --result-size=<option>  [default: compact] CRT build result size.
+                              <options: compact>
+      --status=<option>       Build status filter.
+                              <options: aborted|executing|failed|finished|queued
+                              |succeeded>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado Robotic Testing builds/runs
+
+EXAMPLES
+  $ agentia testing build list --project <project-id>
+
+  $ agentia testing build list --project <project-id> --job <job-id> --status succeeded --json
+
+  $ agentia testing build list --project <project-id> --job <job-id> --count
+

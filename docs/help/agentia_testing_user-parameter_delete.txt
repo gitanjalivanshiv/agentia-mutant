@@ -1,0 +1,22 @@
+Delete an account-scoped Copado Robotic Testing user parameter
+
+USAGE
+  $ agentia testing user-parameter delete ID [--json] [-y]
+
+ARGUMENTS
+  ID  CRT user-parameter ID.
+
+FLAGS
+  -y, --yes  Skip the destructive confirmation prompt.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete an account-scoped Copado Robotic Testing user parameter
+
+EXAMPLES
+  $ agentia testing user-parameter delete <parameter-id> --yes
+
+  $ agentia testing user-parameter delete <parameter-id> --yes --json
+

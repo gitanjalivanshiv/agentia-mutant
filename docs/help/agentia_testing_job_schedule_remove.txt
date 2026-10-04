@@ -1,0 +1,23 @@
+Remove the schedule from a Copado Robotic Testing job/test
+
+USAGE
+  $ agentia testing job schedule remove ID -p <value> [--json] [-y]
+
+ARGUMENTS
+  ID  CRT job/test ID.
+
+FLAGS
+  -p, --project=<value>  (required) CRT project ID.
+  -y, --yes              Confirm schedule removal.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Remove the schedule from a Copado Robotic Testing job/test
+
+EXAMPLES
+  $ agentia testing job schedule remove <job-id> --project <project-id> --yes
+
+  $ agentia testing job schedule remove <job-id> --project <project-id> --yes --json
+

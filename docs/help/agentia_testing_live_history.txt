@@ -1,0 +1,26 @@
+Read bounded sanitized local CRT live execution history
+
+USAGE
+  $ agentia testing live history [JOB-ID] -p <value> [--json] [--session-id
+    <value>] [--limit <value>] [--status completed|failed|recorded]
+
+ARGUMENTS
+  [JOB-ID]  CRT job/test ID; defaults to the active session.
+
+FLAGS
+  -p, --project=<value>     (required) CRT project ID.
+      --limit=<value>       [default: 10] Maximum records to return.
+      --session-id=<value>  Guard that must match the locally active CRT live
+                            session.
+      --status=<option>     Execution status filter.
+                            <options: completed|failed|recorded>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Read bounded sanitized local CRT live execution history
+
+EXAMPLES
+  $ agentia testing live history <job-id> --project <project-id> --limit 20 --json
+

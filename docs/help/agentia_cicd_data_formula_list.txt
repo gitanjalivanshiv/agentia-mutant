@@ -1,0 +1,19 @@
+List record matching formulas for an sObject
+
+USAGE
+  $ agentia cicd data formula list OBJECTAPINAME [--json]
+
+ARGUMENTS
+  OBJECTAPINAME  sObject API name
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List record matching formulas for an sObject
+
+EXAMPLES
+  $ agentia cicd data formula list Account
+
+  $ agentia cicd data formula list Account --json
+

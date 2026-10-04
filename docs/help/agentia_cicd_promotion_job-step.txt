@@ -1,0 +1,8 @@
+Manage Copado promotion job steps
+
+USAGE
+  $ agentia cicd promotion job-step COMMAND
+
+COMMANDS
+  cicd promotion job-step update  Update a promotion manual task
+

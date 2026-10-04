@@ -1,0 +1,49 @@
+Preflight, start, and optionally wait for a Copado promotion execution. Use --resume to continue an existing failed or conflict-resolved execution without starting a duplicate promotion.
+
+USAGE
+  $ agentia cicd promotion run ID [--json] [--deployment-step-id <value>...]
+    [--ignored-metadata-json <value>] [--operation merge|merge_and_deploy]
+    [--recreate-promotion-branch] [--resume <value>] [--wait] [--wait-timeout
+    <value>] [-y]
+
+ARGUMENTS
+  ID  18-character Salesforce Promotion ID
+
+FLAGS
+  -y, --yes                            Confirm promotion branch recreation
+                                       without prompting.
+      --deployment-step-id=<value>...  Ordered deployment-step Salesforce ID.
+                                       Can be provided multiple times.
+      --ignored-metadata-json=<value>  JSON array to persist through
+                                       ignored-metadata before starting the
+                                       promotion.
+      --operation=<option>             Promotion operation. Required unless
+                                       --resume is used.
+                                       <options: merge|merge_and_deploy>
+      --recreate-promotion-branch      Recreate the promotion branch before
+                                       execution. Requires confirmation or
+                                       --yes.
+      --resume=<value>                 Resume this existing JobExecution ID
+                                       instead of calling the promotion run
+                                       endpoint.
+      --[no-]wait                      Poll promotion and deployment executions
+                                       to terminal status.
+      --wait-timeout=<value>           [default: 900] Maximum total seconds to
+                                       wait for promotion and deployment
+                                       executions.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Preflight, start, and optionally wait for a Copado promotion execution. Use
+  --resume to continue an existing failed or conflict-resolved execution without
+  starting a duplicate promotion.
+
+EXAMPLES
+  $ agentia cicd promotion run a0BXXXXXXXXXXXXXXX --operation merge
+
+  $ agentia cicd promotion run a0BXXXXXXXXXXXXXXX --operation merge_and_deploy --json
+
+  $ agentia cicd promotion run a0BXXXXXXXXXXXXXXX --resume a4NXXXXXXXXXXXXXXX
+

@@ -1,0 +1,23 @@
+Interrupt Robot execution in the active CRT live session
+
+USAGE
+  $ agentia testing live interrupt [JOB-ID] -p <value> [--json] [--session-id
+    <value>]
+
+ARGUMENTS
+  [JOB-ID]  Optional CRT job/test ID guard.
+
+FLAGS
+  -p, --project=<value>     (required) CRT project ID.
+      --session-id=<value>  Guard that must match the locally active CRT live
+                            session.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Interrupt Robot execution in the active CRT live session
+
+EXAMPLES
+  $ agentia testing live interrupt --project <project-id>
+

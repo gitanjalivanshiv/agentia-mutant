@@ -1,0 +1,34 @@
+Set project default values for the current project or globally
+
+USAGE
+  $ agentia cicd project default set [--json] [--credential <value>] [--environment
+    <value>] [--epic <value>] [--feature <value>] [--project <value>] [--sprint
+    <value>] [--team <value>] [--assign-me] [--global]
+
+FLAGS
+  --assign-me            Assign work items to the current user by default
+  --credential=<value>   Default source credential
+  --environment=<value>  Default environment
+  --epic=<value>         Default epic
+  --feature=<value>      Default feature
+  --global               Use machine-wide defaults instead of project-local
+                         defaults
+  --project=<value>      Default project
+  --sprint=<value>       Default sprint
+  --team=<value>         Default team
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Set project default values for the current project or globally
+
+EXAMPLES
+  $ agentia cicd project default set --project my-project --team platform
+
+  $ agentia cicd project default set --environment dev --assign-me
+
+  $ agentia cicd project default set --project my-project --global
+
+  $ agentia cicd project default set --project my-project --json
+

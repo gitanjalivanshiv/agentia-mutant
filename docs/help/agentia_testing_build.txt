@@ -1,0 +1,14 @@
+Abort a Copado Robotic Testing build/run
+
+USAGE
+  $ agentia testing build COMMAND
+
+COMMANDS
+  testing build abort   Abort a Copado Robotic Testing build/run
+  testing build get     Get a Copado Robotic Testing build/run
+  testing build latest  List the latest Copado Robotic Testing builds/runs
+  testing build list    List Copado Robotic Testing builds/runs
+  testing build logs    Get logs for a Copado Robotic Testing build/run
+  testing build run     Run a Copado Robotic Testing job/test
+  testing build search  Search Copado Robotic Testing build metrics
+

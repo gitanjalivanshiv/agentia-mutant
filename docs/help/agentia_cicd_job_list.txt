@@ -1,0 +1,34 @@
+List Copado job executions
+
+USAGE
+  $ agentia cicd job list [--json] [--cursor <value>] [--page-size <value>]
+    [--context <value>] [--id <value>] [--mine] [--name <value>] [--parent
+    <value>] [--status <value>] [--type <value>]
+
+FLAGS
+  --context=<value>    Contains match on JobExecution context
+  --cursor=<value>     Opaque pagination cursor from a previous list response
+                       (nextCursor)
+  --id=<value>         Exact JobExecution Id
+  --mine               List only jobs owned by the current user
+  --name=<value>       Contains match on JobExecution name
+  --page-size=<value>  Number of records per page (1-200)
+  --parent=<value>     Exact parent record Id
+  --status=<value>     Exact Copado job status
+  --type=<value>       Contains match on Job Template name
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado job executions
+
+EXAMPLES
+  $ agentia cicd job list
+
+  $ agentia cicd job list --status "In Progress" --page-size 50
+
+  $ agentia cicd job list --name JE- --type Deploy --parent <parent-id>
+
+  $ agentia cicd job list --json
+

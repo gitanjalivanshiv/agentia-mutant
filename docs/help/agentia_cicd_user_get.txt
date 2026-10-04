@@ -1,0 +1,23 @@
+Get a Copado user by ID (defaults to the authenticated user)
+
+USAGE
+  $ agentia cicd user get [--json] [--id <value>]
+
+FLAGS
+  --id=<value>  [default: me] User ID, or "me" for the authenticated user
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado user by ID (defaults to the authenticated user)
+
+EXAMPLES
+  $ agentia cicd user get
+
+  $ agentia cicd user get --id me
+
+  $ agentia cicd user get --id 005000000000000
+
+  $ agentia cicd user get --json
+

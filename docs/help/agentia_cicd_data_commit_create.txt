@@ -1,0 +1,20 @@
+Create a data commit for a user story
+
+USAGE
+  $ agentia cicd data commit create [--json] [-f <value> | --stdin]
+
+FLAGS
+  -f, --file=<value>  Path to a JSON file body
+      --stdin         Read the JSON body from stdin
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a data commit for a user story
+
+EXAMPLES
+  $ agentia cicd data commit create --file commit.json
+
+  $ agentia cicd data commit create --stdin --json
+

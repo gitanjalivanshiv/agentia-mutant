@@ -1,0 +1,19 @@
+List merge conflicts for a Copado promotion
+
+USAGE
+  $ agentia cicd promotion conflict list -p <value> [--json]
+
+FLAGS
+  -p, --promotion=<value>  (required) Copado promotion Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List merge conflicts for a Copado promotion
+
+EXAMPLES
+  $ agentia cicd promotion conflict list --promotion <promotion-id>
+
+  $ agentia cicd promotion conflict list -p <promotion-id> --json
+

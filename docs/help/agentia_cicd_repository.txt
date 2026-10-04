@@ -1,0 +1,15 @@
+Manage Copado Git repositories
+
+USAGE
+  $ agentia cicd repository COMMAND
+
+COMMANDS
+  cicd repository create    Create a Copado Git repository
+  cicd repository delete    Delete a Copado Git repository by ID
+  cicd repository get       Get a Copado Git repository by ID
+  cicd repository list      List Copado Git repositories
+  cicd repository open      Open a Copado Git repository in the browser
+  cicd repository reset     Reset a Copado Git repository
+  cicd repository update    Update a Copado Git repository by ID
+  cicd repository validate  Validate Copado Git repository authentication
+

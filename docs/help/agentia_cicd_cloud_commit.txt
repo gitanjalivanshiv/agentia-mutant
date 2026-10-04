@@ -1,0 +1,88 @@
+Create a Copado cloud metadata commit for a user story. Preflights the story, submits POST /release/commit, and polls the job monitor by default. For local Git work, use git add/commit then `cicd work publish`. Permission and full-metadata selections belong on `cicd work publish`.
+
+USAGE
+  $ agentia cicd cloud commit [ID] [--json] [--action
+    Add|Delete|RetrieveOnly|SelectiveCommit|Full] [--base-branch <value>]
+    [--commit-id <value>] [--execute-commit] [-f <value>] [-m <value>]
+    [--metadata-category <value>] [--metadata-message <value>] [--metadata-name
+    <value>] [--metadata-raw-json <value>] [--metadata-type <value>]
+    [--recreate-feature-branch] [--selection <value>...] [--stdin] [--wait]
+    [--wait-timeout <value>]
+
+ARGUMENTS
+  [ID]  User story ID (defaults to the active work item from `work set`)
+
+FLAGS
+  -f, --file=<value>
+      Path to a JSON commit request body.
+
+  -m, --message=<value>
+      Commit message. Required unless provided by JSON input.
+
+  --action=<option>
+      Metadata action for simple flag input. Defaults to Add.
+      <options: Add|Delete|RetrieveOnly|SelectiveCommit|Full>
+
+  --base-branch=<value>
+      Optional base branch to include in the commit request.
+
+  --commit-id=<value>
+      Existing local Git commit identifier to register when --no-execute-commit is
+      used.
+
+  --[no-]execute-commit
+      Execute the Copado commit job. Use --no-execute-commit only with
+      --commit-id.
+
+  --metadata-category=<value>
+      Metadata category for simple input. Maps to change field c. For Salesforce
+      metadata, always set SFDX so Copado stores c:SFDX. Omitting it omits c, and
+      SFDX deploy steps log "Salesforce changes not found." and skip the deploy
+      while the job can still report Successful.
+
+  --metadata-message=<value>
+      Optional per-change message for simple flag input.
+
+  --metadata-name=<value>
+      Metadata full name for simple flag input.
+
+  --metadata-raw-json=<value>
+      Optional raw metadata JSON value for simple flag input.
+
+  --metadata-type=<value>
+      Metadata type for simple flag input, for example ApexClass.
+
+  --recreate-feature-branch
+      Ask Copado to recreate the feature branch before committing.
+
+  --selection=<value>...
+      Selected file inside a bundle for SelectiveCommit. Can be provided multiple
+      times.
+
+  --stdin
+      Read a JSON commit request body from stdin.
+
+  --[no-]wait
+      Poll the commit job to a terminal status when a jobExecution Id is returned.
+
+  --wait-timeout=<value>
+      [default: 300] Maximum seconds to wait for the commit job.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado cloud metadata commit for a user story. Preflights the story,
+  submits POST /release/commit, and polls the job monitor by default. For local
+  Git work, use git add/commit then `cicd work publish`. Permission and
+  full-metadata selections belong on `cicd work publish`.
+
+EXAMPLES
+  $ agentia cicd cloud commit --message "Commit AccountService" --metadata-name AccountService --metadata-type ApexClass --metadata-category SFDX --action Add
+
+  $ agentia cicd cloud commit a07XXXXXXXXXXXXXXX --message "Update Aura files" --metadata-name accountEditor --metadata-type AuraDefinitionBundle --metadata-category SFDX --action SelectiveCommit --selection accountEditor/accountEditor.cmp --selection accountEditor/accountEditorController.js
+
+  $ agentia cicd cloud commit --file commit-request.json  # {"message":"Commit AccountService","changes":[{"a":"Add","c":"SFDX","n":"AccountService","t":"ApexClass"}]}
+
+  cat commit-request.json | agentia cicd cloud commit --stdin --json
+

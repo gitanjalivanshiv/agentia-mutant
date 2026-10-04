@@ -1,0 +1,19 @@
+Get a Copado pipeline
+
+USAGE
+  $ agentia cicd pipeline get ID [--json]
+
+ARGUMENTS
+  ID  Pipeline Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado pipeline
+
+EXAMPLES
+  $ agentia cicd pipeline get <pipeline-id>
+
+  $ agentia cicd pipeline get <pipeline-id> --json
+

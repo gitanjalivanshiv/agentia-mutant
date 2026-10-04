@@ -1,0 +1,42 @@
+Start an interactive Copado AI agent chat session
+
+USAGE
+  $ agentia ai agent chat [--agent
+    plan|build|test|release|operate|knowledge|orchestrate] [--component <value>]
+    [--credential-id <value>] [--dialogue <value>] [--timeout <value>]
+    [--force-credential-sync] [--no-credential-sync] [--sf-org <value>]
+    [--user-story <value>] [--work-item <value>] [--workspace <value>]
+
+FLAGS
+  --agent=<option>         [default: knowledge] AI agent to target (defaults to
+                           knowledge)
+                           <options: plan|build|test|release|operate|knowledge|o
+                           rchestrate>
+  --component=<value>      Metadata component name to include in prompt context
+  --credential-id=<value>  Copado credential ID that overrides the project
+                           default for workspace synchronization
+  --dialogue=<value>       Copado AI dialogue UUID to reuse
+  --force-credential-sync  Replace the cached Copado CICD workspace integration
+  --no-credential-sync     Skip Copado CICD workspace credential synchronization
+  --sf-org=<value>         Salesforce org or environment name to include in
+                           prompt context
+  --timeout=<value>        AI gateway timeout in seconds for workspace,
+                           dialogue, and message calls
+  --user-story=<value>     User story identifier to include in prompt context
+  --work-item=<value>      Work item identifier to include in prompt context
+  --workspace=<value>      Copado AI workspace UUID to reuse for a new dialogue
+
+DESCRIPTION
+  Start an interactive Copado AI agent chat session
+
+EXAMPLES
+  $ agentia ai agent chat
+
+  $ agentia ai agent chat --agent plan --sf-org test14
+
+  $ agentia ai agent chat --agent build --user-story US-1042 --timeout 240
+
+  $ agentia ai agent chat --agent knowledge
+
+  $ agentia ai agent chat --agent orchestrate --workspace 42d0b908-37b7-4565-9ec9-86eda40c9782
+

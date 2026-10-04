@@ -1,0 +1,27 @@
+Inspect bounded, sanitized page state from an active CRT live session
+
+USAGE
+  $ agentia testing live inspect [JOB-ID] -p <value> [--json] [--session-id
+    <value>] [--output <value> --dom]
+
+ARGUMENTS
+  [JOB-ID]  Optional CRT job/test ID guard.
+
+FLAGS
+  -p, --project=<value>     (required) CRT project ID.
+      --dom                 Fetch raw page DOM; requires --output.
+      --output=<value>      Explicit file path for raw DOM.
+      --session-id=<value>  Guard that must match the locally active CRT live
+                            session.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Inspect bounded, sanitized page state from an active CRT live session
+
+EXAMPLES
+  $ agentia testing live inspect --project <project-id> --json
+
+  $ agentia testing live inspect --project <project-id> --dom --output page.html
+

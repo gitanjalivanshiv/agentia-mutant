@@ -1,0 +1,47 @@
+Promote the explicit or active User Story through its Copado Promotion. Selects promote-only unless --deploy is passed.
+
+USAGE
+  $ agentia cicd cloud promote [ID] [--json] [--deploy] [--deployment-step-id
+    <value>...] [--ignored-metadata-json <value>] [--promotion-id <value>]
+    [--recreate-promotion-branch] [--wait] [--wait-timeout <value>] [-y]
+
+ARGUMENTS
+  [ID]  User Story ID (defaults to the active work item from `work set`)
+
+FLAGS
+  -y, --yes                            Confirm promotion branch recreation
+                                       without prompting.
+      --deploy                         Use merge_and_deploy instead of
+                                       promote-only merge.
+      --deployment-step-id=<value>...  Ordered deployment-step Salesforce ID.
+                                       Can be provided multiple times with
+                                       --deploy.
+      --ignored-metadata-json=<value>  JSON array to persist through
+                                       ignored-metadata before starting the
+                                       promotion.
+      --promotion-id=<value>           Explicit 18-character Promotion ID when
+                                       the User Story belongs to multiple
+                                       promotions.
+      --recreate-promotion-branch      Recreate the promotion branch before
+                                       execution. Requires confirmation or
+                                       --yes.
+      --[no-]wait                      Poll promotion and deployment executions
+                                       to terminal status.
+      --wait-timeout=<value>           [default: 900] Maximum total seconds to
+                                       wait for promotion and deployment
+                                       executions.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Promote the explicit or active User Story through its Copado Promotion.
+  Selects promote-only unless --deploy is passed.
+
+EXAMPLES
+  $ agentia cicd cloud promote
+
+  $ agentia cicd cloud promote a07XXXXXXXXXXXXXXX --promotion-id a0BXXXXXXXXXXXXXXX
+
+  $ agentia cicd cloud promote --deploy --json
+

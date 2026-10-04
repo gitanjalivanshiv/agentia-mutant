@@ -1,0 +1,19 @@
+Open a Copado pipeline connection in the browser
+
+USAGE
+  $ agentia cicd pipeline connection open ID [--json]
+
+ARGUMENTS
+  ID  Pipeline connection ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a Copado pipeline connection in the browser
+
+EXAMPLES
+  $ agentia cicd pipeline connection open <connection-id>
+
+  $ agentia cicd pipeline connection open <connection-id> --json
+

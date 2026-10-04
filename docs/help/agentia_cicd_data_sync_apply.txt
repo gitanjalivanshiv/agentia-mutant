@@ -1,0 +1,20 @@
+Apply data template field sync entries
+
+USAGE
+  $ agentia cicd data sync apply [--json] [-f <value> | --stdin]
+
+FLAGS
+  -f, --file=<value>  Path to a JSON file body
+      --stdin         Read the JSON body from stdin
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Apply data template field sync entries
+
+EXAMPLES
+  $ agentia cicd data sync apply --file sync.json
+
+  $ agentia cicd data sync apply --stdin --json
+

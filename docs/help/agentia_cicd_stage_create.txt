@@ -1,0 +1,25 @@
+Create a Copado stage
+
+USAGE
+  $ agentia cicd stage create NAME [--json] [--meta-stage <value>] [--name
+    <value>]
+
+ARGUMENTS
+  NAME  Stage name
+
+FLAGS
+  --meta-stage=<value>  Meta stage (common values: Build, Test, Production;
+                        custom values are allowed)
+  --name=<value>        Stage name
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado stage
+
+EXAMPLES
+  $ agentia cicd stage create Build
+
+  $ agentia cicd stage create Test --meta-stage Test
+

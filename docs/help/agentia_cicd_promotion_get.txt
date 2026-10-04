@@ -1,0 +1,19 @@
+Get a Copado promotion by ID
+
+USAGE
+  $ agentia cicd promotion get ID [--json]
+
+ARGUMENTS
+  ID  Copado promotion ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado promotion by ID
+
+EXAMPLES
+  $ agentia cicd promotion get <promotion-id>
+
+  $ agentia cicd promotion get <promotion-id> --json
+

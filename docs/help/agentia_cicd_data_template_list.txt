@@ -1,0 +1,27 @@
+List Copado data templates
+
+USAGE
+  $ agentia cicd data template list [--json] [--active] [--fetch-related]
+    [--main-object <value>] [--name <value>]
+
+FLAGS
+  --[no-]active          Filter by active flag (--active / --no-active)
+  --fetch-related        Include related template information
+  --main-object=<value>  Filter by main sObject API name
+  --name=<value>         Filter by name
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado data templates
+
+EXAMPLES
+  $ agentia cicd data template list
+
+  $ agentia cicd data template list --fetch-related --active
+
+  $ agentia cicd data template list --no-active --json
+
+  $ agentia cicd data template list --name Accounts --main-object Account
+

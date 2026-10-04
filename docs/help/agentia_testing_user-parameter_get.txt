@@ -1,0 +1,19 @@
+Get an account-scoped Copado Robotic Testing user parameter
+
+USAGE
+  $ agentia testing user-parameter get ID [--json]
+
+ARGUMENTS
+  ID  CRT user-parameter ID.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get an account-scoped Copado Robotic Testing user parameter
+
+EXAMPLES
+  $ agentia testing user-parameter get <parameter-id>
+
+  $ agentia testing user-parameter get <parameter-id> --json
+

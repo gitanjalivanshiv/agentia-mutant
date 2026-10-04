@@ -1,0 +1,16 @@
+Manage Copado pipelines
+
+USAGE
+  $ agentia cicd pipeline COMMAND
+
+TOPICS
+  cicd pipeline connection        Manage Copado pipeline connections
+  cicd pipeline stage-connection  Create a pipeline stage connection
+
+COMMANDS
+  cicd pipeline create  Create a Copado pipeline
+  cicd pipeline get     Get a Copado pipeline
+  cicd pipeline list    List Copado pipelines
+  cicd pipeline open    Open a Copado pipeline in the browser
+  cicd pipeline update  Update a Copado pipeline by ID
+

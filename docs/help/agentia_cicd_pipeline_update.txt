@@ -1,0 +1,38 @@
+Update a Copado pipeline by ID
+
+USAGE
+  $ agentia cicd pipeline update ID [--json] [--active] [--block-commits]
+    [--enable-smart-conflict-resolution] [--calculate-based-on User
+    Story|Branch] [--git-repository-id <value>] [--main-branch <value>]
+    [--platform Salesforce|SFDX|Heroku|Mulesoft|Marketing|Other] [--name
+    <value>]
+
+ARGUMENTS
+  ID  Pipeline ID
+
+FLAGS
+  --[no-]active                            Whether the pipeline is active
+  --[no-]block-commits                     Block commits on the pipeline
+  --calculate-based-on=<option>            Promotion calculation basis
+                                           <options: User Story|Branch>
+  --[no-]enable-smart-conflict-resolution  Enable smart conflict resolution
+  --git-repository-id=<value>              Git repository ID
+  --main-branch=<value>                    Main branch name
+  --name=<value>                           Pipeline name
+  --platform=<option>                      Pipeline platform
+                                           <options: Salesforce|SFDX|Heroku|Mule
+                                           soft|Marketing|Other>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a Copado pipeline by ID
+
+EXAMPLES
+  $ agentia cicd pipeline update pipeline-1 --main-branch develop
+
+  $ agentia cicd pipeline update pipeline-1 --platform SFDX --active
+
+  $ agentia cicd pipeline update pipeline-1 --name "Updated Pipeline" --json
+

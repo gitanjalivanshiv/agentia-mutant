@@ -1,0 +1,10 @@
+Preview and apply data template field sync
+
+USAGE
+  $ agentia cicd data sync COMMAND
+
+COMMANDS
+  cicd data sync apply            Apply data template field sync entries
+  cicd data sync preview-updates  Preview data template updates from metadata
+                                  commit changes
+

@@ -1,0 +1,26 @@
+Set a user or group permission on a Copado Robotic Testing project
+
+USAGE
+  $ agentia testing project permission set PROJECT [--json] [--edit] [--group <value> |
+    --user <value>] [--view]
+
+ARGUMENTS
+  PROJECT  CRT project ID.
+
+FLAGS
+  --edit           Grant edit access.
+  --group=<value>  Platform group ID.
+  --user=<value>   Platform user ID.
+  --view           Grant view access.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Set a user or group permission on a Copado Robotic Testing project
+
+EXAMPLES
+  $ agentia testing project permission set <project-id> --user <user-id> --view
+
+  $ agentia testing project permission set <project-id> --group <group-id> --view --edit --json
+

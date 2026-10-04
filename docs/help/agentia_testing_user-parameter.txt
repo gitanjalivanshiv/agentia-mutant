@@ -1,0 +1,17 @@
+Create an account-scoped Copado Robotic Testing user parameter
+
+USAGE
+  $ agentia testing user-parameter COMMAND
+
+COMMANDS
+  testing user-parameter create  Create an account-scoped Copado Robotic Testing
+                                 user parameter
+  testing user-parameter delete  Delete an account-scoped Copado Robotic Testing
+                                 user parameter
+  testing user-parameter get     Get an account-scoped Copado Robotic Testing
+                                 user parameter
+  testing user-parameter list    List account-scoped Copado Robotic Testing user
+                                 parameters
+  testing user-parameter update  Update an account-scoped Copado Robotic Testing
+                                 user parameter
+

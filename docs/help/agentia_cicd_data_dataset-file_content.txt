@@ -1,0 +1,19 @@
+Get dataset file content by ContentVersion Id
+
+USAGE
+  $ agentia cicd data dataset-file content CONTENTVERSIONID [--json]
+
+ARGUMENTS
+  CONTENTVERSIONID  ContentVersion Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get dataset file content by ContentVersion Id
+
+EXAMPLES
+  $ agentia cicd data dataset-file content 068000000000001
+
+  $ agentia cicd data dataset-file content 068000000000001 --json
+

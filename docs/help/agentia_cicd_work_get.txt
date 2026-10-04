@@ -1,0 +1,30 @@
+Get a Copado user story by ID
+
+USAGE
+  $ agentia cicd work get [ID] [--json] [--user-stories-ahead-behind]
+
+ARGUMENTS
+  [ID]  User story ID (defaults to the active work item from `work set`)
+
+FLAGS
+  --user-stories-ahead-behind  When the user story has a pipeline and source
+                               environment, compare user stories ahead of and
+                               behind the next pipeline environment
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado user story by ID
+
+EXAMPLES
+  $ agentia cicd work get
+
+  $ agentia cicd work get a0SKC000000CmZ2AU
+
+  $ agentia cicd work get a0SKC000000CmZ2AU --json
+
+  $ agentia cicd work get a0SKC000000CmZ2AU --user-stories-ahead-behind
+
+  $ agentia cicd work get a0SKC000000CmZ2AU --user-stories-ahead-behind --json
+

@@ -1,0 +1,33 @@
+Show project default values for the current project or globally
+
+USAGE
+  $ agentia cicd project default get [--json] [--assign-me] [--credential]
+    [--environment] [--epic] [--feature] [--global] [--project] [--sprint]
+    [--team]
+
+FLAGS
+  --assign-me    Select the assign-me default
+  --credential   Select the default source credential
+  --environment  Select the default environment
+  --epic         Select the default epic
+  --feature      Select the default feature
+  --global       Use machine-wide defaults instead of project-local defaults
+  --project      Select the default project
+  --sprint       Select the default sprint
+  --team         Select the default team
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Show project default values for the current project or globally
+
+EXAMPLES
+  $ agentia cicd project default get
+
+  $ agentia cicd project default get --project --environment
+
+  $ agentia cicd project default get --global
+
+  $ agentia cicd project default get --json
+

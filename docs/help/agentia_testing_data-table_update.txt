@@ -1,0 +1,39 @@
+Update a Copado Robotic Testing data table
+
+USAGE
+  $ agentia testing data-table update ID -p <value> [--json] [--job <value>] [--file
+    <value>] [--header row|column] [--json-data <value>] [--stdin]
+    [--ai-generated true|false] [--default-row <value>] [--topics <value>] [-y]
+
+ARGUMENTS
+  ID  CRT data-table ID.
+
+FLAGS
+  -p, --project=<value>        (required) CRT project ID.
+  -y, --yes                    Confirm update after reviewing or bypassing
+                               preview.
+      --ai-generated=<option>  Set whether the table is AI-generated.
+                               <options: true|false>
+      --default-row=<value>    Default dataset row (1-based).
+      --file=<value>           Read data from a CSV, TSV, JSON, or XLSX file.
+      --header=<option>        [default: row] Location of variable headers in
+                               imported data.
+                               <options: row|column>
+      --job=<value>            Optional CRT job/test ID filter.
+      --json-data=<value>      Inline JSON array of row arrays. Mutually
+                               exclusive with --file/--stdin.
+      --stdin                  Read CSV, TSV, or JSON data from stdin.
+      --topics=<value>         Replacement comma-separated topics; pass an empty
+                               value to clear.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a Copado Robotic Testing data table
+
+EXAMPLES
+  $ agentia testing data-table update <table-id> --project <project-id> --file customers.csv --yes
+
+  $ agentia testing data-table update <table-id> --project <project-id> --topics smoke,regression --yes --json
+

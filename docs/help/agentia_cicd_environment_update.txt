@@ -1,0 +1,47 @@
+Update a Copado environment by ID
+
+USAGE
+  $ agentia cicd environment update ID [--json] [--enable-rollback]
+    [--index-back-promotion-metadata] [--run-local-tests] [--apex-test-level
+    <value>] [--name <value>] [--namespace <value>] [--platform <value>]
+    [--promotion-default-credential <value>] [--run-specified-tests <value>]
+    [--type Production/Developer|Sandbox|Scratch Org|Custom Domain]
+    [--validation-promotion-default-credential <value>]
+
+ARGUMENTS
+  ID  Copado environment ID
+
+FLAGS
+  --apex-test-level=<value>                          Apex test level
+  --[no-]enable-rollback                             Enable rollback
+  --[no-]index-back-promotion-metadata               Index back promotion
+                                                     metadata
+  --name=<value>                                     Environment name
+  --namespace=<value>                                Environment namespace
+  --platform=<value>                                 Environment platform
+  --promotion-default-credential=<value>             Default credential for
+                                                     promotions
+  --[no-]run-local-tests                             Run local tests
+  --run-specified-tests=<value>                      Specified tests to run
+  --type=<option>                                    Environment type
+                                                     <options: Production/Develo
+                                                     per|Sandbox|Scratch
+                                                     Org|Custom Domain>
+  --validation-promotion-default-credential=<value>  Default credential for
+                                                     validation promotions
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a Copado environment by ID
+
+EXAMPLES
+  $ agentia cicd environment update a0SKC000000CmZ2AU --name UAT
+
+  $ agentia cicd environment update a0SKC000000CmZ2AU --type Sandbox --enable-rollback
+
+  $ agentia cicd environment update a0SKC000000CmZ2AU --no-run-local-tests
+
+  $ agentia cicd environment update a0SKC000000CmZ2AU --name UAT --json
+

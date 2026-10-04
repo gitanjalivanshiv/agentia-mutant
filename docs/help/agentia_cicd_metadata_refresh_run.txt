@@ -1,0 +1,41 @@
+Trigger a metadata index refresh via the CICD gateway
+
+USAGE
+  $ agentia cicd metadata refresh run [--json] [--all] [--env <value>] [--git-files
+    <value>] [--module-type vlocity|data_cloud] [--pipeline-id <value>]
+    [--platform-experience salesforce|sfdx|metacache|db] [--refresh-mode
+    <value>] [--selected-name <value>] [--selected-type <value>]
+    [--source-credential-id <value>] [--source-org-id <value>] [--target-org-id
+    <value>]
+
+FLAGS
+  --all                           Request replacing the metadata index instead
+                                  of merging it
+  --env=<value>                   Copado environment Id used to resolve source
+                                  org and credential
+  --git-files=<value>             Comma-separated Git file paths to refresh
+  --module-type=<option>          Optional addon module type
+                                  <options: vlocity|data_cloud>
+  --pipeline-id=<value>           Optional pipeline Id
+  --platform-experience=<option>  [default: salesforce] Gateway platform
+                                  experience header
+                                  <options: salesforce|sfdx|metacache|db>
+  --refresh-mode=<value>          Optional refresh mode
+  --selected-name=<value>         Optional selected metadata API name
+  --selected-type=<value>         Optional selected metadata type
+  --source-credential-id=<value>  Override source credential Id resolved from
+                                  --env
+  --source-org-id=<value>         Override source org Id resolved from --env
+  --target-org-id=<value>         Optional target org Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Trigger a metadata index refresh via the CICD gateway
+
+EXAMPLES
+  $ agentia cicd metadata refresh run --env <environment-id>
+
+  $ agentia cicd metadata refresh run --env <environment-id> --all --json
+

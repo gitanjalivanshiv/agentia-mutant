@@ -1,0 +1,13 @@
+Create a Copado stage
+
+USAGE
+  $ agentia cicd stage COMMAND
+
+COMMANDS
+  cicd stage create  Create a Copado stage
+  cicd stage delete  Delete a Copado stage
+  cicd stage get     Get a Copado stage
+  cicd stage list    List Copado stages
+  cicd stage open    Open a Copado stage in the browser
+  cicd stage update  Update a Copado stage
+

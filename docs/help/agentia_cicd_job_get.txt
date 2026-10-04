@@ -1,0 +1,19 @@
+Get a Copado job execution with ordered steps
+
+USAGE
+  $ agentia cicd job get ID [--json]
+
+ARGUMENTS
+  ID  JobExecution Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado job execution with ordered steps
+
+EXAMPLES
+  $ agentia cicd job get <job-id>
+
+  $ agentia cicd job get <job-id> --json
+

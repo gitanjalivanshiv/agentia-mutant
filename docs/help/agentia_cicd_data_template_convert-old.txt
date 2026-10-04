@@ -1,0 +1,19 @@
+Convert a legacy data template graph to v2
+
+USAGE
+  $ agentia cicd data template convert-old ID [--json]
+
+ARGUMENTS
+  ID  Legacy data template Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Convert a legacy data template graph to v2
+
+EXAMPLES
+  $ agentia cicd data template convert-old a0X000000000001
+
+  $ agentia cicd data template convert-old a0X000000000001 --json
+

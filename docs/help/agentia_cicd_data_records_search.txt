@@ -1,0 +1,27 @@
+Search data records for a data template
+
+USAGE
+  $ agentia cicd data records search --credential-id <value> --data-template-id
+    <value> [--json] [--changed-date-from <value>] [-f <value> | --stdin]
+
+FLAGS
+  -f, --file=<value>               Path to a JSON file body
+      --changed-date-from=<value>  Optional changed-date-from filter (ISO
+                                   datetime)
+      --credential-id=<value>      (required) Org credential Id
+      --data-template-id=<value>   (required) Data template Id
+      --stdin                      Read the JSON body from stdin
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Search data records for a data template
+
+EXAMPLES
+  $ agentia cicd data records search --credential-id a0Y... --data-template-id a0X...
+
+  $ agentia cicd data records search --credential-id a0Y... --data-template-id a0X... --file request.json
+
+  $ agentia cicd data records search --credential-id a0Y... --data-template-id a0X... --json
+

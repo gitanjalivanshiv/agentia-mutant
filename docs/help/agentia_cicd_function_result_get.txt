@@ -1,0 +1,19 @@
+Get Copado Function execution status by result Id
+
+USAGE
+  $ agentia cicd function result get RESULT-ID [--json]
+
+ARGUMENTS
+  RESULT-ID  Function result Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get Copado Function execution status by result Id
+
+EXAMPLES
+  $ agentia cicd function result get <result-id>
+
+  $ agentia cicd function result get <result-id> --json
+

@@ -1,0 +1,26 @@
+Get raw merge-conflict content for a promotion file
+
+USAGE
+  $ agentia cicd promotion conflict get ID -p <value> [--json] [--output
+  <value>]
+
+ARGUMENTS
+  ID  Conflict attachment Id
+
+FLAGS
+  -p, --promotion=<value>  (required) Copado promotion Id
+      --output=<value>     Write raw conflict content to this file path
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get raw merge-conflict content for a promotion file
+
+EXAMPLES
+  $ agentia cicd promotion conflict get <conflict-id> --promotion <promotion-id>
+
+  $ agentia cicd promotion conflict get <conflict-id> -p <promotion-id> --output ./MyClass.cls
+
+  $ agentia cicd promotion conflict get <conflict-id> -p <promotion-id> --json
+

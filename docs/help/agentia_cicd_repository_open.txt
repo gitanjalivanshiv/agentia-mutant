@@ -1,0 +1,19 @@
+Open a Copado Git repository in the browser
+
+USAGE
+  $ agentia cicd repository open ID [--json]
+
+ARGUMENTS
+  ID  Copado Git repository ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a Copado Git repository in the browser
+
+EXAMPLES
+  $ agentia cicd repository open <repository-id>
+
+  $ agentia cicd repository open <repository-id> --json
+

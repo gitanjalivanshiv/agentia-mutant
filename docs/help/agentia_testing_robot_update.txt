@@ -1,0 +1,35 @@
+Update a Copado Robotic Testing robot
+
+USAGE
+  $ agentia testing robot update ID -p <value> [--json] [--description <value>]
+    [--fw-version <value>] [--label <value>] [--name <value>] [--reporting
+    all|nothing] [--robot-type bitbar|browserstack|browserstackdesktop|default|l
+    ambdatest|lambdatestdesktop|mobile|pabot|paceconnectmobile|privatemobile]
+
+ARGUMENTS
+  ID  CRT robot ID.
+
+FLAGS
+  -p, --project=<value>      (required) CRT project ID.
+      --description=<value>  New robot description.
+      --fw-version=<value>   New Robot Framework release channel.
+      --label=<value>        New robot label.
+      --name=<value>         New robot name.
+      --reporting=<option>   Which testing results to retain.
+                             <options: all|nothing>
+      --robot-type=<option>  New CRT robot type.
+                             <options: bitbar|browserstack|browserstackdesktop|d
+                             efault|lambdatest|lambdatestdesktop|mobile|pabot|pa
+                             ceconnectmobile|privatemobile>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a Copado Robotic Testing robot
+
+EXAMPLES
+  $ agentia testing robot update <robot-id> --project <project-id> --name "Updated Robot"
+
+  $ agentia testing robot update <robot-id> --project <project-id> --robot-type default --json
+

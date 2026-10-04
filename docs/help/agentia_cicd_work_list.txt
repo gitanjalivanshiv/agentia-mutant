@@ -1,0 +1,42 @@
+List Copado user stories
+
+USAGE
+  $ agentia cicd work list [--json] [--cursor <value>] [--page-size <value>]
+    [--assigned-to-me] [--assignee-id <value>] [--assignee-name <value>] [--name
+    <value>] [--owned-by-me] [--owner-id <value>] [--owner-name <value>]
+    [--project-id <value>] [--project-name <value>] [--status <value>] [--title
+    <value>]
+
+FLAGS
+  --assigned-to-me         Filter by the current user as assignee
+  --assignee-id=<value>    Filter by assignee ID
+  --assignee-name=<value>  Filter by assignee name
+  --cursor=<value>         Opaque pagination cursor from a previous list
+                           response (nextCursor)
+  --name=<value>           Filter by name
+  --owned-by-me            Filter by the current user as owner
+  --owner-id=<value>       Filter by owner ID
+  --owner-name=<value>     Filter by owner name
+  --page-size=<value>      Number of records per page (1-200)
+  --project-id=<value>     Filter by project ID
+  --project-name=<value>   Filter by project name
+  --status=<value>         Filter by status
+  --title=<value>          Filter by title
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado user stories
+
+EXAMPLES
+  $ agentia cicd work list
+
+  $ agentia cicd work list --status "In Progress" --project-name MyProject
+
+  $ agentia cicd work list --assigned-to-me
+
+  $ agentia cicd work list --owned-by-me
+
+  $ agentia cicd work list --json
+

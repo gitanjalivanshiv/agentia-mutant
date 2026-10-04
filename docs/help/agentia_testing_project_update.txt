@@ -1,0 +1,24 @@
+Update a Copado Robotic Testing project
+
+USAGE
+  $ agentia testing project update ID [--json] [--description <value>] [--name
+    <value>]
+
+ARGUMENTS
+  ID  CRT project ID.
+
+FLAGS
+  --description=<value>  New project description.
+  --name=<value>         New project name.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a Copado Robotic Testing project
+
+EXAMPLES
+  $ agentia testing project update <project-id> --name "QA Updated"
+
+  $ agentia testing project update <project-id> --description "Regression suites" --json
+

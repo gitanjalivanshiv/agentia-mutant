@@ -1,0 +1,35 @@
+Create a Copado Robotic Testing data table
+
+USAGE
+  $ agentia testing data-table create -p <value> --name <value> [--json] [--job
+    <value>] [--file <value>] [--header row|column] [--json-data <value>]
+    [--stdin] [--ai-generated] [--default-row <value>] [--topics <value>] [-y]
+
+FLAGS
+  -p, --project=<value>      (required) CRT project ID.
+  -y, --yes                  Confirm creation after reviewing or bypassing
+                             preview.
+      --ai-generated         Mark the table as AI-generated.
+      --default-row=<value>  Default dataset row (1-based).
+      --file=<value>         Read data from a CSV, TSV, JSON, or XLSX file.
+      --header=<option>      [default: row] Location of variable headers in
+                             imported data.
+                             <options: row|column>
+      --job=<value>          Optional CRT job/test ID filter.
+      --json-data=<value>    Inline JSON array of row arrays. Mutually exclusive
+                             with --file/--stdin.
+      --name=<value>         (required) Data-table name.
+      --stdin                Read CSV, TSV, or JSON data from stdin.
+      --topics=<value>       Comma-separated topic tags.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado Robotic Testing data table
+
+EXAMPLES
+  $ agentia testing data-table create --project <project-id> --name Customers --file customers.csv --yes
+
+  $ agentia testing data-table create --project <project-id> --name Customers --json-data '[["name"],["Alice"]]' --yes --json
+

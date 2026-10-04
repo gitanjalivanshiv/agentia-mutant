@@ -1,0 +1,19 @@
+Get a Copado environment by ID
+
+USAGE
+  $ agentia cicd environment get ID [--json]
+
+ARGUMENTS
+  ID  Copado environment ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado environment by ID
+
+EXAMPLES
+  $ agentia cicd environment get a0SKC000000CmZ2AU
+
+  $ agentia cicd environment get a0SKC000000CmZ2AU --json
+

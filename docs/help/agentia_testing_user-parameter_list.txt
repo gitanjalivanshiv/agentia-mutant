@@ -1,0 +1,22 @@
+List account-scoped Copado Robotic Testing user parameters
+
+USAGE
+  $ agentia testing user-parameter list [--json] [--job <value>] [--key <value>]
+    [--project <value>]
+
+FLAGS
+  --job=<value>      Defensive client-side job scope filter.
+  --key=<value>      Exact parameter key filter.
+  --project=<value>  Defensive client-side project scope filter.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List account-scoped Copado Robotic Testing user parameters
+
+EXAMPLES
+  $ agentia testing user-parameter list
+
+  $ agentia testing user-parameter list --key BASE_URL --json
+

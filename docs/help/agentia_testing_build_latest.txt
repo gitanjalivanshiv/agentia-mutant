@@ -1,0 +1,25 @@
+List the latest Copado Robotic Testing builds/runs
+
+USAGE
+  $ agentia testing build latest -p <value> [--json] [--result-size compact]
+    [--status aborted|executing|failed|finished|queued|succeeded]
+
+FLAGS
+  -p, --project=<value>       (required) CRT project ID.
+      --result-size=<option>  [default: compact] CRT build result size.
+                              <options: compact>
+      --status=<option>       Build status filter.
+                              <options: aborted|executing|failed|finished|queued
+                              |succeeded>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List the latest Copado Robotic Testing builds/runs
+
+EXAMPLES
+  $ agentia testing build latest --project <project-id>
+
+  $ agentia testing build latest --project <project-id> --status failed --json
+

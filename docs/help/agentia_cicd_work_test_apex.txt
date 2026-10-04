@@ -1,0 +1,28 @@
+Run specified Apex test classes via Salesforce CLI (`sf apex run test`) with code coverage. Usually run from project-root local quality gates (`.agentia_quality_gates.sh` / `.agentia_quality_gates.cmd`) when those scripts are configured. Prints the test-run summary when the run passes, or failing tests with their messages and stack traces when it fails.
+
+USAGE
+  $ agentia cicd work test apex -t <value> [--json] [-w <value>]
+
+FLAGS
+  -t, --apex-test-classes=<value>  (required) Comma-separated Apex test class
+                                   names to run
+  -w, --wait=<value>               [default: 60] Minutes to wait for Salesforce
+                                   CLI Apex test results
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Run specified Apex test classes via Salesforce CLI (`sf apex run test`) with
+  code coverage. Usually run from project-root local quality gates
+  (`.agentia_quality_gates.sh` / `.agentia_quality_gates.cmd`) when those
+  scripts are configured. Prints the test-run summary when the run passes, or
+  failing tests with their messages and stack traces when it fails.
+
+EXAMPLES
+  $ agentia cicd work test apex -t HelloWorldTest
+
+  $ agentia cicd work test apex --apex-test-classes=MyTest,OtherTest
+
+  $ agentia cicd work test apex -t MyTest,OtherTest -w 10 --json
+

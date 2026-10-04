@@ -1,0 +1,19 @@
+List advanced filters for a data template
+
+USAGE
+  $ agentia cicd data filter list DATATEMPLATEID [--json]
+
+ARGUMENTS
+  DATATEMPLATEID  Data template Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List advanced filters for a data template
+
+EXAMPLES
+  $ agentia cicd data filter list a0X000000000001
+
+  $ agentia cicd data filter list a0X000000000001 --json
+

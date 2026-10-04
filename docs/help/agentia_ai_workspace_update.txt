@@ -1,0 +1,43 @@
+Update a Copado AI workspace
+
+USAGE
+  $ agentia ai workspace update ID [--json] [--timeout <value>] [--capability
+    AgentFramework|Artifacts|CRTKnowledge|CustomKnowledge|DeepResearch|Essential
+    sKnowledge|LongTermMemory|Mermaid|MetadataFormatKnowledge|Mindmap|OtherKnowl
+    edge|Reasoning|SourceFormatKnowledge|STEM|TabularData|WebSearch...]
+    [--default-dataset-id <value>] [--description <value>] [--name <value>]
+
+ARGUMENTS
+  ID  Copado AI workspace UUID.
+
+FLAGS
+  --capability=<option>...
+      Workspace capability. Can be provided multiple times and replaces the
+      existing set when provided.
+      <options: AgentFramework|Artifacts|CRTKnowledge|CustomKnowledge|DeepResearch
+      |EssentialsKnowledge|LongTermMemory|Mermaid|MetadataFormatKnowledge|Mindmap|
+      OtherKnowledge|Reasoning|SourceFormatKnowledge|STEM|TabularData|WebSearch>
+
+  --default-dataset-id=<value>
+      Default dataset UUID for the workspace.
+
+  --description=<value>
+      Workspace description.
+
+  --name=<value>
+      Workspace name.
+
+  --timeout=<value>
+      AI gateway timeout in seconds.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a Copado AI workspace
+
+EXAMPLES
+  $ agentia ai workspace update 42d0b908-37b7-4565-9ec9-86eda40c9782 --name "Delivery Workspace"
+
+  $ agentia ai workspace update 42d0b908-37b7-4565-9ec9-86eda40c9782 --capability Reasoning --capability CustomKnowledge
+

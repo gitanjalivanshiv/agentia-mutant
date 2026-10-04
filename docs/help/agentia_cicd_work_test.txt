@@ -1,0 +1,42 @@
+Run quality gates for the current work item. With --local (the default) it runs project-root .agentia_quality_gates.sh (macOS/Linux) or .agentia_quality_gates.cmd (Windows) when present. When no project script exists it warns, runs the stock Agentia setup sample from a temporary file, then deletes that file. With --cloud it runs remote Copado quality gates (not implemented yet).
+
+USAGE
+  $ agentia cicd work test [--json] [--apex-test-classes <value>] [--cloud]
+    [--local]
+
+FLAGS
+  --apex-test-classes=<value>  Comma-separated Apex test class names passed to
+                               local quality gates as AGENTIA_APEX_TEST_CLASSES
+  --cloud                      Run remote Copado quality gates (not implemented
+                               yet).
+  --local                      Run local project-root quality gates scripts.
+                               Used by default when --cloud is omitted.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Run quality gates for the current work item. With --local (the default) it
+  runs project-root .agentia_quality_gates.sh (macOS/Linux) or
+  .agentia_quality_gates.cmd (Windows) when present. When no project script
+  exists it warns, runs the stock Agentia setup sample from a temporary file,
+  then deletes that file. With --cloud it runs remote Copado quality gates (not
+  implemented yet).
+
+EXAMPLES
+  $ agentia cicd work test
+
+  $ agentia cicd work test --local --apex-test-classes=MyTest,OtherTest
+
+  $ agentia cicd work test --json
+
+  $ agentia cicd work test --cloud
+
+COMMANDS
+  cicd work test apex
+      Run specified Apex test classes via Salesforce CLI (`sf apex run test`) with
+      code coverage. Usually run from project-root local quality gates
+      (`.agentia_quality_gates.sh` / `.agentia_quality_gates.cmd`) when those
+      scripts are configured. Prints the test-run summary when the run passes, or
+      failing tests with their messages and stack traces when it fails.
+

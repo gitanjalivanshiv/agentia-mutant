@@ -1,0 +1,8 @@
+Inspect Copado AI quota
+
+USAGE
+  $ agentia ai quota COMMAND
+
+COMMANDS
+  ai quota get  Get Copado AI organization quota
+

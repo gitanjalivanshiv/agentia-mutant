@@ -1,0 +1,24 @@
+Open the authenticated CRT run/session page without putting viewer secrets in the URL
+
+USAGE
+  $ agentia testing live view -p <value> [--json] [--interactive] [--no-open]
+    [--session-id <value>]
+
+FLAGS
+  -p, --project=<value>     (required) CRT project ID.
+      --interactive         Request interactive viewer controls when available.
+      --no-open             Return the nonsecret URL without opening a browser.
+      --session-id=<value>  Guard that must match the active CRT live session.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open the authenticated CRT run/session page without putting viewer secrets in
+  the URL
+
+EXAMPLES
+  $ agentia testing live view --project <project-id>
+
+  $ agentia testing live view --project <project-id> --no-open --json
+

@@ -1,0 +1,12 @@
+Create a Copado Robotic Testing variable/secret
+
+USAGE
+  $ agentia testing variable COMMAND
+
+COMMANDS
+  testing variable create  Create a Copado Robotic Testing variable/secret
+  testing variable delete  Delete a Copado Robotic Testing variable/secret
+  testing variable get     Get a Copado Robotic Testing variable/secret
+  testing variable list    List Copado Robotic Testing variables/secrets
+  testing variable update  Update a Copado Robotic Testing variable/secret
+

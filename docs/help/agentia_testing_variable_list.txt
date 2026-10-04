@@ -1,0 +1,28 @@
+List Copado Robotic Testing variables/secrets
+
+USAGE
+  $ agentia testing variable list -p <value> [--json] [--job <value> | --robot
+    <value>] [--key <value>] [--sensitive] [--type clp|config|dataset|secret]
+    [--user-specific]
+
+FLAGS
+  -p, --project=<value>     (required) CRT project ID.
+      --job=<value>         Filter for a CRT job/test ID.
+      --key=<value>         Filter by exact variable key.
+      --robot=<value>       Filter for a CRT robot ID.
+      --[no-]sensitive      Filter by sensitive status.
+      --type=<option>       Filter by CRT variable type.
+                            <options: clp|config|dataset|secret>
+      --[no-]user-specific  Filter by user-specific status.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado Robotic Testing variables/secrets
+
+EXAMPLES
+  $ agentia testing variable list --project <project-id>
+
+  $ agentia testing variable list --project <project-id> --job <job-id> --json
+

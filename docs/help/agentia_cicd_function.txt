@@ -1,0 +1,21 @@
+Scaffold default Copado Function metadata and script without writing to Salesforce
+
+USAGE
+  $ agentia cicd function COMMAND
+
+TOPICS
+  cicd function result  Get Copado Function execution status by result Id
+
+COMMANDS
+  cicd function defaults   Scaffold default Copado Function metadata and script
+                           without writing to Salesforce
+  cicd function delete     Delete a Copado Function by API name
+  cicd function get        Get a Copado Function by API name
+  cicd function list       List Copado Functions
+  cicd function open       Open a Copado Function in the browser
+  cicd function run        Run a Copado Function and return the result Id
+  cicd function run-local  Run a Copado Function script locally in Docker (no
+                           CICD gateway). Override --image when the Copado
+                           registry is unavailable.
+  cicd function upsert     Create or update a Copado Function by API name
+

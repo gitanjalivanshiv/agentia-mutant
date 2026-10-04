@@ -1,0 +1,45 @@
+Upload file operations to a Copado Robotic Testing job/test
+
+USAGE
+  $ agentia testing job upload ID -p <value> [--json] [--branch <value>] [--add
+    <value>...] [--remove <value>...] [--replace <value>...] [--author-email
+    <value>] [--author-name <value>] [--base-path <value>] [--dry-run]
+    [--message <value>] [--parent-commit <value>] [--remote-prefix <value>]
+
+ARGUMENTS
+  ID  CRT job/test ID.
+
+FLAGS
+  -p, --project=<value>        (required) CRT project ID.
+      --add=<value>...         Add a file using local[:remote] syntax. Can be
+                               provided multiple times.
+      --author-email=<value>   [default: agentia@copado.com] Author email for
+                               CRT file history.
+      --author-name=<value>    [default: Agentia CLI] Author name for CRT file
+                               history.
+      --base-path=<value>      Require local upload files to stay within this
+                               directory and derive relative paths from it.
+      --branch=<value>         Optional CRT branch name for file operations.
+      --dry-run                Return a sanitized upload plan without making a
+                               network mutation.
+      --message=<value>        Commit message for CRT file history.
+      --parent-commit=<value>  Expected parent commit hash.
+      --remote-prefix=<value>  Validated remote path prefix for all operations.
+      --remove=<value>...      Remove a remote CRT file path. Can be provided
+                               multiple times.
+      --replace=<value>...     Replace a file using local[:remote] syntax. Can
+                               be provided multiple times.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Upload file operations to a Copado Robotic Testing job/test
+
+EXAMPLES
+  $ agentia testing job upload <job-id> --project <project-id> --add tests.robot
+
+  $ agentia testing job upload <job-id> --project <project-id> --replace local.robot:tests.robot --remove old.robot --json
+
+  $ agentia testing job upload <job-id> --project <project-id> --add tests/smoke.robot --base-path tests --remote-prefix suites --dry-run --json
+

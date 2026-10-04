@@ -1,0 +1,30 @@
+Update a Copado project by ID
+
+USAGE
+  $ agentia cicd project update ID [--json] [--description <value>] [--end-date
+    <value>] [--pipeline <value>] [--should-index-metadata] [--start-date
+    <value>] [--status <value>] [--name <value>]
+
+ARGUMENTS
+  ID  Copado project ID
+
+FLAGS
+  --description=<value>         Project description
+  --end-date=<value>            Project end date (YYYY-MM-DD)
+  --name=<value>                Project name
+  --pipeline=<value>            Pipeline ID
+  --[no-]should-index-metadata  Whether project metadata should be indexed
+  --start-date=<value>          Project start date (YYYY-MM-DD)
+  --status=<value>              Project status
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a Copado project by ID
+
+EXAMPLES
+  $ agentia cicd project update project-1 --name "Updated Project"
+
+  $ agentia cicd project update project-1 --status Active --json
+

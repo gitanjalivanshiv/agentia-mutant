@@ -1,0 +1,22 @@
+Delete a user story deployment step
+
+USAGE
+  $ agentia cicd work deployment-step delete --step <value> [--json]
+  [--user-story <value>]
+
+FLAGS
+  --step=<value>        (required) Deployment step ID
+  --user-story=<value>  User story ID (defaults to the active work item from
+                        `work set`)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a user story deployment step
+
+EXAMPLES
+  $ agentia cicd work deployment-step delete --step a2D...
+
+  $ agentia cicd work deployment-step delete --step a2D... --user-story a16... --json
+

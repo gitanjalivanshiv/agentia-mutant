@@ -1,0 +1,19 @@
+List Copado Robotic Testing projects
+
+USAGE
+  $ agentia testing project list [--json] [--name <value>]
+
+FLAGS
+  --name=<value>  Exact project name to match client-side.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado Robotic Testing projects
+
+EXAMPLES
+  $ agentia testing project list
+
+  $ agentia testing project list --name "QA Tests" --json
+

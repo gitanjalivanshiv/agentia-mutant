@@ -1,0 +1,22 @@
+List files for a Copado Robotic Testing job/test
+
+USAGE
+  $ agentia testing job files ID -p <value> [--json]
+
+ARGUMENTS
+  ID  CRT job/test ID.
+
+FLAGS
+  -p, --project=<value>  (required) CRT project ID.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List files for a Copado Robotic Testing job/test
+
+EXAMPLES
+  $ agentia testing job files <job-id> --project <project-id>
+
+  $ agentia testing job files <job-id> --project <project-id> --json
+

@@ -1,0 +1,16 @@
+Manage Copado pipeline connections
+
+USAGE
+  $ agentia cicd pipeline connection COMMAND
+
+COMMANDS
+  cicd pipeline connection create  Create one or more Copado pipeline
+                                   connections
+  cicd pipeline connection delete  Delete one or more Copado pipeline
+                                   connections
+  cicd pipeline connection list    List connections for a Copado pipeline
+  cicd pipeline connection open    Open a Copado pipeline connection in the
+                                   browser
+  cicd pipeline connection update  Update one or more Copado pipeline
+                                   connections
+

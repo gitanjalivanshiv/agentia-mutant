@@ -1,0 +1,22 @@
+Delete a Copado project by ID
+
+USAGE
+  $ agentia cicd project delete ID [--json] [-y]
+
+ARGUMENTS
+  ID  Copado project ID
+
+FLAGS
+  -y, --yes  Confirm deletion without prompting
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a Copado project by ID
+
+EXAMPLES
+  $ agentia cicd project delete project-1 --yes
+
+  $ agentia cicd project delete project-1 --yes --json
+

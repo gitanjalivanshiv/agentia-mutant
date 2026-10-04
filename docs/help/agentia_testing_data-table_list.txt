@@ -1,0 +1,24 @@
+List Copado Robotic Testing data tables
+
+USAGE
+  $ agentia testing data-table list -p <value> [--json] [--job <value>] [-r <value>]
+    [--fields <value>] [--name <value>]
+
+FLAGS
+  -p, --project=<value>   (required) CRT project ID.
+  -r, --revision=<value>  Specific data-table revision/version.
+      --fields=<value>    Comma-separated server fields to return.
+      --job=<value>       Optional CRT job/test ID filter.
+      --name=<value>      Exact data-table name filter.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado Robotic Testing data tables
+
+EXAMPLES
+  $ agentia testing data-table list --project <project-id>
+
+  $ agentia testing data-table list --project <project-id> --job <job-id> --name Customers --json
+

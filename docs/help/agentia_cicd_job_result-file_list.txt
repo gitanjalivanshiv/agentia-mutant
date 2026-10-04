@@ -1,0 +1,19 @@
+List Files linked to a Copado job Result
+
+USAGE
+  $ agentia cicd job result-file list RESULTID [--json]
+
+ARGUMENTS
+  RESULTID  Copado Result Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Files linked to a Copado job Result
+
+EXAMPLES
+  $ agentia cicd job result-file list <result-id>
+
+  $ agentia cicd job result-file list <result-id> --json
+

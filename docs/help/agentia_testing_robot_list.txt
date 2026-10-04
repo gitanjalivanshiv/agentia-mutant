@@ -1,0 +1,19 @@
+List Copado Robotic Testing robots in a project
+
+USAGE
+  $ agentia testing robot list -p <value> [--json]
+
+FLAGS
+  -p, --project=<value>  (required) CRT project ID.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado Robotic Testing robots in a project
+
+EXAMPLES
+  $ agentia testing robot list --project <project-id>
+
+  $ agentia testing robot list --project <project-id> --json
+

@@ -1,0 +1,133 @@
+Create a Copado Robotic Testing job/test from uploaded files or Git storage
+
+USAGE
+  $ agentia testing test create -p <value> --name <value> --robot <value>
+    [--json] [--dir <value>...] [-f <value>...] [--git-branch <value>]
+    [--git-domain-credential <value>] [--git-password <value> |
+    --git-password-file <value> | --git-password-stdin] [--git-tag <value>]
+    [--git-url <value>] [--git-use-caller-credentials] [--git-username <value>]
+    [--author-email <value>] [--author-name <value>] [--base-path <value>]
+    [--case-duration-change-detection] [--description <value>] [--dry-run]
+    [--message <value>] [--parallel-mode disabled|enabled] [--parent-commit
+    <value>] [--remote-prefix <value>] [--screen-depth <value>] [--screen-height
+    <value>] [--screen-width <value>] [--show-video-params] [--suite-type
+    bitbar|browserstack|browserstackdesktop|default|lambdatest|lambdatestdesktop
+    |mobile|paceconnectmobile|privatemobile|rpa|selenese|zap] [--timeout
+    <value>] [--validation]
+
+FLAGS
+  -f, --file=<value>...
+      Robot Framework file to upload. Can be provided multiple times.
+
+  -p, --project=<value>
+      (required) CRT project ID.
+
+  --author-email=<value>
+      [default: agentia@copado.com] Author email for initial file history.
+
+  --author-name=<value>
+      [default: Agentia CLI] Author name for initial file history.
+
+  --base-path=<value>
+      Require local files to stay within this directory.
+
+  --[no-]case-duration-change-detection
+      Enable or disable duration analytics.
+
+  --description=<value>
+      Job/test description.
+
+  --dir=<value>...
+      Directory containing Robot Framework files to upload. Can be provided
+      multiple times.
+
+  --dry-run
+      Return a sanitized creation plan without network mutation.
+
+  --git-branch=<value>
+      Git branch to use for a Git-backed CRT job. Mutually exclusive with
+      --git-tag.
+
+  --git-domain-credential=<value>
+      CRT domain credential ID to use for Git repository access.
+
+  --git-password=<value>
+      Git password/token for repository access. Prefer --git-domain-credential
+      when available.
+
+  --git-password-file=<value>
+      Read a bounded Git password/token from a regular file.
+
+  --git-password-stdin
+      Read a Git password/token from stdin.
+
+  --git-tag=<value>
+      Git tag to use for a Git-backed CRT job. Mutually exclusive with
+      --git-branch.
+
+  --git-url=<value>
+      Git repository URL for a Git-backed CRT job.
+
+  --git-use-caller-credentials
+      Use caller credentials for Git repository access instead of explicit Git
+      username/password.
+
+  --git-username=<value>
+      Git username for repository access. Prefer --git-domain-credential when
+      available.
+
+  --message=<value>
+      Commit message for initial file upload.
+
+  --name=<value>
+      (required) Job/test name.
+
+  --parallel-mode=<option>
+      Parallel execution mode.
+      <options: disabled|enabled>
+
+  --parent-commit=<value>
+      Expected parent commit hash for initial upload.
+
+  --remote-prefix=<value>
+      Validated remote prefix for initial local files.
+
+  --robot=<value>
+      (required) CRT robot ID.
+
+  --screen-depth=<value>
+      Screen color depth.
+
+  --screen-height=<value>
+      Screen height.
+
+  --screen-width=<value>
+      Screen width.
+
+  --[no-]show-video-params
+      Show or hide video parameters.
+
+  --suite-type=<option>
+      CRT suite/job type.
+      <options: bitbar|browserstack|browserstackdesktop|default|lambdatest|lambdat
+      estdesktop|mobile|paceconnectmobile|privatemobile|rpa|selenese|zap>
+
+  --timeout=<value>
+      Build timeout, for example 10m.
+
+  --validation
+      Ask CRT to validate the created job.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado Robotic Testing job/test from uploaded files or Git storage
+
+EXAMPLES
+  $ agentia testing test create --project <project-id> --robot <robot-id> --name "Smoke" --file tests.robot
+
+  $ agentia testing test create --project <project-id> --robot <robot-id> --name "Smoke" --dir tests --json
+
+  $ agentia testing test create --project <project-id> --robot <robot-id> --name "Smoke" --git-url https://github.com/acme/crt-tests.git --git-branch main
+

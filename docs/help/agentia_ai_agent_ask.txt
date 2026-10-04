@@ -1,0 +1,56 @@
+Send a single-turn prompt to a Copado AI agent
+
+USAGE
+  $ agentia ai agent ask -p <value> [--json] [--agent
+    plan|build|test|release|operate|knowledge] [--component <value>]
+    [--credential-id <value>] [--dialogue <value>] [--timeout <value>]
+    [--force-credential-sync] [--no-credential-sync] [--no-stream] [--sf-org
+    <value>] [--user-story <value>] [--work-item <value>] [--workspace <value>]
+
+FLAGS
+  -p, --prompt=<value>         (required) Natural language instruction for the
+                               agent
+      --agent=<option>         [default: knowledge] AI agent to target (defaults
+                               to knowledge)
+                               <options:
+                               plan|build|test|release|operate|knowledge>
+      --component=<value>      Metadata component name to include in prompt
+                               context
+      --credential-id=<value>  Copado credential ID that overrides the project
+                               default for workspace synchronization
+      --dialogue=<value>       Copado AI dialogue UUID to reuse
+      --force-credential-sync  Replace the cached Copado CICD workspace
+                               integration
+      --no-credential-sync     Skip Copado CICD workspace credential
+                               synchronization
+      --no-stream              Buffer the full response before printing in human
+                               mode
+      --sf-org=<value>         Salesforce org or environment name to include in
+                               prompt context
+      --timeout=<value>        AI gateway timeout in seconds for workspace,
+                               dialogue, and message calls
+      --user-story=<value>     User story identifier to include in prompt
+                               context
+      --work-item=<value>      Work item identifier to include in prompt context
+      --workspace=<value>      Copado AI workspace UUID to reuse for a new
+                               dialogue
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Send a single-turn prompt to a Copado AI agent
+
+EXAMPLES
+  $ agentia ai agent ask -p "Summarize our deployment guidance"
+
+  $ agentia ai agent ask --agent plan -p "Break this requirement into implementation steps"
+
+  $ agentia ai agent ask --agent build -p "Generate an Apex handler outline" --sf-org test14 --user-story US-1042
+
+  $ agentia ai agent ask --agent test -p "Create regression checks" --component LeadScoringHandler --json
+
+  $ agentia ai agent ask --agent operate -p "Diagnose this deployment error" --timeout 240
+
+  $ agentia ai agent ask --agent knowledge -p "Summarize our deployment guidance"
+

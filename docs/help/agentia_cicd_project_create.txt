@@ -1,0 +1,29 @@
+Create a Copado project
+
+USAGE
+  $ agentia cicd project create NAME [--json] [--description <value>] [--end-date
+    <value>] [--pipeline <value>] [--should-index-metadata] [--start-date
+    <value>] [--status <value>]
+
+ARGUMENTS
+  NAME  Copado project name
+
+FLAGS
+  --description=<value>         Project description
+  --end-date=<value>            Project end date (YYYY-MM-DD)
+  --pipeline=<value>            Pipeline ID
+  --[no-]should-index-metadata  Whether project metadata should be indexed
+  --start-date=<value>          Project start date (YYYY-MM-DD)
+  --status=<value>              Project status
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado project
+
+EXAMPLES
+  $ agentia cicd project create "Release Project"
+
+  $ agentia cicd project create "Release Project" --pipeline pipeline-1 --json
+

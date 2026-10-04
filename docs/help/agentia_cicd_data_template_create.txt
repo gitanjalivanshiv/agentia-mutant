@@ -1,0 +1,25 @@
+Create a Copado data template
+
+USAGE
+  $ agentia cicd data template create --api-name <value> --credential-id <value>
+    --main-object-api-name <value> --main-object-label <value> --template-name
+    <value> [--json]
+
+FLAGS
+  --api-name=<value>              (required) Template API name
+  --credential-id=<value>         (required) Org credential Id
+  --main-object-api-name=<value>  (required) Main sObject API name
+  --main-object-label=<value>     (required) Main sObject label
+  --template-name=<value>         (required) Template display name
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado data template
+
+EXAMPLES
+  $ agentia cicd data template create --credential-id a0Y... --template-name Accounts --api-name Accounts --main-object-api-name Account --main-object-label Account
+
+  $ agentia cicd data template create --credential-id a0Y... --template-name Accounts --api-name Accounts --main-object-api-name Account --main-object-label Account --json
+

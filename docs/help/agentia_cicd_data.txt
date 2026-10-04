@@ -1,0 +1,16 @@
+Manage Copado data templates and data commits
+
+USAGE
+  $ agentia cicd data COMMAND
+
+TOPICS
+  cicd data commit        Create and list data commits
+  cicd data dataset-file  Inspect data commit dataset files
+  cicd data filter        Manage data template advanced filters
+  cicd data formula       Manage record matching formulas
+  cicd data records       Search and match data template records
+  cicd data sobject       Describe sObject fields and relationships for data
+                          templates
+  cicd data sync          Preview and apply data template field sync
+  cicd data template      Manage Copado data templates
+

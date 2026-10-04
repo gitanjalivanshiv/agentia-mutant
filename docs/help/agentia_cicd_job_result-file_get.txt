@@ -1,0 +1,26 @@
+Get a File linked to a Copado job Result
+
+USAGE
+  $ agentia cicd job result-file get RESULTID --file-id <value> [--json]
+    [--output-file <value>]
+
+ARGUMENTS
+  RESULTID  Copado Result Id
+
+FLAGS
+  --file-id=<value>      (required) File Id returned by result-file list
+  --output-file=<value>  Explicit file path to receive decoded content
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a File linked to a Copado job Result
+
+EXAMPLES
+  $ agentia cicd job result-file get <result-id> --file-id <file-id>
+
+  $ agentia cicd job result-file get <result-id> --file-id <file-id> --output-file ./result.zip
+
+  $ agentia cicd job result-file get <result-id> --file-id <file-id> --json
+

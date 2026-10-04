@@ -1,0 +1,11 @@
+Describe sObject fields and relationships for data templates
+
+USAGE
+  $ agentia cicd data sobject COMMAND
+
+COMMANDS
+  cicd data sobject fields         Describe fields for an sObject via a
+                                   credential
+  cicd data sobject relationships  Describe relationships for an sObject via a
+                                   credential
+

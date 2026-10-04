@@ -1,0 +1,19 @@
+List dataset files for a user story data commit
+
+USAGE
+  $ agentia cicd data dataset-file list USERSTORYDATACOMMITID [--json]
+
+ARGUMENTS
+  USERSTORYDATACOMMITID  User story data commit Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List dataset files for a user story data commit
+
+EXAMPLES
+  $ agentia cicd data dataset-file list a1A000000000001
+
+  $ agentia cicd data dataset-file list a1A000000000001 --json
+

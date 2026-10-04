@@ -1,0 +1,20 @@
+List connections for a Copado pipeline
+
+USAGE
+  $ agentia cicd pipeline connection list --pipeline-id <value> [--json]
+
+FLAGS
+  --pipeline-id=<value>  (required) Pipeline Id whose connections should be
+                         listed
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List connections for a Copado pipeline
+
+EXAMPLES
+  $ agentia cicd pipeline connection list --pipeline-id <pipeline-id>
+
+  $ agentia cicd pipeline connection list --pipeline-id <pipeline-id> --json
+

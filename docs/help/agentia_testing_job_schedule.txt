@@ -1,0 +1,13 @@
+Get the schedule for a Copado Robotic Testing job/test
+
+USAGE
+  $ agentia testing job schedule COMMAND
+
+COMMANDS
+  testing job schedule get     Get the schedule for a Copado Robotic Testing
+                               job/test
+  testing job schedule remove  Remove the schedule from a Copado Robotic Testing
+                               job/test
+  testing job schedule set     Create or update a Copado Robotic Testing
+                               job/test schedule
+

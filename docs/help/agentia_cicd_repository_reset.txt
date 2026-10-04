@@ -1,0 +1,19 @@
+Reset a Copado Git repository
+
+USAGE
+  $ agentia cicd repository reset ID [--json]
+
+ARGUMENTS
+  ID  Copado Git repository ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Reset a Copado Git repository
+
+EXAMPLES
+  $ agentia cicd repository reset repo-001
+
+  $ agentia cicd repository reset repo-001 --json
+

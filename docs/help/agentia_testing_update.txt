@@ -1,0 +1,42 @@
+Update a Copado Robotic Testing test by uploading file operations
+
+USAGE
+  $ agentia testing update ID -p <value> [--json] [--branch <value>] [--add
+    <value>...] [--remove <value>...] [--replace <value>...] [--author-email
+    <value>] [--author-name <value>] [--base-path <value>] [--dry-run]
+    [--message <value>] [--parent-commit <value>] [--remote-prefix <value>]
+
+ARGUMENTS
+  ID  CRT job/test ID.
+
+FLAGS
+  -p, --project=<value>        (required) CRT project ID.
+      --add=<value>...         Add a file using local[:remote] syntax. Can be
+                               provided multiple times.
+      --author-email=<value>   [default: agentia@copado.com] Author email for
+                               CRT file history.
+      --author-name=<value>    [default: Agentia CLI] Author name for CRT file
+                               history.
+      --base-path=<value>      Require local upload files to stay within this
+                               directory.
+      --branch=<value>         Optional CRT branch name for file operations.
+      --dry-run                Return a sanitized plan without making a request.
+      --message=<value>        Commit message for CRT file history.
+      --parent-commit=<value>  Expected parent commit hash.
+      --remote-prefix=<value>  Validated remote path prefix for all operations.
+      --remove=<value>...      Remove a remote CRT file path. Can be provided
+                               multiple times.
+      --replace=<value>...     Replace a file using local[:remote] syntax. Can
+                               be provided multiple times.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a Copado Robotic Testing test by uploading file operations
+
+EXAMPLES
+  $ agentia testing update <job-id> --project <project-id> --replace tests.robot
+
+  $ agentia testing update <job-id> --project <project-id> --add new.robot --remove old.robot --json
+

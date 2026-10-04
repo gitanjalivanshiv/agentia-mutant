@@ -1,0 +1,19 @@
+Get the caller's permission on a Copado Robotic Testing project
+
+USAGE
+  $ agentia testing project permission get PROJECT [--json]
+
+ARGUMENTS
+  PROJECT  CRT project ID.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get the caller's permission on a Copado Robotic Testing project
+
+EXAMPLES
+  $ agentia testing project permission get <project-id>
+
+  $ agentia testing project permission get <project-id> --json
+

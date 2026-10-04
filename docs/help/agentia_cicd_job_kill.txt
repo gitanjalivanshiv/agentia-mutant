@@ -1,0 +1,19 @@
+Cancel a Copado job execution
+
+USAGE
+  $ agentia cicd job kill ID [--json]
+
+ARGUMENTS
+  ID  JobExecution Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Cancel a Copado job execution
+
+EXAMPLES
+  $ agentia cicd job kill <job-id>
+
+  $ agentia cicd job kill <job-id> --json
+

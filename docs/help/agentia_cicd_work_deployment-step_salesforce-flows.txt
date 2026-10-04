@@ -1,0 +1,16 @@
+List Salesforce Flows available to deployment steps in the Copado org
+
+USAGE
+  $ agentia cicd work deployment-step salesforce-flows [--json]
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Salesforce Flows available to deployment steps in the Copado org
+
+EXAMPLES
+  $ agentia cicd work deployment-step salesforce-flows
+
+  $ agentia cicd work deployment-step salesforce-flows --json
+

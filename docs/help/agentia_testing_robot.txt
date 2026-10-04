@@ -1,0 +1,13 @@
+Create a Copado Robotic Testing robot
+
+USAGE
+  $ agentia testing robot COMMAND
+
+COMMANDS
+  testing robot create  Create a Copado Robotic Testing robot
+  testing robot delete  Delete a Copado Robotic Testing robot
+  testing robot get     Get a Copado Robotic Testing robot from the project
+                        robot list
+  testing robot list    List Copado Robotic Testing robots in a project
+  testing robot update  Update a Copado Robotic Testing robot
+

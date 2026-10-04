@@ -1,0 +1,19 @@
+Get a Copado stage
+
+USAGE
+  $ agentia cicd stage get ID [--json]
+
+ARGUMENTS
+  ID  Stage ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado stage
+
+EXAMPLES
+  $ agentia cicd stage get <stage-id>
+
+  $ agentia cicd stage get <stage-id> --json
+

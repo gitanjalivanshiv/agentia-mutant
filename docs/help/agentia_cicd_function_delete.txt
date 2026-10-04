@@ -1,0 +1,19 @@
+Delete a Copado Function by API name
+
+USAGE
+  $ agentia cicd function delete API-NAME [--json]
+
+ARGUMENTS
+  API-NAME  Function API name
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a Copado Function by API name
+
+EXAMPLES
+  $ agentia cicd function delete myFunction
+
+  $ agentia cicd function delete myFunction --json
+

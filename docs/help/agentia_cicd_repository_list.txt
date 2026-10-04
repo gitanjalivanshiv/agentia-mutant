@@ -1,0 +1,35 @@
+List Copado Git repositories
+
+USAGE
+  $ agentia cicd repository list [--json] [--cursor <value>] [--page-size <value>]
+    [--name <value>] [--provider Github|Bitbucket|GitLab|Microsoft Team
+    Service|Copado Version Control|Others] [--source-format DX]
+
+FLAGS
+  --cursor=<value>          Opaque pagination cursor from a previous list
+                            response (nextCursor)
+  --name=<value>            Filter by name
+  --page-size=<value>       Number of records per page (1-200)
+  --provider=<option>       Filter by Git repository provider
+                            <options: Github|Bitbucket|GitLab|Microsoft Team
+                            Service|Copado Version Control|Others>
+  --source-format=<option>  Filter by Git repository source format
+                            <options: DX>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado Git repositories
+
+EXAMPLES
+  $ agentia cicd repository list
+
+  $ agentia cicd repository list --page-size 50
+
+  $ agentia cicd repository list --cursor NEXT --json
+
+  $ agentia cicd repository list --name copado-demo --provider Github
+
+  $ agentia cicd repository list --source-format DX --json
+

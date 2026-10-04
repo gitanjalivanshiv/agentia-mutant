@@ -1,0 +1,25 @@
+Run organization-scoped governance health checks
+
+USAGE
+  $ agentia cicd health-check [--json] [--path <value> --git-sizer]
+
+FLAGS
+  --git-sizer     Also analyze a local Git clone with git-sizer
+  --path=<value>  Local Git clone for --git-sizer. Defaults to the current
+                  directory.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Run organization-scoped governance health checks
+
+EXAMPLES
+  $ agentia cicd health-check
+
+  $ agentia cicd health-check --json
+
+  $ agentia cicd health-check --git-sizer
+
+  $ agentia cicd health-check --git-sizer --path /path/to/clone
+

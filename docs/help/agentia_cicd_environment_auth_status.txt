@@ -1,0 +1,25 @@
+Validate the authentication status of an environment credential
+
+USAGE
+  $ agentia cicd environment auth status ID [--json] [--credentialid <value>]
+
+ARGUMENTS
+  ID  Copado environment ID
+
+FLAGS
+  --credentialid=<value>  Credential ID to validate when automatic selection is
+                          not possible
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Validate the authentication status of an environment credential
+
+EXAMPLES
+  $ agentia cicd environment auth status <environment-id>
+
+  $ agentia cicd environment auth status <environment-id> --credentialid <credential-id>
+
+  $ agentia cicd environment auth status <environment-id> --json
+

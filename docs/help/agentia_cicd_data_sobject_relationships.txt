@@ -1,0 +1,23 @@
+Describe relationships for an sObject via a credential
+
+USAGE
+  $ agentia cicd data sobject relationships SOBJECTAPINAME --credential-id
+  <value> [--json]
+
+ARGUMENTS
+  SOBJECTAPINAME  sObject API name
+
+FLAGS
+  --credential-id=<value>  (required) Org credential Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Describe relationships for an sObject via a credential
+
+EXAMPLES
+  $ agentia cicd data sobject relationships Account --credential-id a0Y...
+
+  $ agentia cicd data sobject relationships Account --credential-id a0Y... --json
+

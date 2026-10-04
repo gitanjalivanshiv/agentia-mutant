@@ -1,0 +1,26 @@
+Invite a member to a Copado AI workspace
+
+USAGE
+  $ agentia ai workspace member invite WORKSPACE --permission Access|Manage --user-id
+    <value> [--json] [--timeout <value>]
+
+ARGUMENTS
+  WORKSPACE  Copado AI workspace UUID.
+
+FLAGS
+  --permission=<option>  (required) Workspace permission for the invited member.
+                         <options: Access|Manage>
+  --timeout=<value>      AI gateway timeout in seconds.
+  --user-id=<value>      (required) Copado AI user ID to invite.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Invite a member to a Copado AI workspace
+
+EXAMPLES
+  $ agentia ai workspace member invite 42d0b908-37b7-4565-9ec9-86eda40c9782 --user-id 12345 --permission Access
+
+  $ agentia ai workspace member invite 42d0b908-37b7-4565-9ec9-86eda40c9782 --user-id 12345 --permission Manage --json
+

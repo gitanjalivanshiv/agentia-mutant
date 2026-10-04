@@ -1,0 +1,19 @@
+Resume outstanding steps for a Copado job execution
+
+USAGE
+  $ agentia cicd job resume ID [--json]
+
+ARGUMENTS
+  ID  JobExecution Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Resume outstanding steps for a Copado job execution
+
+EXAMPLES
+  $ agentia cicd job resume <job-id>
+
+  $ agentia cicd job resume <job-id> --json
+

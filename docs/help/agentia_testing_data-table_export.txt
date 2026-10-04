@@ -1,0 +1,30 @@
+Export a Copado Robotic Testing data table
+
+USAGE
+  $ agentia testing data-table export ID -p <value> -o <value> [--json] [--job <value>]
+    [-r <value>] [--datasets <value>] [--format csv|tsv|xlsx] [-y]
+
+ARGUMENTS
+  ID  CRT data-table ID.
+
+FLAGS
+  -o, --output=<value>    (required) Explicit local output file.
+  -p, --project=<value>   (required) CRT project ID.
+  -r, --revision=<value>  Specific data-table revision/version.
+  -y, --yes               Confirm overwriting an existing output file.
+      --datasets=<value>  1-based dataset list/ranges to export.
+      --format=<option>   Output format; defaults to the output extension.
+                          <options: csv|tsv|xlsx>
+      --job=<value>       Optional CRT job/test ID filter.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Export a Copado Robotic Testing data table
+
+EXAMPLES
+  $ agentia testing data-table export <table-id> --project <project-id> --output table.csv
+
+  $ agentia testing data-table export <table-id> --project <project-id> --datasets 1-3 --output table.xlsx --yes --json
+

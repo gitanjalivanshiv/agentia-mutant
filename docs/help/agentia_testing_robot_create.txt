@@ -1,0 +1,40 @@
+Create a Copado Robotic Testing robot
+
+USAGE
+  $ agentia testing robot create -p <value> --name <value> [--json] [--description
+    <value>] [--fw-version <value>] [--kind cloud|paceconnect|QConnect |
+    --run-environment cloud|paceconnect|QConnect] [--label <value>] [--os
+    <value>] [--reporting all|nothing] [--robot-type
+    bitbar|browserstack|browserstackdesktop|default|lambdatest|lambdatestdesktop
+    |mobile|pabot|paceconnectmobile|privatemobile]
+
+FLAGS
+  -p, --project=<value>           (required) CRT project ID.
+      --description=<value>       Robot description.
+      --fw-version=<value>        [default: stable] Robot framework version.
+      --kind=<option>             Backward-compatible robot run environment
+                                  alias.
+                                  <options: cloud|paceconnect|QConnect>
+      --label=<value>             Optional robot label.
+      --name=<value>              (required) Robot name.
+      --os=<value>                [default: linux] Robot operating system.
+      --reporting=<option>        Which testing results to retain.
+                                  <options: all|nothing>
+      --robot-type=<option>       [default: default] CRT robot type.
+                                  <options: bitbar|browserstack|browserstackdesk
+                                  top|default|lambdatest|lambdatestdesktop|mobil
+                                  e|pabot|paceconnectmobile|privatemobile>
+      --run-environment=<option>  Robot execution environment.
+                                  <options: cloud|paceconnect|QConnect>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado Robotic Testing robot
+
+EXAMPLES
+  $ agentia testing robot create --project <project-id> --name "Cloud Robot"
+
+  $ agentia testing robot create --project <project-id> --name "QConnect Robot" --kind QConnect --json
+

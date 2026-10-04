@@ -1,0 +1,9 @@
+Authenticate an environment credential via browser web login
+
+USAGE
+  $ agentia cicd environment auth web COMMAND
+
+COMMANDS
+  cicd environment auth web login  Authenticate an environment credential via
+                                   browser web login
+

@@ -1,0 +1,35 @@
+Execute bounded Robot Framework keywords in an active CRT live session
+
+USAGE
+  $ agentia testing live execute [JOB-ID] -p <value> [--json] [--session-id
+    <value>] [--arg <value>...] [--file <value>] [--keyword <value>] [--line
+    <value>...] [--raw] [--section <value>] [--section-index <value>]
+
+ARGUMENTS
+  [JOB-ID]  Optional CRT job/test ID guard.
+
+FLAGS
+  -p, --project=<value>        (required) CRT project ID.
+      --arg=<value>...         Keyword argument. Repeat to preserve argument
+                               boundaries.
+      --file=<value>           Robot Framework input file.
+      --keyword=<value>        Robot Framework keyword name.
+      --line=<value>...        Raw Robot Framework keyword line. Repeat for
+                               multiple lines.
+      --raw                    Treat file input as raw keyword lines.
+      --section=<value>        Robot test/task name to execute.
+      --section-index=<value>  One-based Robot test/task index to execute.
+      --session-id=<value>     Guard that must match the locally active CRT live
+                               session.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Execute bounded Robot Framework keywords in an active CRT live session
+
+EXAMPLES
+  $ agentia testing live execute --project <project-id> --keyword GoTo --arg https://example.com
+
+  $ agentia testing live execute <job-id> --project <project-id> --file smoke.robot --section Login
+

@@ -1,0 +1,9 @@
+Configure Copado notification subscriptions
+
+USAGE
+  $ agentia cicd notification COMMAND
+
+COMMANDS
+  cicd notification configure  Configure one Slack notification subscription for
+                               the current user on a pipeline
+

@@ -1,0 +1,29 @@
+Run a Copado Function and return the result Id
+
+USAGE
+  $ agentia cicd function run API-NAME [--json] [--context-id <value>]
+    [--deploy-first] [--parameter <value>...] [--show-validation-errors]
+
+ARGUMENTS
+  API-NAME  Function API name
+
+FLAGS
+  --context-id=<value>           Execution context Id
+  --deploy-first                 Deploy related metadata before running the
+                                 function
+  --parameter=<value>...         Run parameter as key=value (repeatable)
+  --[no-]show-validation-errors  Surface validation errors from the gateway
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Run a Copado Function and return the result Id
+
+EXAMPLES
+  $ agentia cicd function run myFunction
+
+  $ agentia cicd function run myFunction --parameter env=dev --json
+
+  $ agentia cicd function run myFunction --context-id a00... --deploy-first --json
+

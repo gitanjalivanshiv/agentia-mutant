@@ -1,0 +1,27 @@
+Create a record matching formula for a data template
+
+USAGE
+  $ agentia cicd data formula create DATATEMPLATEID --fields <value>... --name <value>
+    --object-api-name <value> [--json] [--hash-formula]
+
+ARGUMENTS
+  DATATEMPLATEID  Data template Id
+
+FLAGS
+  --fields=<value>...        (required) Formula fields (repeatable or
+                             comma-separated, up to 3)
+  --hash-formula             Enable hash formula
+  --name=<value>             (required) Formula name
+  --object-api-name=<value>  (required) sObject API name
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a record matching formula for a data template
+
+EXAMPLES
+  $ agentia cicd data formula create a0X... --name MatchByName --object-api-name Account --fields Name,BillingCity
+
+  $ agentia cicd data formula create a0X... --name MatchByName --object-api-name Account --fields Name --fields BillingCity --hash-formula --json
+

@@ -1,0 +1,100 @@
+Run a Copado Robotic Testing test
+
+USAGE
+  $ agentia testing run ID -p <value> [--json] [--branch <value>]
+    [--console-colors auto|on|ansi|off] [--console-width <value>] [--datatable
+    <value>...] [--doc <value>] [--dry-run] [--exclude <value>...]
+    [--exit-on-error] [--exit-on-failure] [--include <value>...] [--metadata
+    <value>...] [--name <value>] [--no-exit-code] [--param <value>...] [--record
+    all|failed|none] [--rerun-failed <value>] [--rerun-failed-from-latest]
+    [--run-empty-suite] [--run-type regression|development] [--save-artifacts
+    <value>] [--set-tag <value>...] [--skip <value>...] [--skip-on-failure
+    <value>...] [--stream-logs] [--suite <value>...] [--tag <value>] [--test
+    <value>...] [--timeout <value>] [--variable <value>...] [--wait-for-result]
+    [--watch <value>] [--xunit <value>]
+
+ARGUMENTS
+  ID  CRT job/test ID to run.
+
+FLAGS
+  -p, --project=<value>             (required) CRT project ID.
+      --branch=<value>              Git branch/ref to use for this run. Mutually
+                                    exclusive with --tag.
+      --console-colors=<option>     Control Robot Framework console colors.
+                                    <options: auto|on|ansi|off>
+      --console-width=<value>       Set Robot Framework console width.
+      --datatable=<value>...        Data table and 1-based datasets as
+                                    TABLE_ID:1,2-4. Repeat for zipped table
+                                    selections.
+      --doc=<value>                 Set top-level Robot Framework suite
+                                    documentation.
+      --dry-run                     Validate Robot Framework data without
+                                    executing library keywords.
+      --exclude=<value>...          Robot Framework tag to exclude from this
+                                    run. Can be provided multiple times.
+      --exit-on-error               Stop execution when Robot Framework
+                                    encounters a data or import error.
+      --exit-on-failure             Stop execution when a critical Robot
+                                    Framework test fails.
+      --include=<value>...          Robot Framework tag to include in this run.
+                                    Can be provided multiple times.
+      --metadata=<value>...         Robot Framework suite metadata. Can be
+                                    provided multiple times.
+      --name=<value>                Set the top-level Robot Framework suite
+                                    name.
+      --no-exit-code                Return exit code zero even when the waited
+                                    CRT run fails.
+      --param=<value>...            Execution parameter in KEY=VALUE format. Can
+                                    be provided multiple times.
+      --record=<option>             CRT execution recording mode.
+                                    <options: all|failed|none>
+      --rerun-failed=<value>        Rerun failed tests from the specified
+                                    build/run ID. Mutually exclusive with
+                                    --rerun-failed-from-latest.
+      --rerun-failed-from-latest    Rerun failed tests from the latest failed
+                                    run. Mutually exclusive with --rerun-failed.
+      --run-empty-suite             Execute even when the selected Robot
+                                    Framework suite is empty.
+      --run-type=<option>           CRT run type. Regression is sent as normal;
+                                    development is sent unchanged.
+                                    <options: regression|development>
+      --save-artifacts=<value>      Save the completed run output ZIP to this
+                                    explicit file path.
+      --set-tag=<value>...          Set a tag on all executed tests. Can be
+                                    provided multiple times.
+      --skip=<value>...             Skip tests matching this tag. Can be
+                                    provided multiple times.
+      --skip-on-failure=<value>...  Skip failures for tests matching this tag.
+                                    Can be provided multiple times.
+      --stream-logs                 Stream new CRT log text while waiting (human
+                                    output only).
+      --suite=<value>...            Select a Robot Framework suite. Can be
+                                    provided multiple times.
+      --tag=<value>                 Git tag to use for this run. Mutually
+                                    exclusive with --branch.
+      --test=<value>...             Select a Robot Framework test/task. Can be
+                                    provided multiple times.
+      --timeout=<value>             [default: 60] Maximum number of minutes to
+                                    wait for a terminal result.
+      --variable=<value>...         Set a Robot Framework variable. Can be
+                                    provided multiple times.
+      --wait-for-result             Poll CRT until the started build reaches a
+                                    terminal result.
+      --watch=<value>               Watch a directory and rerun after debounced
+                                    file changes (human output only).
+      --xunit=<value>               Extract xunit_report.xml from completed run
+                                    artifacts to this explicit file path.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Run a Copado Robotic Testing test
+
+EXAMPLES
+  $ agentia testing run <job-id> --project <project-id>
+
+  $ agentia testing run <job-id> --project <project-id> --branch main --include smoke
+
+  $ agentia testing run <job-id> --project <project-id> --json
+

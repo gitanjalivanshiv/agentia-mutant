@@ -1,0 +1,19 @@
+Get a Copado Git repository by ID
+
+USAGE
+  $ agentia cicd repository get ID [--json]
+
+ARGUMENTS
+  ID  Copado Git repository ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado Git repository by ID
+
+EXAMPLES
+  $ agentia cicd repository get repo-001
+
+  $ agentia cicd repository get repo-001 --json
+

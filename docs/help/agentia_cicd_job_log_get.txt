@@ -1,0 +1,24 @@
+Get log output for a Copado job execution step
+
+USAGE
+  $ agentia cicd job log get ID [--json] [--step <value>]
+
+ARGUMENTS
+  ID  JobExecution Id
+
+FLAGS
+  --step=<value>  Job step Id (defaults to the first step with a result Id)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get log output for a Copado job execution step
+
+EXAMPLES
+  $ agentia cicd job log get <job-id>
+
+  $ agentia cicd job log get <job-id> --step <step-id>
+
+  $ agentia cicd job log get <job-id> --json
+

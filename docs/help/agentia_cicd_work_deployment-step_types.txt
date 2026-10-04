@@ -1,0 +1,16 @@
+List available deployment step types
+
+USAGE
+  $ agentia cicd work deployment-step types [--json]
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List available deployment step types
+
+EXAMPLES
+  $ agentia cicd work deployment-step types
+
+  $ agentia cicd work deployment-step types --json
+

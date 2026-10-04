@@ -1,0 +1,19 @@
+Get a Copado Function by API name
+
+USAGE
+  $ agentia cicd function get API-NAME [--json]
+
+ARGUMENTS
+  API-NAME  Function API name
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado Function by API name
+
+EXAMPLES
+  $ agentia cicd function get myFunction
+
+  $ agentia cicd function get myFunction --json
+

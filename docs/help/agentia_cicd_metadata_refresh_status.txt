@@ -1,0 +1,26 @@
+Get metadata index refresh status via the CICD gateway
+
+USAGE
+  $ agentia cicd metadata refresh status [--json] [--job-id <value>] [--module-type
+    vlocity|data_cloud] [--platform-experience salesforce|sfdx|metacache|db]
+
+FLAGS
+  --job-id=<value>                Metadata refresh event Id
+  --module-type=<option>          Optional addon module type used by the trigger
+                                  request
+                                  <options: vlocity|data_cloud>
+  --platform-experience=<option>  [default: salesforce] Gateway platform
+                                  experience header used by the trigger request
+                                  <options: salesforce|sfdx|metacache|db>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get metadata index refresh status via the CICD gateway
+
+EXAMPLES
+  $ agentia cicd metadata refresh status --job-id <event-id>
+
+  $ agentia cicd metadata refresh status --job-id <event-id> --json
+

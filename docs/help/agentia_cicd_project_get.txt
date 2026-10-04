@@ -1,0 +1,19 @@
+Get a Copado project by ID
+
+USAGE
+  $ agentia cicd project get ID [--json]
+
+ARGUMENTS
+  ID  Copado project ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado project by ID
+
+EXAMPLES
+  $ agentia cicd project get <project-id>
+
+  $ agentia cicd project get <project-id> --json
+

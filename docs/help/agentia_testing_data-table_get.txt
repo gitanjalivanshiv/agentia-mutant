@@ -1,0 +1,27 @@
+Get a Copado Robotic Testing data table
+
+USAGE
+  $ agentia testing data-table get ID -p <value> [--json] [--job <value>] [-r
+    <value>] [--datasets <value>]
+
+ARGUMENTS
+  ID  CRT data-table ID.
+
+FLAGS
+  -p, --project=<value>   (required) CRT project ID.
+  -r, --revision=<value>  Specific data-table revision/version.
+      --datasets=<value>  1-based dataset list/ranges to return, for example
+                          1,3-5.
+      --job=<value>       Optional CRT job/test ID filter.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado Robotic Testing data table
+
+EXAMPLES
+  $ agentia testing data-table get <table-id> --project <project-id>
+
+  $ agentia testing data-table get <table-id> --project <project-id> --datasets 1,3-5 --json
+

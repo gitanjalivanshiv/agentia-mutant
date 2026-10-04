@@ -1,0 +1,11 @@
+Get Copado Function execution status by result Id
+
+USAGE
+  $ agentia cicd function result COMMAND
+
+TOPICS
+  cicd function result log  Get log output for a Copado Function result
+
+COMMANDS
+  cicd function result get  Get Copado Function execution status by result Id
+

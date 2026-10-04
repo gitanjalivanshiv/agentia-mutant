@@ -1,0 +1,19 @@
+List data commits for a user story
+
+USAGE
+  $ agentia cicd data commit list USERSTORYID [--json]
+
+ARGUMENTS
+  USERSTORYID  User story Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List data commits for a user story
+
+EXAMPLES
+  $ agentia cicd data commit list a16P7000006AyU5IAK
+
+  $ agentia cicd data commit list a16P7000006AyU5IAK --json
+

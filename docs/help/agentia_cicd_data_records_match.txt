@@ -1,0 +1,20 @@
+Match a source data record to a destination org
+
+USAGE
+  $ agentia cicd data records match [--json] [-f <value> | --stdin]
+
+FLAGS
+  -f, --file=<value>  Path to a JSON file body
+      --stdin         Read the JSON body from stdin
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Match a source data record to a destination org
+
+EXAMPLES
+  $ agentia cicd data records match --file match.json
+
+  $ agentia cicd data records match --stdin --json
+

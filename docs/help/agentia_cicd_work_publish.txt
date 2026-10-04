@@ -1,0 +1,68 @@
+Publish the current feature/<lastWorkItem> branch and register commits with Copado. Requires a clean working tree, base branch, and dev org branch from `.agentia/config.user.json`. Fetches origin/<lastBaseBranch>, then registers only commits in origin/<lastBaseBranch>..HEAD and diffs nested parent XML at merge-base(origin/<lastBaseBranch>, HEAD) versus HEAD, so origin/base-only history is ignored. When there are no commits since origin/<lastBaseBranch>, or origin already has HEAD, fails with "No changes to publish" unless `--permissions` and/or `--full-metadata` is set, in which case it creates an empty commit so a tip commit id exists. Applies Copado environment-variable then yaml replacements to the added and modified files in origin/<lastBaseBranch>..HEAD (passed to the jars as `--include`; yaml `-b` is the feature branch, matching Copado Commit), commits both as a single follow-up commit, locks the tip commit, runs `git push origin <branch>`, reports the nested metadata changed across the branch, such as the CustomField behind a profile field-permission edit, plus the parent components it would ignore, calls headless work/push with one changeListUpdate list of Action:MetadataType:MetadataName corrections: lastPermissionSelected and --permissions plus the nested metadata of the changed profiles and permission sets as RetrieveOnly, lastFullMetadataSelected and --full-metadata plus brand-new nested parent files as fullMetadata, the ignored parents as unchanged, the nested metadata deleted on the branch as Del, and the remaining nested metadata as Add, then merges the feature branch into the recorded dev org branch. The changed profiles and permission sets themselves are never sent as corrections, so they stay in the change list and deploy only the permissions their RetrieveOnly entries select. Brand-new nested parent files are an exception: they are sent as fullMetadata so the complete file travels. `cicd work push` is a compatibility alias of this command.
+
+USAGE
+  $ agentia cicd work publish [--json] [--full-metadata <value>] [--permissions
+    <value>] [--skip-nested-metadata-detection]
+
+FLAGS
+  --full-metadata=<value>
+      Comma-separated Type:Name metadata such as
+      Profile:Sales_User,PermissionSet:Sales_Onboarding. Allowed types: Profile,
+      PermissionSet, MutingPermissionSet, CustomObject, CustomObjectTranslation.
+      Added for this publish and sent as headless push fullMetadata corrections.
+      The named metadata is committed as a complete file, so it is never
+      decomposed into nested metadata. Not stored.
+
+  --permissions=<value>
+      Comma-separated type-prefixed metadata such as
+      CustomField:Account.SLA__c,ApexClass:AccountService, added for this publish
+      and sent as headless push RetrieveOnly corrections. Not stored.
+
+  --skip-nested-metadata-detection
+      Do not detect the nested metadata changed across the branch (also
+      configurable via skipNestedMetadataDetection in .agentia/config.json or
+      .agentia/config.user.json)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Publish the current feature/<lastWorkItem> branch and register commits with
+  Copado. Requires a clean working tree, base branch, and dev org branch from
+  `.agentia/config.user.json`. Fetches origin/<lastBaseBranch>, then registers
+  only commits in origin/<lastBaseBranch>..HEAD and diffs nested parent XML at
+  merge-base(origin/<lastBaseBranch>, HEAD) versus HEAD, so origin/base-only
+  history is ignored. When there are no commits since origin/<lastBaseBranch>,
+  or origin already has HEAD, fails with "No changes to publish" unless
+  `--permissions` and/or `--full-metadata` is set, in which case it creates an
+  empty commit so a tip commit id exists. Applies Copado environment-variable
+  then yaml replacements to the added and modified files in
+  origin/<lastBaseBranch>..HEAD (passed to the jars as `--include`; yaml `-b` is
+  the feature branch, matching Copado Commit), commits both as a single
+  follow-up commit, locks the tip commit, runs `git push origin <branch>`,
+  reports the nested metadata changed across the branch, such as the CustomField
+  behind a profile field-permission edit, plus the parent components it would
+  ignore, calls headless work/push with one changeListUpdate list of
+  Action:MetadataType:MetadataName corrections: lastPermissionSelected and
+  --permissions plus the nested metadata of the changed profiles and permission
+  sets as RetrieveOnly, lastFullMetadataSelected and --full-metadata plus
+  brand-new nested parent files as fullMetadata, the ignored parents as
+  unchanged, the nested metadata deleted on the branch as Del, and the remaining
+  nested metadata as Add, then merges the feature branch into the recorded dev
+  org branch. The changed profiles and permission sets themselves are never sent
+  as corrections, so they stay in the change list and deploy only the
+  permissions their RetrieveOnly entries select. Brand-new nested parent files
+  are an exception: they are sent as fullMetadata so the complete file travels.
+  `cicd work push` is a compatibility alias of this command.
+
+EXAMPLES
+  $ agentia cicd work publish
+
+  $ agentia cicd work publish --permissions CustomField:Account.SLA__c,ApexClass:AccountService
+
+  $ agentia cicd work publish --full-metadata PermissionSet:Sales_Onboarding
+
+  $ agentia cicd work publish --skip-nested-metadata-detection
+
+  $ agentia cicd work publish --json
+

@@ -1,0 +1,16 @@
+Manage Copado environments
+
+USAGE
+  $ agentia cicd environment COMMAND
+
+TOPICS
+  cicd environment auth  Manage Copado environment authentication
+
+COMMANDS
+  cicd environment create  Create a Copado environment
+  cicd environment get     Get a Copado environment by ID
+  cicd environment list    List Copado environments
+  cicd environment open    Open a Copado environment or credential in the
+                           browser
+  cicd environment update  Update a Copado environment by ID
+

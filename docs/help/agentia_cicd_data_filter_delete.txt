@@ -1,0 +1,20 @@
+Delete an advanced filter from a data template
+
+USAGE
+  $ agentia cicd data filter delete DATATEMPLATEID UUID [--json]
+
+ARGUMENTS
+  DATATEMPLATEID  Data template Id
+  UUID            Advanced filter UUID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete an advanced filter from a data template
+
+EXAMPLES
+  $ agentia cicd data filter delete a0X000000000001 550e8400-e29b-41d4-a716-446655440000
+
+  $ agentia cicd data filter delete a0X000000000001 550e8400-e29b-41d4-a716-446655440000 --json
+

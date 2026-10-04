@@ -1,0 +1,31 @@
+Get status for a work item, including related job executions. Includes local branch metadata when lastBaseBranch is recorded by `work set`. Uses the given user story ID/name, or the last work item from `agentia cicd work set`. Use --metadata-list-only to retrieve only local branch metadata without an API call.
+
+USAGE
+  $ agentia cicd work status [ID] [--json] [--metadata-list-only]
+
+ARGUMENTS
+  [ID]  User story ID or name (defaults to the last work item from `work set`)
+
+FLAGS
+  --metadata-list-only  Return only local branch metadata without calling the
+                        CICD API
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get status for a work item, including related job executions. Includes local
+  branch metadata when lastBaseBranch is recorded by `work set`. Uses the given
+  user story ID/name, or the last work item from `agentia cicd work set`. Use
+  --metadata-list-only to retrieve only local branch metadata without an API
+  call.
+
+EXAMPLES
+  $ agentia cicd work status
+
+  $ agentia cicd work status US-0001
+
+  $ agentia cicd work status a0SKC000000CmZ2AU --json
+
+  $ agentia cicd work status --metadata-list-only
+

@@ -1,0 +1,23 @@
+Continue paused Robot execution in the active CRT live session
+
+USAGE
+  $ agentia testing live continue [JOB-ID] -p <value> [--json] [--session-id
+    <value>]
+
+ARGUMENTS
+  [JOB-ID]  Optional CRT job/test ID guard.
+
+FLAGS
+  -p, --project=<value>     (required) CRT project ID.
+      --session-id=<value>  Guard that must match the locally active CRT live
+                            session.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Continue paused Robot execution in the active CRT live session
+
+EXAMPLES
+  $ agentia testing live continue --project <project-id>
+

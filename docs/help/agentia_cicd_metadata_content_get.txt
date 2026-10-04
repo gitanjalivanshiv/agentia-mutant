@@ -1,0 +1,43 @@
+Retrieve metadata file content via the CICD gateway
+
+USAGE
+  $ agentia cicd metadata content get [--json] [--api-name <value>] [--branch <value>]
+    [--file <value>] [--file-name <value>] [--metadata-type <value>]
+    [--output-file <value>] [--pipeline-id <value>] [--result-id <value>]
+    [--show] [--source ENVIRONMENT|REPOSITORY|GIT_MIRROR|ORG_CACHE]
+    [--source-credential-id <value>] [--source-org-id <value>]
+
+FLAGS
+  --api-name=<value>              Metadata API name
+  --branch=<value>                Git branch when source is REPOSITORY or
+                                  GIT_MIRROR
+  --file=<value>                  Path to a JSON file with an array of metadata
+                                  content requests
+  --file-name=<value>             Optional metadata file name
+  --metadata-type=<value>         Metadata type, for example ApexClass
+  --output-file=<value>           Write decoded content from the first result to
+                                  this file path
+  --pipeline-id=<value>           Pipeline Id
+  --result-id=<value>             Optional result Id from a prior metadata
+                                  operation
+  --show                          Print decoded metadata content to stdout after
+                                  retrieval
+  --source=<option>               [default: ENVIRONMENT] Content source
+                                  <options:
+                                  ENVIRONMENT|REPOSITORY|GIT_MIRROR|ORG_CACHE>
+  --source-credential-id=<value>  Source org credential Id
+  --source-org-id=<value>         Source org Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Retrieve metadata file content via the CICD gateway
+
+EXAMPLES
+  $ agentia cicd metadata content get --metadata-type ApexClass --api-name MyClass --pipeline-id <id> --source-org-id <id>
+
+  $ agentia cicd metadata content get --metadata-type ApexClass --api-name MyClass --show
+
+  $ agentia cicd metadata content get --file requests.json --json
+

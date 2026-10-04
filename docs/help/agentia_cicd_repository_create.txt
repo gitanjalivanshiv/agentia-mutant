@@ -1,0 +1,47 @@
+Create a Copado Git repository
+
+USAGE
+  $ agentia cicd repository create NAME --provider Github|Bitbucket|GitLab|Microsoft
+    Team Service|Copado Version Control|Others --source-format DX [--json]
+    [--allow-functions-git-cache] [--copado-tunnel-enabled] [--auth-type HTTPS]
+    [--branch-base-url <value>] [--commit-base-url <value>] [--extra-headers
+    <value>] [--password <value>] [--pull-request-base-url <value>]
+    [--tag-base-url <value>] [--uri <value>] [--username <value>]
+
+ARGUMENTS
+  NAME  Name of the Copado Git repository to create
+
+FLAGS
+  --[no-]allow-functions-git-cache  Allow Functions Git cache for this
+                                    repository
+  --auth-type=<option>              Repository authentication type
+                                    <options: HTTPS>
+  --branch-base-url=<value>         Base URL for repository branch links
+  --commit-base-url=<value>         Base URL for repository commit links
+  --[no-]copado-tunnel-enabled      Enable Copado tunnel for this repository
+  --extra-headers=<value>           Additional authentication headers. Prefer
+                                    environment-specific credential storage when
+                                    available.
+  --password=<value>                Repository password or token. This can be
+                                    visible in shell history.
+  --provider=<option>               (required) Git repository provider
+                                    <options: Github|Bitbucket|GitLab|Microsoft
+                                    Team Service|Copado Version Control|Others>
+  --pull-request-base-url=<value>   Base URL for repository pull request links
+  --source-format=<option>          (required) Git repository source format
+                                    <options: DX>
+  --tag-base-url=<value>            Base URL for repository tag links
+  --uri=<value>                     Repository clone URI
+  --username=<value>                Repository username
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado Git repository
+
+EXAMPLES
+  $ agentia cicd repository create my-repo --source-format DX --provider Github --uri https://github.com/org/repo.git
+
+  $ agentia cicd repository create my-repo --source-format DX --provider GitLab --json
+

@@ -1,0 +1,15 @@
+Get the caller's permission on a Copado Robotic Testing project
+
+USAGE
+  $ agentia testing project permission COMMAND
+
+COMMANDS
+  testing project permission get     Get the caller's permission on a Copado
+                                     Robotic Testing project
+  testing project permission list    List assignments for a Copado Robotic
+                                     Testing project
+  testing project permission set     Set a user or group permission on a Copado
+                                     Robotic Testing project
+  testing project permission update  Update a user or group permission on a
+                                     Copado Robotic Testing project
+

@@ -1,0 +1,16 @@
+Manage Copado projects
+
+USAGE
+  $ agentia cicd project COMMAND
+
+TOPICS
+  cicd project default  Manage local Agentia project defaults
+
+COMMANDS
+  cicd project create  Create a Copado project
+  cicd project delete  Delete a Copado project by ID
+  cicd project get     Get a Copado project by ID
+  cicd project list    List Copado projects
+  cicd project open    Open a Copado project in the browser
+  cicd project update  Update a Copado project by ID
+

@@ -1,0 +1,28 @@
+Create or update a Copado Robotic Testing job/test schedule
+
+USAGE
+  $ agentia testing job schedule set ID -p <value> --cron <value> [--json] [--record
+    all|failed|none] [--timezone <value>]
+
+ARGUMENTS
+  ID  CRT job/test ID.
+
+FLAGS
+  -p, --project=<value>   (required) CRT project ID.
+      --cron=<value>      (required) Cron expression for the schedule.
+      --record=<option>   Recording mode for scheduled runs.
+                          <options: all|failed|none>
+      --timezone=<value>  Timezone for the schedule, for example
+                          Europe/Helsinki.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create or update a Copado Robotic Testing job/test schedule
+
+EXAMPLES
+  $ agentia testing job schedule set <job-id> --project <project-id> --cron "0 6 * * 1-5"
+
+  $ agentia testing job schedule set <job-id> --project <project-id> --cron "0 6 * * *" --timezone Europe/Helsinki --record failed --json
+

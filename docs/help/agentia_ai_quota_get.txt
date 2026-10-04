@@ -1,0 +1,19 @@
+Get Copado AI organization quota
+
+USAGE
+  $ agentia ai quota get [--json] [--timeout <value>]
+
+FLAGS
+  --timeout=<value>  AI gateway timeout in seconds.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get Copado AI organization quota
+
+EXAMPLES
+  $ agentia ai quota get
+
+  $ agentia ai quota get --json
+

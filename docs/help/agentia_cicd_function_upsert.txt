@@ -1,0 +1,46 @@
+Create or update a Copado Function by API name
+
+USAGE
+  $ agentia cicd function upsert API-NAME [--json] [--apex-class <value>]
+    [--callback <value>] [--description <value>] [--file <value>]
+    [--flow-handler <value>] [--image-name <value>] [--name <value>]
+    [--parameters-file <value>] [--runtime bash|node|python] [--script <value>]
+    [--script-file <value>] [--size <value>] [--timeout <value>] [--type
+    <value>] [--version <value>]
+
+ARGUMENTS
+  API-NAME  Function API name
+
+FLAGS
+  --apex-class=<value>       Apex callback class
+  --callback=<value>         Function callback type
+  --description=<value>      Function description
+  --file=<value>             Path to a JSON file with the full upsert payload
+                             (overrides individual script flags)
+  --flow-handler=<value>     Flow handler name
+  --image-name=<value>       Function container image
+  --name=<value>             Function display name (defaults to the API name
+                             argument)
+  --parameters-file=<value>  Path to a JSON file containing the parameters array
+  --runtime=<option>         Script runtime
+                             <options: bash|node|python>
+  --script=<value>           Inline script content
+  --script-file=<value>      Path to a file whose contents become the script
+  --size=<value>             Function size
+  --timeout=<value>          Function timeout in seconds
+  --type=<value>             Function type
+  --version=<value>          Function version
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create or update a Copado Function by API name
+
+EXAMPLES
+  $ agentia cicd function upsert myFunction --name "My Function" --script "echo hello"
+
+  $ agentia cicd function upsert myFunction --script-file ./run.sh --runtime bash --json
+
+  $ agentia cicd function upsert myFunction --file ./function.json --json
+

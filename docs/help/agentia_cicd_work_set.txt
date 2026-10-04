@@ -1,0 +1,42 @@
+Set the active work item and prepare a local feature branch. Calls the CICD gateway work/set endpoint, requires a clean tracked working tree, fetches the work item base branch from origin, fetches the feature branch when it exists on origin, then creates or checks out feature/<user-story-name> from the remote feature branch when present, otherwise from the base branch. A gateway warning prints the message, skips git, clears lastBaseBranch/lastDevOrgBranch/lastPullRequestBaseUrl, and records lastWorkItemId/lastWorkItem/lastWorkItemTitle from the returned work item. After work/set returns, compares the Story source credential with the CICD project default: warns when the default or Story credential is missing, and warns without changing the Story when they differ (shows the current credential and environment; use work update to change it). With --none, clears every last* key from `.agentia/config.user.json` and checks out the previous lastBaseBranch when present, else main, else master, else stays put.
+
+USAGE
+  $ agentia cicd work set [ID] [--json] [--base-branch <value>] [--none]
+
+ARGUMENTS
+  [ID]  User story ID or name (omit with --none)
+
+FLAGS
+  --base-branch=<value>  Override the base branch returned by the work/set
+                         endpoint
+  --none                 Clear every last* key from `.agentia/config.user.json`
+                         and check out lastBaseBranch, else main, else master.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Set the active work item and prepare a local feature branch. Calls the CICD
+  gateway work/set endpoint, requires a clean tracked working tree, fetches the
+  work item base branch from origin, fetches the feature branch when it exists
+  on origin, then creates or checks out feature/<user-story-name> from the
+  remote feature branch when present, otherwise from the base branch. A gateway
+  warning prints the message, skips git, clears
+  lastBaseBranch/lastDevOrgBranch/lastPullRequestBaseUrl, and records
+  lastWorkItemId/lastWorkItem/lastWorkItemTitle from the returned work item.
+  After work/set returns, compares the Story source credential with the CICD
+  project default: warns when the default or Story credential is missing, and
+  warns without changing the Story when they differ (shows the current
+  credential and environment; use work update to change it). With --none, clears
+  every last* key from `.agentia/config.user.json` and checks out the previous
+  lastBaseBranch when present, else main, else master, else stays put.
+
+EXAMPLES
+  $ agentia cicd work set a0SKC000000CmZ2AU
+
+  $ agentia cicd work set US-0001 --json
+
+  $ agentia cicd work set US-0001 --base-branch develop
+
+  $ agentia cicd work set --none
+

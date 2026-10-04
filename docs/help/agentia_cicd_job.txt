@@ -1,0 +1,18 @@
+Manage Copado job executions
+
+USAGE
+  $ agentia cicd job COMMAND
+
+TOPICS
+  cicd job log          Inspect Copado job execution logs
+  cicd job result-file  Inspect Files linked to Copado job Results
+
+COMMANDS
+  cicd job get     Get a Copado job execution with ordered steps
+  cicd job kill    Cancel a Copado job execution
+  cicd job list    List Copado job executions
+  cicd job open    Open a Copado job execution in the browser
+  cicd job pause   Pause a Copado job execution (resumable cancel alias)
+  cicd job resume  Resume outstanding steps for a Copado job execution
+  cicd job run     Run all steps for a Copado job execution
+

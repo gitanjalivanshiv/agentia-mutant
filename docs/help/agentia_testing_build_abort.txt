@@ -1,0 +1,24 @@
+Abort a Copado Robotic Testing build/run
+
+USAGE
+  $ agentia testing build abort ID -p <value> -j <value> [--json] [-y]
+
+ARGUMENTS
+  ID  CRT build/run ID.
+
+FLAGS
+  -j, --job=<value>      (required) CRT job/test ID.
+  -p, --project=<value>  (required) CRT project ID.
+  -y, --yes              Skip the destructive confirmation prompt.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Abort a Copado Robotic Testing build/run
+
+EXAMPLES
+  $ agentia testing build abort <build-id> --project <project-id> --job <job-id> --yes
+
+  $ agentia testing build abort <build-id> --project <project-id> --job <job-id> --yes --json
+

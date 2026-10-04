@@ -1,0 +1,22 @@
+Get a Copado Robotic Testing robot from the project robot list
+
+USAGE
+  $ agentia testing robot get ID -p <value> [--json]
+
+ARGUMENTS
+  ID  CRT robot ID.
+
+FLAGS
+  -p, --project=<value>  (required) CRT project ID.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado Robotic Testing robot from the project robot list
+
+EXAMPLES
+  $ agentia testing robot get <robot-id> --project <project-id>
+
+  $ agentia testing robot get <robot-id> --project <project-id> --json
+

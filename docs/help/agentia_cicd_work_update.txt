@@ -1,0 +1,68 @@
+Update a Copado user story by ID
+
+USAGE
+  $ agentia cicd work update [ID] [--json] [--excluded-from-cbm]
+    [--actual-points <value>] [--planned-points <value>] [--priority <value>]
+    [--acceptance-criteria <value>] [--as-a <value>] [--assignee <value>]
+    [--cancellation-reason <value>] [--close-date <value>] [--epic <value>]
+    [--feature <value>] [--functional-requirements <value>] [--owner-id <value>]
+    [--project <value>] [--record-type <value>] [--release-id <value>]
+    [--so-that <value>] [--source-credential <value>] [--source-environment
+    <value>] [--sprint-id <value>] [--status <value>] [--team <value>]
+    [--technical-specifications <value>] [--theme <value>] [--title <value>]
+    [--want-to <value>]
+
+ARGUMENTS
+  [ID]  User story ID (defaults to the active work item from `work set`)
+
+FLAGS
+  --acceptance-criteria=<value>       Acceptance criteria (maximum 255
+                                      characters)
+  --actual-points=<value>             Actual points
+  --as-a=<value>                      User story "as a" clause (maximum 255
+                                      characters)
+  --assignee=<value>                  Assignee ID
+  --cancellation-reason=<value>       Cancellation reason
+  --close-date=<value>                Close date
+  --epic=<value>                      Epic
+  --[no-]excluded-from-cbm            Exclude from CBM
+  --feature=<value>                   Feature
+  --functional-requirements=<value>   Functional requirements (maximum 30000
+                                      characters)
+  --owner-id=<value>                  Owner ID
+  --planned-points=<value>            Planned points
+  --priority=<value>                  Priority
+  --project=<value>                   Project ID
+  --record-type=<value>               Record type
+  --release-id=<value>                Release ID
+  --so-that=<value>                   User story "so that" clause (maximum 255
+                                      characters)
+  --source-credential=<value>         Source credential ID. When set,
+                                      sourceEnvironment is sent as null so
+                                      Salesforce assigns the environment from
+                                      the credential.
+  --source-environment=<value>        Source environment ID. Ignored when
+                                      --source-credential is also set.
+  --sprint-id=<value>                 Sprint ID
+  --status=<value>                    Status
+  --team=<value>                      Team
+  --technical-specifications=<value>  Technical specifications (maximum 30000
+                                      characters)
+  --theme=<value>                     Theme
+  --title=<value>                     Title (maximum 255 characters)
+  --want-to=<value>                   User story "want to" clause (maximum 255
+                                      characters)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Update a Copado user story by ID
+
+EXAMPLES
+  $ agentia cicd work update --title "Updated story"
+
+  $ agentia cicd work update a0SKC000000CmZ2AU --title "Updated story"
+
+  $ agentia cicd work update a0SKC000000CmZ2AU --status "In Progress" --json
+

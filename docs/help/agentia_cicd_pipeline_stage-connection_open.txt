@@ -1,0 +1,19 @@
+Open a pipeline stage connection in the browser
+
+USAGE
+  $ agentia cicd pipeline stage-connection open ID [--json]
+
+ARGUMENTS
+  ID  Pipeline stage connection ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a pipeline stage connection in the browser
+
+EXAMPLES
+  $ agentia cicd pipeline stage-connection open connection-1
+
+  $ agentia cicd pipeline stage-connection open connection-1 --json
+

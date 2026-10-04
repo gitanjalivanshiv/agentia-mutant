@@ -1,0 +1,13 @@
+Refresh Copado metadata indexes
+
+USAGE
+  $ agentia cicd metadata refresh COMMAND
+
+COMMANDS
+  cicd metadata refresh deleted  Refresh the deleted metadata index via the CICD
+                                 gateway
+  cicd metadata refresh run      Trigger a metadata index refresh via the CICD
+                                 gateway
+  cicd metadata refresh status   Get metadata index refresh status via the CICD
+                                 gateway
+

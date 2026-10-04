@@ -1,0 +1,156 @@
+# Agentia commands used by Mutant
+
+Source of truth: `agentia --help` output for **@copado/agentia-cli 1.0.0-beta.2**, saved verbatim in [`docs/help/`](help/) (276 pages), plus the managed Agentia skills (`agentia-cicd`, `agentia-testing`, `agentia-ai`). The MCP tool list is in [`mcp-tools.md`](mcp-tools.md).
+
+Status legend: ✅ called and shape observed · 📄 from `--help` only (shape not yet observed) · ⛔ blocked (CI/CD auth not configured yet)
+
+---
+
+## 1. Output envelope, errors, exit codes (observed ✅)
+
+Every `--json` call prints exactly one JSON document on **stdout**. Nothing was written to stderr in the cases we observed.
+
+```ts
+/** Success. Observed on `auth get`, `testing project list`, `ai quota get`, `ai workspace list`. */
+interface AgentiaOk<T> {
+  result: T;
+  status: 0;
+  transactionId: string; // uuid
+}
+
+/** Failure (API/config errors AND flag-parse errors). Exit code 1 in both cases. */
+interface AgentiaErr {
+  error: {
+    message: string; // human-readable, e.g. "CICD API key is not configured. Run `agentia auth set --cicd ...`"
+    name: string;    // "Error"
+    code?: string;
+    // Flag-parse errors also embed `oclif` and `parse` objects containing the
+    // ENTIRE CLI config (hundreds of KB). AgentiaClient must read only
+    // message/name/code and never log the raw payload.
+    [k: string]: unknown;
+  };
+  transactionId: string;
+}
+```
+
+| Case | Exit | Shape |
+|---|---|---|
+| Success | 0 | `AgentiaOk` |
+| API / config error (e.g. missing CICD key) | 1 | `AgentiaErr`, small |
+| Missing required flag | 1 | `AgentiaErr` with huge `oclif`/`parse` blobs |
+| CRT run failed with `--wait-for-result` | non-zero unless `--no-exit-code` | 📄 |
+| Cloud commit / promote job failed or timed out | non-zero, diagnostic IDs preserved | 📄 (skill doc) |
+
+**Adapter rules:** parse stdout as JSON regardless of exit code; discriminate on `"error" in doc`; cap stdout buffer generously (≥ 5 MB) because parse errors are large; never print `result` of `auth get` (contains masked keys and org IDs).
+
+---
+
+## 2. Auth / readiness
+
+### `agentia auth get [--ai] [--cicd] [--crt] --json` ✅
+```ts
+interface AuthGetResult {
+  configFiles: { exists: boolean; label: string; path: string; scope: 'project' | 'user' }[];
+  credentials: {
+    type: 'cicd' | 'crt' | 'ai';
+    label: string;
+    set: boolean;
+    ready?: boolean | null;   // CRT reports true/false; AI reported null even when set
+    missing?: string[] | null;
+    issues?: string[] | null;
+    source?: 'global' | string | null;
+    masked?: string;          // DO NOT log
+    domain?: string;
+    orgId?: string;           // DO NOT log / commit
+  }[];
+}
+```
+Readiness rule for `mutant doctor`: CRT → `ready === true`; CICD → `set === true` **and** a cheap read call (`cicd environment list --page-size 1`) succeeds; AI → `set === true` and `ai quota get` succeeds (AI never reports `ready`).
+
+---
+
+## 3. CI/CD (⛔ all blocked until `agentia auth set --cicd` is done)
+
+### Stories
+| Command | Purpose |
+|---|---|
+| `cicd work list [--assigned-to-me] [--name] [--title] [--project-id] [--status] [--page-size] [--cursor] --json` | find the lab story |
+| `cicd work get [ID] --json` | read story (ID optional after `work set`) |
+| `cicd work create --title … [--project <id>] [--source-environment <id> \| --source-credential <id>] [--status] --json` | create lab story |
+| `cicd work update [ID] [--status] [--source-credential] … --json` | adjust story |
+| `cicd work set <ID\|name> [--base-branch] [--none] --json` | activate, checks out `feature/<story-name>`; writes `.agentia/config.user.json` (`lastWorkItemId`, `lastBaseBranch`, `lastDevOrgBranch`, …). `status:"warning"` ⇒ story misconfigured, stop |
+| `cicd work status [ID] [--metadata-list-only] --json` | story + related job executions |
+
+### Local delivery (the path Mutant uses)
+| Command | Purpose / notes |
+|---|---|
+| `git commit` | apply mutant |
+| `cicd work publish [--permissions T:N,…] [--full-metadata T:N,…] [--skip-nested-metadata-detection] --json` | push branch, register Copado commit(s) in `origin/<base>..HEAD`, merge into dev-org branch. Needs ≥1 new commit. **PermissionSet edits** are sent as RetrieveOnly nested metadata — use `--full-metadata PermissionSet:<name>` so a revoked permission actually deploys |
+| `cicd work submit [--done\|--deploy] [--skip-local-tests] [--skip-pull-request] [--apex-test-classes] --json` | without `--done`: validate-only promote (`validate=true`). With `--done`: promote **and deploy** to next pipeline env. Waits ≤5 min for a pending Commit job |
+| `cicd work test [--local] [--apex-test-classes] --json` | runs `.agentia_quality_gates.sh` (not CRT) |
+| `cicd work test apex -t <classes> [-w <minutes>] --json` | named Apex tests |
+
+**Not used:** `cicd work promote` (experimental, skips quality gates and deploys with `sf project deploy start` directly — that would bypass Copado's deploy path). `cicd cloud commit/promote` (cloud flow; must never be mixed with the local flow on the same story).
+
+### Promotions / jobs (monitoring + recovery)
+| Command | Purpose |
+|---|---|
+| `cicd promotion list --work-id <story> --json` | find promotion for the story |
+| `cicd promotion get <id> --json` | read before run/resume |
+| `cicd promotion run <id> --operation merge\|merge_and_deploy [--resume <jobExecId>] [--wait-timeout 900] --json` | explicit (re)run |
+| `cicd promotion conflict list -p <id> --json` | conflict detection |
+| `cicd job get <jobExecId> --json` | status + ordered steps |
+| `cicd job log get <jobExecId> [--step <id>] --json` | deploy failure diagnosis → `invalid` classification |
+
+### Verification (revert check)
+| Command | Purpose |
+|---|---|
+| `cicd metadata content compare --metadata-type <T> --api-name <N> [--source ENVIRONMENT\|REPOSITORY\|GIT_MIRROR\|ORG_CACHE] [--target-source …] [--source-org-id/--target-org-id] [--source-credential-id] [--source-branch/--target-branch] [--pipeline-id] --json` | per-component diff lab vs baseline branch — **the `verify` step** |
+| `cicd metadata index compare --comparison-mode BRANCH_COMPARE\|INDEX_FILE\|MIX …` | whole-org drift check for `doctor` |
+| `cicd metadata list --source Changed --metadata-types … --change-date-from …` | planner: "recently changed" components |
+| `cicd environment list [--name] [--type] --json`, `environment get <id>` | resolve `labEnvironment` name → id; safety name check |
+| `cicd pipeline list/get`, `pipeline connection list --pipeline-id` | confirm lab is a promotion destination |
+
+---
+
+## 4. Copado Robotic Testing
+
+| Command | Status | Notes |
+|---|---|---|
+| `testing project list --json` | ✅ | `result: CrtProject[]` — **currently empty** for the configured CRT org |
+| `testing robot list -p <project> --json` | 📄 | `--project` is required |
+| `testing job list -p <project> [--name] --json`, `testing job get <job> -p <project>` | 📄 | CRT job = test definition (≠ `cicd job`) |
+| `testing test create -p <project> --robot <id> --name … --file x.robot \| --dir … --json` | 📄 | creates CRT job from local .robot files |
+| `testing job upload <job> -p <project> --add\|--replace local[:remote] [--remove path] [--message] [--dry-run] --json` | 📄 | **`heal --apply` uploads tests here**; `--dry-run` gives a plan without mutation |
+| `testing job files <job> -p <project>` / `job download` | 📄 | snapshot current suite before heal |
+| `testing build run <job> -p <project> [--test …] [--include tag] [--wait-for-result] [--timeout min] [--no-exit-code] [--xunit <path>] [--save-artifacts <path>] [--run-type regression\|development] --json` | 📄 | same flags as `testing test run`. `--stream-logs`/`--watch` incompatible with `--json` |
+| `testing build get <build> -p <project> -j <job> [--full] --json` | 📄 | poll |
+| `testing build latest -p <project> [--status …]` | 📄 | |
+| `testing build logs <build> -p <project> -j <job> [-o <path>] [--tail-lines] --json` | 📄 | explicit `-o` path only |
+| `testing build abort` | 📄 | needs `--yes` |
+
+Runner plan: `build run --json` (no wait) → poll `build get` every 10 s → on terminal: `build get --full` + `build logs -o artifacts/<mutant>/crt.log` (+ `--xunit` path if we use `--wait-for-result` instead). Per-test pass/fail parsed from xUnit to name the killing test.
+
+---
+
+## 5. Copado AI
+
+| Command | Status | Shape |
+|---|---|---|
+| `ai quota get --json` | ✅ | `result: { limit: number; usage: number }` |
+| `ai workspace list --json` | ✅ | `result: { workspaces: { id; name; description; organization_id; created_at; created_by; modified_at; modified_by; icon_url }[] }` (3 workspaces visible) |
+| `ai agent ask -p <prompt> --agent test [--component <name>] [--user-story <id>] [--sf-org <env>] [--workspace <uuid>] [--dialogue <uuid>] [--no-stream] [--timeout s] [--no-credential-sync] --json` | 📄 | `--agent test` is selectable ✅ — used by `heal`. `--no-credential-sync` avoids needing CICD for pure test generation |
+
+---
+
+## 6. MCP
+
+`agentia mcp start` — stdio server, 192 tools (see [`mcp-tools.md`](mcp-tools.md)). Relevant to the demo: `agentia_testing_build_run/get/logs`, `agentia_testing_job_upload`, `agentia_ai_ask`, `agentia_work_*`, `agentia_metadata_content_compare`. MCP destructive ops take `confirm: true`. No CLI subcommand lists tools; we used a raw JSON-RPC `tools/list`.
+
+---
+
+## 7. Plugin scaffolding
+
+- Generator: `npm init @copado/agentia-plugin <dir>` → package `@copado/create-agentia-plugin@0.3.0` (exists on npm ✅).
+- Link: `agentia plugins link .` · `agentia plugins` currently reports "No plugins installed."
+- Host CLI: oclif 4, `topicSeparator: " "`, Node ≥ 18 (we have Node 24.18).

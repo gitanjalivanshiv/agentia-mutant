@@ -1,0 +1,19 @@
+Pause a Copado job execution (resumable cancel alias)
+
+USAGE
+  $ agentia cicd job pause ID [--json]
+
+ARGUMENTS
+  ID  JobExecution Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Pause a Copado job execution (resumable cancel alias)
+
+EXAMPLES
+  $ agentia cicd job pause <job-id>
+
+  $ agentia cicd job pause <job-id> --json
+

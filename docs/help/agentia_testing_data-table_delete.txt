@@ -1,0 +1,25 @@
+Delete a Copado Robotic Testing data table
+
+USAGE
+  $ agentia testing data-table delete ID -p <value> [--json] [--job <value>]
+  [-y]
+
+ARGUMENTS
+  ID  CRT data-table ID.
+
+FLAGS
+  -p, --project=<value>  (required) CRT project ID.
+  -y, --yes              Confirm data-table deletion.
+      --job=<value>      Optional CRT job/test ID filter.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a Copado Robotic Testing data table
+
+EXAMPLES
+  $ agentia testing data-table delete <table-id> --project <project-id> --yes
+
+  $ agentia testing data-table delete <table-id> --project <project-id> --yes --json
+

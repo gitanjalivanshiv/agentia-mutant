@@ -1,0 +1,9 @@
+Inspect Files linked to Copado job Results
+
+USAGE
+  $ agentia cicd job result-file COMMAND
+
+COMMANDS
+  cicd job result-file get   Get a File linked to a Copado job Result
+  cicd job result-file list  List Files linked to a Copado job Result
+

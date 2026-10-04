@@ -1,0 +1,19 @@
+Get the raw v2 data template detail payload
+
+USAGE
+  $ agentia cicd data template get-detail ID [--json]
+
+ARGUMENTS
+  ID  Data template Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get the raw v2 data template detail payload
+
+EXAMPLES
+  $ agentia cicd data template get-detail a0X000000000001
+
+  $ agentia cicd data template get-detail a0X000000000001 --json
+

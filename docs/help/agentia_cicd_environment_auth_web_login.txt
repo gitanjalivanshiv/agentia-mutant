@@ -1,0 +1,30 @@
+Authenticate an environment credential via browser web login
+
+USAGE
+  $ agentia cicd environment auth web login ID [--json] [--credentialid <value>] [--port
+    <value>] [--timeout <value>]
+
+ARGUMENTS
+  ID  Copado environment ID
+
+FLAGS
+  --credentialid=<value>  Credential ID to authenticate when automatic selection
+                          is not possible
+  --port=<value>          Local loopback port (default: scan 8080-8090)
+  --timeout=<value>       [default: 300] Max seconds to wait for browser login
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Authenticate an environment credential via browser web login
+
+EXAMPLES
+  $ agentia cicd environment auth web login <environment-id>
+
+  $ agentia cicd environment auth web login <environment-id> --credentialid <credential-id>
+
+  $ agentia cicd environment auth web login <environment-id> --port 8085 --timeout 120
+
+  $ agentia cicd environment auth web login <environment-id> --json
+

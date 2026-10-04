@@ -1,0 +1,8 @@
+Compare Copado metadata indexes
+
+USAGE
+  $ agentia cicd metadata index COMMAND
+
+COMMANDS
+  cicd metadata index compare  Compare metadata between orgs or Git branches
+

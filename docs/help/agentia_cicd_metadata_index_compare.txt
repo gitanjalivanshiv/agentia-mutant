@@ -1,0 +1,31 @@
+Compare metadata between orgs or Git branches
+
+USAGE
+  $ agentia cicd metadata index compare [--json] [--comparison-mode
+    BRANCH_COMPARE|INDEX_FILE|MIX] [--filter-type <value>] [--pipeline-id
+    <value>] [--source-credential-id <value>] [--source-org-id <value>]
+    [--target-org-id <value>]
+
+FLAGS
+  --comparison-mode=<option>      [default: BRANCH_COMPARE] Comparison mode
+                                  <options: BRANCH_COMPARE|INDEX_FILE|MIX>
+  --filter-type=<value>           Optional metadata type filter, for example
+                                  ApexClass
+  --pipeline-id=<value>           Pipeline Id
+  --source-credential-id=<value>  Source org credential Id
+  --source-org-id=<value>         Source org Id
+  --target-org-id=<value>         Target org Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Compare metadata between orgs or Git branches
+
+EXAMPLES
+  $ agentia cicd metadata index compare --comparison-mode BRANCH_COMPARE --pipeline-id <id> --source-org-id <id> --source-credential-id <id> --target-org-id <id>
+
+  $ agentia cicd metadata index compare --comparison-mode INDEX_FILE --filter-type ApexClass --pipeline-id <id> --source-org-id <id> --source-credential-id <id> --target-org-id <id>
+
+  $ agentia cicd metadata index compare --comparison-mode MIX --json
+

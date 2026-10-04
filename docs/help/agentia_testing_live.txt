@@ -1,0 +1,32 @@
+Manage Copado Robotic Testing live sessions
+
+USAGE
+  $ agentia testing live COMMAND
+
+COMMANDS
+  testing live continue     Continue paused Robot execution in the active CRT
+                            live session
+  testing live execute      Execute bounded Robot Framework keywords in an
+                            active CRT live session
+  testing live history      Read bounded sanitized local CRT live execution
+                            history
+  testing live inspect      Inspect bounded, sanitized page state from an active
+                            CRT live session
+  testing live interrupt    Interrupt Robot execution in the active CRT live
+                            session
+  testing live recorder     Record CRT live interactions as bounded Robot
+                            Framework lines
+  testing live reports      List or save bounded report artifacts from an active
+                            CRT live session
+  testing live screenshot   Save a bounded CRT live browser screenshot to an
+                            explicit file
+  testing live set-options  Set the complete validated CRT live recorder option
+                            block
+  testing live start        Start and bootstrap a bounded Copado Robotic Testing
+                            live session
+  testing live status       Inspect sanitized status for the active CRT live
+                            session
+  testing live stop         Stop the active Copado Robotic Testing live session
+  testing live view         Open the authenticated CRT run/session page without
+                            putting viewer secrets in the URL
+

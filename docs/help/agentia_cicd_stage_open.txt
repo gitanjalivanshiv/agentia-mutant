@@ -1,0 +1,19 @@
+Open a Copado stage in the browser
+
+USAGE
+  $ agentia cicd stage open ID [--json]
+
+ARGUMENTS
+  ID  Stage ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a Copado stage in the browser
+
+EXAMPLES
+  $ agentia cicd stage open <stage-id>
+
+  $ agentia cicd stage open <stage-id> --json
+

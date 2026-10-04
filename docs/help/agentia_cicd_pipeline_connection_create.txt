@@ -1,0 +1,37 @@
+Create one or more Copado pipeline connections
+
+USAGE
+  $ agentia cicd pipeline connection create --pipeline-id <value> [--json] [--connection-id
+    <value>] [-f <value> | --branch <value> | --destination-branch <value> |
+    --destination-environment-id <value> | --source-environment-id <value> |
+    --stage-connection-id <value> | --sync-merge-state <value> |
+    --sync-pull-state <value>]
+
+FLAGS
+  -f, --file=<value>                        Path to a JSON array of pipeline
+                                            connections to create
+      --branch=<value>                      Source branch for the connection
+      --connection-id=<value>               Pipeline connection ID (required for
+                                            single-connection update or delete)
+      --destination-branch=<value>          Destination branch for the
+                                            connection
+      --destination-environment-id=<value>  Destination environment ID
+      --pipeline-id=<value>                 (required) Pipeline ID or name
+      --source-environment-id=<value>       Source environment ID
+      --stage-connection-id=<value>         Stage connection ID
+      --sync-merge-state=<value>            Sync merge state
+      --sync-pull-state=<value>             Sync pull state
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create one or more Copado pipeline connections
+
+EXAMPLES
+  $ agentia cicd pipeline connection create --pipeline-id pipeline-1 --source-environment-id env-1 --destination-environment-id env-2 --branch main
+
+  $ agentia cicd pipeline connection create --pipeline-id pipeline-1 --file connections.json
+
+  $ agentia cicd pipeline connection create --pipeline-id pipeline-1 --source-environment-id env-1 --destination-environment-id env-2 --branch main --json
+

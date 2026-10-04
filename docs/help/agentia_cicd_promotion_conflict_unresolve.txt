@@ -1,0 +1,22 @@
+Undo a promotion conflict resolution
+
+USAGE
+  $ agentia cicd promotion conflict unresolve ID -p <value> [--json]
+
+ARGUMENTS
+  ID  Conflict attachment Id
+
+FLAGS
+  -p, --promotion=<value>  (required) Copado promotion Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Undo a promotion conflict resolution
+
+EXAMPLES
+  $ agentia cicd promotion conflict unresolve <conflict-id> --promotion <promotion-id>
+
+  $ agentia cicd promotion conflict unresolve <conflict-id> -p <promotion-id> --json
+

@@ -1,0 +1,23 @@
+Save a v2 data template detail payload
+
+USAGE
+  $ agentia cicd data template save-detail ID [--json] [-f <value> | --stdin]
+
+ARGUMENTS
+  ID  Data template Id
+
+FLAGS
+  -f, --file=<value>  Path to a JSON file body
+      --stdin         Read the JSON body from stdin
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Save a v2 data template detail payload
+
+EXAMPLES
+  $ agentia cicd data template save-detail a0X000000000001 --file detail.json
+
+  $ agentia cicd data template save-detail a0X000000000001 --stdin --json
+

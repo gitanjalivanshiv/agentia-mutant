@@ -1,0 +1,26 @@
+Manage Copado CICD workflows
+
+USAGE
+  $ agentia cicd COMMAND
+
+TOPICS
+  cicd cloud         Run Copado cloud commit and promotion operations
+  cicd credential    Manage Copado environment credentials
+  cicd data          Manage Copado data templates and data commits
+  cicd environment   Manage Copado environments
+  cicd function      Scaffold default Copado Function metadata and script
+                     without writing to Salesforce
+  cicd job           Manage Copado job executions
+  cicd metadata      Inspect and compare Copado metadata
+  cicd notification  Configure Copado notification subscriptions
+  cicd pipeline      Manage Copado pipelines
+  cicd project       Manage Copado projects
+  cicd promotion     Manage Copado promotions
+  cicd repository    Manage Copado Git repositories
+  cicd stage         Create a Copado stage
+  cicd user          Manage Copado users
+  cicd work          Manage Copado user stories
+
+COMMANDS
+  cicd health-check  Run organization-scoped governance health checks
+

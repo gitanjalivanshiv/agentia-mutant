@@ -1,0 +1,13 @@
+Manage Copado environment authentication
+
+USAGE
+  $ agentia cicd environment auth COMMAND
+
+TOPICS
+  cicd environment auth web  Authenticate an environment credential via browser
+                             web login
+
+COMMANDS
+  cicd environment auth status  Validate the authentication status of an
+                                environment credential
+

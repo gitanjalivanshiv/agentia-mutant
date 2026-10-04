@@ -1,0 +1,62 @@
+Submit the current feature/<lastWorkItem> work item for pipeline quality gates and validation. Runs project-root .agentia_quality_gates.sh (macOS/Linux) or .agentia_quality_gates.cmd (Windows) when present, pushes and registers commits when the branch is ahead of origin, then calls headless work/submit (Promote Action with validate=true). When the last pending related job template name contains Commit, waits up to 5 minutes for that job before submitting. Before submit or promote, counts user stories ahead and behind between the source environment and the next pipeline environment, and warns when stories behind might cause promotion conflicts. With --done or --deploy, matches Copado UI Submit when promoting (validate=false / headless work/done). cicd work done is a compatibility alias of this command with --done.
+
+USAGE
+  $ agentia cicd work submit [--json] [--skip-nested-metadata-detection]
+    [--apex-test-classes <value>] [--deploy] [--done] [--skip-local-tests]
+    [--skip-pull-request]
+
+FLAGS
+  --apex-test-classes=<value>       Comma-separated Apex test class names passed
+                                    to local quality gates as
+                                    AGENTIA_APEX_TEST_CLASSES
+  --deploy                          Alias of --done: promote instead of
+                                    validate-only (Copado UI Submit promote)
+  --done                            Promote instead of validate-only (Copado UI
+                                    Submit promote); honors
+                                    --skip-nested-metadata-detection. --deploy
+                                    is an alias of --done.
+  --skip-local-tests                Skip running local quality gates scripts in
+                                    the project root
+  --skip-nested-metadata-detection  Do not detect the nested metadata changed
+                                    across the branch when pushing (also
+                                    configurable via skipNestedMetadataDetection
+                                    in .agentia/config.json or
+                                    .agentia/config.user.json)
+  --skip-pull-request               Do not open the pull request compare URL
+                                    after submit (also configurable via
+                                    skipPullRequest in .agentia/config.json or
+                                    .agentia/config.user.json)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Submit the current feature/<lastWorkItem> work item for pipeline quality gates
+  and validation. Runs project-root .agentia_quality_gates.sh (macOS/Linux) or
+  .agentia_quality_gates.cmd (Windows) when present, pushes and registers
+  commits when the branch is ahead of origin, then calls headless work/submit
+  (Promote Action with validate=true). When the last pending related job
+  template name contains Commit, waits up to 5 minutes for that job before
+  submitting. Before submit or promote, counts user stories ahead and behind
+  between the source environment and the next pipeline environment, and warns
+  when stories behind might cause promotion conflicts. With --done or --deploy,
+  matches Copado UI Submit when promoting (validate=false / headless work/done).
+  cicd work done is a compatibility alias of this command with --done.
+
+EXAMPLES
+  $ agentia cicd work submit
+
+  $ agentia cicd work submit --apex-test-classes=MyTest,OtherTest
+
+  $ agentia cicd work submit --skip-local-tests
+
+  $ agentia cicd work submit --skip-pull-request
+
+  $ agentia cicd work submit --done
+
+  $ agentia cicd work submit --deploy
+
+  $ agentia cicd work submit --done --skip-nested-metadata-detection
+
+  $ agentia cicd work submit --json
+

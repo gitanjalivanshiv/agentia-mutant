@@ -1,0 +1,36 @@
+Create a Copado pipeline
+
+USAGE
+  $ agentia cicd pipeline create NAME [--json] [--active] [--block-commits]
+    [--enable-smart-conflict-resolution] [--calculate-based-on User
+    Story|Branch] [--git-repository-id <value>] [--main-branch <value>]
+    [--platform Salesforce|SFDX|Heroku|Mulesoft|Marketing|Other]
+
+ARGUMENTS
+  NAME  Name of the Copado pipeline to create
+
+FLAGS
+  --[no-]active                            Whether the pipeline is active
+  --[no-]block-commits                     Block commits on the pipeline
+  --calculate-based-on=<option>            Promotion calculation basis
+                                           <options: User Story|Branch>
+  --[no-]enable-smart-conflict-resolution  Enable smart conflict resolution
+  --git-repository-id=<value>              Git repository ID
+  --main-branch=<value>                    Main branch name
+  --platform=<option>                      Pipeline platform
+                                           <options: Salesforce|SFDX|Heroku|Mule
+                                           soft|Marketing|Other>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado pipeline
+
+EXAMPLES
+  $ agentia cicd pipeline create "Dev Pipeline"
+
+  $ agentia cicd pipeline create "Dev Pipeline" --platform SFDX --main-branch main --active
+
+  $ agentia cicd pipeline create "Dev Pipeline" --json
+

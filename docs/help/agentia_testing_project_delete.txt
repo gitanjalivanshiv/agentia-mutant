@@ -1,0 +1,22 @@
+Delete a Copado Robotic Testing project
+
+USAGE
+  $ agentia testing project delete ID [--json] [-y]
+
+ARGUMENTS
+  ID  CRT project ID.
+
+FLAGS
+  -y, --yes  Skip the destructive confirmation prompt.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a Copado Robotic Testing project
+
+EXAMPLES
+  $ agentia testing project delete <project-id> --yes
+
+  $ agentia testing project delete <project-id> --yes --json
+

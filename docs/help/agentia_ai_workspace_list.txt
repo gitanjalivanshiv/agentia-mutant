@@ -1,0 +1,19 @@
+List Copado AI workspaces
+
+USAGE
+  $ agentia ai workspace list [--json] [--timeout <value>]
+
+FLAGS
+  --timeout=<value>  AI gateway timeout in seconds.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado AI workspaces
+
+EXAMPLES
+  $ agentia ai workspace list
+
+  $ agentia ai workspace list --json
+

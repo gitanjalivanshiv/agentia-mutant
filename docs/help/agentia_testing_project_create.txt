@@ -1,0 +1,26 @@
+Create a Copado Robotic Testing project
+
+USAGE
+  $ agentia testing project create --name <value> [--json] [--dashboard-id <value>]
+    [--description <value>] [--executor jenkins|kubernetes] [--type ta|rpa]
+
+FLAGS
+  --dashboard-id=<value>  Optional CRT dashboard ID.
+  --description=<value>   Project description.
+  --executor=<option>     Project execution backend.
+                          <options: jenkins|kubernetes>
+  --name=<value>          (required) Project name.
+  --type=<option>         [default: ta] CRT project type.
+                          <options: ta|rpa>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado Robotic Testing project
+
+EXAMPLES
+  $ agentia testing project create --name "QA Tests"
+
+  $ agentia testing project create --name "QA Tests" --description "Smoke suite" --json
+

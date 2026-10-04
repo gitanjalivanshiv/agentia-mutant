@@ -1,0 +1,13 @@
+Manage Copado promotion conflicts
+
+USAGE
+  $ agentia cicd promotion conflict COMMAND
+
+COMMANDS
+  cicd promotion conflict get        Get raw merge-conflict content for a
+                                     promotion file
+  cicd promotion conflict list       List merge conflicts for a Copado promotion
+  cicd promotion conflict resolve    Resolve a promotion merge conflict
+                                     automatically or from a file
+  cicd promotion conflict unresolve  Undo a promotion conflict resolution
+

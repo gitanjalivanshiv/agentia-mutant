@@ -1,0 +1,22 @@
+Get the schedule for a Copado Robotic Testing job/test
+
+USAGE
+  $ agentia testing job schedule get ID -p <value> [--json]
+
+ARGUMENTS
+  ID  CRT job/test ID.
+
+FLAGS
+  -p, --project=<value>  (required) CRT project ID.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get the schedule for a Copado Robotic Testing job/test
+
+EXAMPLES
+  $ agentia testing job schedule get <job-id> --project <project-id>
+
+  $ agentia testing job schedule get <job-id> --project <project-id> --json
+

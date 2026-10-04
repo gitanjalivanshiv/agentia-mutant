@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.mutant/runs/
+.agentia/config.user.json
+.env*
+*.log
+oclif.manifest.json

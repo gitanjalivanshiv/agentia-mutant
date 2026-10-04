@@ -1,0 +1,51 @@
+Retrieve metadata dependencies via the CICD gateway
+
+USAGE
+  $ agentia cicd metadata dependency list [--json] [--base-ref <value>] [-f <value>]
+    [--from-changes] [--metadata-category <value>] [--metadata-name <value>]
+    [--metadata-raw-json <value>] [--metadata-type <value>] [--module-type
+    vlocity|data_cloud] [--pipeline-id <value>] [--platform-experience
+    salesforce|sfdx|metacache|db] [--result-id <value>] [--retrieve-mode
+    all|diff_only] [--source-credential-id <value>] [--source-org-id <value>]
+    [--stdin] [--target-org-id <value>]
+
+FLAGS
+  -f, --file=<value>                  Path to a JSON dependency request body
+      --base-ref=<value>              [default: origin/main] Base Git ref used
+                                      with --from-changes
+      --from-changes                  Build metadata selections from committed
+                                      branch changes and staged index files
+      --metadata-category=<value>     Optional metadata category
+      --metadata-name=<value>         Metadata component name
+      --metadata-raw-json=<value>     Optional raw metadata JSON for the
+                                      selection
+      --metadata-type=<value>         Metadata type, for example ApexClass
+      --module-type=<option>          Optional addon module type
+                                      <options: vlocity|data_cloud>
+      --pipeline-id=<value>           Pipeline Id
+      --platform-experience=<option>  [default: salesforce] Gateway platform
+                                      experience header
+                                      <options: salesforce|sfdx|metacache|db>
+      --result-id=<value>             Optional result Id from a prior metadata
+                                      operation
+      --retrieve-mode=<option>        Dependency retrieve mode
+                                      <options: all|diff_only>
+      --source-credential-id=<value>  Source org credential Id
+      --source-org-id=<value>         Source org Id
+      --stdin                         Read a JSON dependency request body from
+                                      stdin
+      --target-org-id=<value>         Target org Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Retrieve metadata dependencies via the CICD gateway
+
+EXAMPLES
+  $ agentia cicd metadata dependency list --metadata-name MyClass --metadata-type ApexClass --pipeline-id <id> --source-org-id <id> --source-credential-id <id>
+
+  cat request.json | agentia cicd metadata dependency list --stdin
+
+  $ agentia cicd metadata dependency list --from-changes --base-ref origin/main --retrieve-mode all --pipeline-id <id> --source-org-id <id> --source-credential-id <id>
+

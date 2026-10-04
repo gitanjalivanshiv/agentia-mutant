@@ -1,0 +1,43 @@
+List Copado promotions
+
+USAGE
+  $ agentia cicd promotion list [--json] [--cursor <value>] [--page-size <value>]
+    [--created-by-id <value>] [--created-by-name <value>]
+    [--destination-environment-id <value>] [--destination-environment-name
+    <value>] [--is-back-promotion] [--name <value>] [--pipeline-id <value>]
+    [--pipeline-name <value>] [--project-id <value>] [--project-name <value>]
+    [--source-environment-id <value>] [--source-environment-name <value>]
+    [--status <value>] [--work-id <value>]
+
+FLAGS
+  --created-by-id=<value>                 Filter by creator ID
+  --created-by-name=<value>               Filter by creator name
+  --cursor=<value>                        Opaque pagination cursor from a
+                                          previous list response (nextCursor)
+  --destination-environment-id=<value>    Filter by destination environment ID
+  --destination-environment-name=<value>  Filter by destination environment name
+  --[no-]is-back-promotion                Filter by back promotion
+  --name=<value>                          Filter by name
+  --page-size=<value>                     Number of records per page (1-200)
+  --pipeline-id=<value>                   Filter by pipeline ID
+  --pipeline-name=<value>                 Filter by pipeline name
+  --project-id=<value>                    Filter by project ID
+  --project-name=<value>                  Filter by project name
+  --source-environment-id=<value>         Filter by source environment ID
+  --source-environment-name=<value>       Filter by source environment name
+  --status=<value>                        Filter by status
+  --work-id=<value>                       Filter by user story ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List Copado promotions
+
+EXAMPLES
+  $ agentia cicd promotion list
+
+  $ agentia cicd promotion list --status Completed --project-name "My Project" --page-size 50
+
+  $ agentia cicd promotion list --json
+

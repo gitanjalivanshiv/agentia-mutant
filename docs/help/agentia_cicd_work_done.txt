@@ -1,0 +1,28 @@
+Alias of cicd work submit --done. Matches Copado UI Submit when promoting (not validate-only). Prefer: agentia cicd work submit --done.
+
+USAGE
+  $ agentia cicd work done [--json] [--skip-nested-metadata-detection]
+
+FLAGS
+  --skip-nested-metadata-detection  Do not detect the nested metadata changed
+                                    across the branch when pushing (also
+                                    configurable via skipNestedMetadataDetection
+                                    in .agentia/config.json or
+                                    .agentia/config.user.json)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Alias of cicd work submit --done. Matches Copado UI Submit when promoting (not
+  validate-only). Prefer: agentia cicd work submit --done.
+
+EXAMPLES
+  $ agentia cicd work submit --done
+
+  $ agentia cicd work done
+
+  $ agentia cicd work done --skip-nested-metadata-detection
+
+  $ agentia cicd work done --json
+

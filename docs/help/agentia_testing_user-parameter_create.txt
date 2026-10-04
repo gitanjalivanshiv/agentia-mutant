@@ -1,0 +1,34 @@
+Create an account-scoped Copado Robotic Testing user parameter
+
+USAGE
+  $ agentia testing user-parameter create --key <value> [--json] [--description <value>]
+    [--sensitive] [--type parameter] [--unique] [--no-trim | --trim] [--value
+    <value> | --value-file <value> | --value-stdin]
+
+FLAGS
+  --description=<value>  Parameter description.
+  --key=<value>          (required) Parameter key.
+  --no-trim              Preserve leading and trailing whitespace in the
+                         supplied value.
+  --sensitive            Mark the parameter as sensitive.
+  --trim                 Trim leading and trailing whitespace (the default
+                         policy).
+  --type=<option>        [default: parameter] CRT user-parameter type.
+                         <options: parameter>
+  --unique               Reject an existing parameter with the same key.
+  --value=<value>        Value supplied directly. Prefer file/stdin for
+                         sensitive values.
+  --value-file=<value>   Read the value from a bounded regular file.
+  --value-stdin          Read the value from stdin.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create an account-scoped Copado Robotic Testing user parameter
+
+EXAMPLES
+  $ agentia testing user-parameter create --key BASE_URL --value https://example.com
+
+  $ agentia testing user-parameter create --key TOKEN --value-stdin --sensitive --unique --json
+

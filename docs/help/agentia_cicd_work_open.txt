@@ -1,0 +1,21 @@
+Open a Copado user story in the browser
+
+USAGE
+  $ agentia cicd work open [ID] [--json]
+
+ARGUMENTS
+  [ID]  User story ID (defaults to the active work item from `work set`)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a Copado user story in the browser
+
+EXAMPLES
+  $ agentia cicd work open
+
+  $ agentia cicd work open a0SKC000000CmZ2AU
+
+  $ agentia cicd work open a0SKC000000CmZ2AU --json
+

@@ -1,0 +1,9 @@
+Prompt and chat with Copado AI agents
+
+USAGE
+  $ agentia ai agent COMMAND
+
+COMMANDS
+  ai agent ask   Send a single-turn prompt to a Copado AI agent
+  ai agent chat  Start an interactive Copado AI agent chat session
+

@@ -1,0 +1,38 @@
+Create a Copado Robotic Testing variable/secret
+
+USAGE
+  $ agentia testing variable create -p <value> --key <value> [--json] [--description
+    <value>] [--job <value> | --robot <value>] [--sensitive] [--type
+    clp|config|dataset|secret] [--user-specific] [--no-trim | --trim] [--value
+    <value> | --value-file <value> | --value-stdin]
+
+FLAGS
+  -p, --project=<value>      (required) CRT project ID.
+      --description=<value>  Variable description.
+      --job=<value>          Scope the variable to a CRT job/test ID.
+      --key=<value>          (required) Variable key.
+      --no-trim              Preserve leading and trailing whitespace in the
+                             supplied value.
+      --robot=<value>        Scope the variable to a CRT robot ID.
+      --sensitive            Mark the variable as sensitive.
+      --trim                 Trim leading and trailing whitespace (the default
+                             policy).
+      --type=<option>        [default: secret] CRT variable type.
+                             <options: clp|config|dataset|secret>
+      --user-specific        Create a user-specific variable.
+      --value=<value>        Value supplied directly. Prefer file/stdin for
+                             sensitive values.
+      --value-file=<value>   Read the value from a bounded regular file.
+      --value-stdin          Read the value from stdin.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado Robotic Testing variable/secret
+
+EXAMPLES
+  $ agentia testing variable create --project <project-id> --key BASE_URL --value https://example.com
+
+  $ agentia testing variable create --project <project-id> --key TOKEN --value secret --sensitive --json
+

@@ -1,0 +1,37 @@
+Create a Copado AI workspace
+
+USAGE
+  $ agentia ai workspace create --name <value> [--json] [--timeout <value>]
+    [--capability
+    AgentFramework|Artifacts|CRTKnowledge|CustomKnowledge|DeepResearch|Essential
+    sKnowledge|LongTermMemory|Mermaid|MetadataFormatKnowledge|Mindmap|OtherKnowl
+    edge|Reasoning|SourceFormatKnowledge|STEM|TabularData|WebSearch...]
+    [--description <value>]
+
+FLAGS
+  --capability=<option>...
+      Workspace capability. Can be provided multiple times.
+      <options: AgentFramework|Artifacts|CRTKnowledge|CustomKnowledge|DeepResearch
+      |EssentialsKnowledge|LongTermMemory|Mermaid|MetadataFormatKnowledge|Mindmap|
+      OtherKnowledge|Reasoning|SourceFormatKnowledge|STEM|TabularData|WebSearch>
+
+  --description=<value>
+      Workspace description.
+
+  --name=<value>
+      (required) Workspace name.
+
+  --timeout=<value>
+      AI gateway timeout in seconds.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a Copado AI workspace
+
+EXAMPLES
+  $ agentia ai workspace create --name "Agentia CLI"
+
+  $ agentia ai workspace create --name "Agentia CLI" --description "CLI workspace" --capability Reasoning --capability CustomKnowledge
+

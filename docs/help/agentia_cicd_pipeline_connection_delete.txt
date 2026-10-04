@@ -1,0 +1,26 @@
+Delete one or more Copado pipeline connections
+
+USAGE
+  $ agentia cicd pipeline connection delete --pipeline-id <value> [--json] [-f <value> |
+    --connection-id <value>...] [-y]
+
+FLAGS
+  -f, --file=<value>              Path to a JSON array of connection IDs or an
+                                  object with connectionIds
+  -y, --yes                       Confirm deletion without prompting
+      --connection-id=<value>...  Pipeline connection ID to delete (repeatable)
+      --pipeline-id=<value>       (required) Pipeline ID or name
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete one or more Copado pipeline connections
+
+EXAMPLES
+  $ agentia cicd pipeline connection delete --pipeline-id pipeline-1 --connection-id conn-1 --yes
+
+  $ agentia cicd pipeline connection delete --pipeline-id pipeline-1 --connection-id conn-1 --connection-id conn-2 --yes
+
+  $ agentia cicd pipeline connection delete --pipeline-id pipeline-1 --file connection-ids.json --yes --json
+

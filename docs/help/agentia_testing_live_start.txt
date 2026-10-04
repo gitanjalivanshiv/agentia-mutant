@@ -1,0 +1,48 @@
+Start and bootstrap a bounded Copado Robotic Testing live session
+
+USAGE
+  $ agentia testing live start JOB-ID -p <value> [--json] [--session-id <value>]
+    [--description <value>] [--file <value>] [--jap-ime] [--library
+    QWeb|QForce|QMobile] [--no-bootstrap] [--no-browser] [--poll-interval
+    <value>] [--screen <value>] [--section <value>] [--section-index <value>]
+    [--session-version <value>] [--timeout <value>] [--viewport <value>]
+
+ARGUMENTS
+  JOB-ID  CRT job/test ID.
+
+FLAGS
+  -p, --project=<value>          (required) CRT project ID.
+      --description=<value>      Nonsecret session label.
+      --file=<value>             Robot Framework file used to bootstrap a
+                                 selected test/task.
+      --jap-ime                  Enable Japanese IME in the live environment.
+      --library=<option>         [default: QWeb] Robot Framework library to
+                                 bootstrap.
+                                 <options: QWeb|QForce|QMobile>
+      --no-bootstrap             Create the host without readiness/bootstrap
+                                 calls.
+      --no-browser               Do not open Chrome during QWeb/QForce
+                                 bootstrap.
+      --poll-interval=<value>    [default: 3] Readiness polling interval in
+                                 seconds.
+      --screen=<value>           Session screen as WIDTHxHEIGHTxDEPTH.
+      --section=<value>          Robot test/task name to bootstrap.
+      --section-index=<value>    One-based Robot test/task index to bootstrap.
+      --session-id=<value>       Guard that must match the locally active CRT
+                                 live session.
+      --session-version=<value>  CRT live environment version.
+      --timeout=<value>          [default: 120] Readiness timeout in seconds.
+      --viewport=<value>         Session viewport as WIDTHxHEIGHT (24-bit
+                                 depth).
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Start and bootstrap a bounded Copado Robotic Testing live session
+
+EXAMPLES
+  $ agentia testing live start <job-id> --project <project-id>
+
+  $ agentia testing live start <job-id> --project <project-id> --file smoke.robot --section "Login"
+

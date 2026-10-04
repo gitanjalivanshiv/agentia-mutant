@@ -1,0 +1,26 @@
+Stop the active Copado Robotic Testing live session
+
+USAGE
+  $ agentia testing live stop [JOB-ID] -p <value> [--json] [--session-id
+    <value>] [-y]
+
+ARGUMENTS
+  [JOB-ID]  Optional CRT job/test ID guard.
+
+FLAGS
+  -p, --project=<value>     (required) CRT project ID.
+  -y, --yes                 Confirm live session shutdown.
+      --session-id=<value>  Guard that must match the locally active CRT live
+                            session.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Stop the active Copado Robotic Testing live session
+
+EXAMPLES
+  $ agentia testing live stop --project <project-id>
+
+  $ agentia testing live stop <job-id> --project <project-id> --yes --json
+

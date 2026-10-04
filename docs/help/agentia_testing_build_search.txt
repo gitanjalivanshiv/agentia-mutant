@@ -1,0 +1,38 @@
+Search Copado Robotic Testing build metrics
+
+USAGE
+  $ agentia testing build search -p <value> -j <value> [--json] [--count] [--from
+    <value>] [--order asc|desc] [--page <value>] [--page-size <value>] [--robot
+    <value>...] [--run-type regression|development...] [--sort
+    date|duration|id|status] [--status <value>...] [--to <value>]
+
+FLAGS
+  -j, --job=<value>           (required) CRT job/test ID.
+  -p, --project=<value>       (required) CRT project ID.
+      --count                 Return only the filtered build count.
+      --from=<value>          Include builds at or after this ISO-8601 date or
+                              epoch value.
+      --order=<option>        [default: desc]
+                              <options: asc|desc>
+      --page=<value>          [default: 1]
+      --page-size=<value>     [default: 50]
+      --robot=<value>...      Robot ID filter. Can be provided multiple times.
+      --run-type=<option>...  Run type filter. Can be provided multiple times.
+                              <options: regression|development>
+      --sort=<option>         [default: date]
+                              <options: date|duration|id|status>
+      --status=<value>...     Status filter. Can be provided multiple times.
+      --to=<value>            Include builds at or before this ISO-8601 date or
+                              epoch value.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Search Copado Robotic Testing build metrics
+
+EXAMPLES
+  $ agentia testing build search --project <project-id> --job <job-id> --status failed
+
+  $ agentia testing build search --project <project-id> --job <job-id> --run-type regression --count --json
+

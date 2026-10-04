@@ -1,0 +1,19 @@
+List assignments for a Copado Robotic Testing project
+
+USAGE
+  $ agentia testing project permission list PROJECT [--json]
+
+ARGUMENTS
+  PROJECT  CRT project ID.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List assignments for a Copado Robotic Testing project
+
+EXAMPLES
+  $ agentia testing project permission list <project-id>
+
+  $ agentia testing project permission list <project-id> --json
+

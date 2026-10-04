@@ -1,0 +1,54 @@
+Search the metadata index for an org via the CICD gateway
+
+USAGE
+  $ agentia cicd metadata list [--json] [--avoid-source-tracking]
+    [--change-date-from <value>] [--change-date-to <value>] [--filter-type
+    <value>] [--find-managed-packages] [--limit <value>] [--metadata-types
+    <value>] [--modified-by <value>] [--module-type vlocity|data_cloud]
+    [--order-direction ASC|DESC] [--pipeline-id <value>] [--platform-experience
+    salesforce|sfdx|metacache|db] [--source
+    All|Changed|Deleted|New|NewAndChanged|PreviouslyCommitted]
+    [--source-credential-id <value>] [--source-org-id <value>] [--target-org-id
+    <value>]
+
+FLAGS
+  --avoid-source-tracking         Pass avoidSourceTracking=true to the gateway
+                                  index route
+  --change-date-from=<value>      Optional change-date-from filter (ISO
+                                  datetime)
+  --change-date-to=<value>        Optional change-date-to filter (ISO datetime)
+  --filter-type=<value>           Optional metadata type name filter, for
+                                  example ApexClass
+  --find-managed-packages         Include managed package metadata in the search
+  --limit=<value>                 Maximum number of records to return
+  --metadata-types=<value>        Optional comma-separated metadata types to
+                                  include
+  --modified-by=<value>           Filter by last modified user
+  --module-type=<option>          Optional addon module type
+                                  <options: vlocity|data_cloud>
+  --order-direction=<option>      Sort direction for last modified date
+                                  <options: ASC|DESC>
+  --pipeline-id=<value>           Pipeline Id
+  --platform-experience=<option>  [default: salesforce] Gateway platform
+                                  experience header
+                                  <options: salesforce|sfdx|metacache|db>
+  --source=<option>               Index source filter
+                                  <options: All|Changed|Deleted|New|NewAndChange
+                                  d|PreviouslyCommitted>
+  --source-credential-id=<value>  Source org credential Id
+  --source-org-id=<value>         Source org Id
+  --target-org-id=<value>         Optional target org Id
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Search the metadata index for an org via the CICD gateway
+
+EXAMPLES
+  $ agentia cicd metadata list --pipeline-id <id> --source-org-id <id> --source-credential-id <id>
+
+  $ agentia cicd metadata list --source Changed --metadata-types ApexClass --limit 100 --pipeline-id <id> --source-org-id <id> --source-credential-id <id>
+
+  $ agentia cicd metadata list --source NewAndChanged --find-managed-packages --json
+

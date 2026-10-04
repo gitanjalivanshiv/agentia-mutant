@@ -1,0 +1,14 @@
+Inspect and compare Copado metadata
+
+USAGE
+  $ agentia cicd metadata COMMAND
+
+TOPICS
+  cicd metadata content     Inspect and compare Copado metadata content
+  cicd metadata dependency  Inspect Copado metadata dependencies
+  cicd metadata index       Compare Copado metadata indexes
+  cicd metadata refresh     Refresh Copado metadata indexes
+
+COMMANDS
+  cicd metadata list  Search the metadata index for an org via the CICD gateway
+

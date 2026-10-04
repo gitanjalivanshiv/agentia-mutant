@@ -1,0 +1,19 @@
+Open a Copado promotion in the browser
+
+USAGE
+  $ agentia cicd promotion open ID [--json]
+
+ARGUMENTS
+  ID  Copado promotion ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a Copado promotion in the browser
+
+EXAMPLES
+  $ agentia cicd promotion open <promotion-id>
+
+  $ agentia cicd promotion open <promotion-id> --json
+

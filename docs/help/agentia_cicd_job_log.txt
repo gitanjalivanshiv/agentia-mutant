@@ -1,0 +1,8 @@
+Inspect Copado job execution logs
+
+USAGE
+  $ agentia cicd job log COMMAND
+
+COMMANDS
+  cicd job log get  Get log output for a Copado job execution step
+

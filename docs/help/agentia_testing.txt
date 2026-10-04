@@ -1,0 +1,28 @@
+Manage Copado Robotic Testing projects, tests, runs, logs, and variables
+
+USAGE
+  $ agentia testing COMMAND
+
+TOPICS
+  testing build           Abort a Copado Robotic Testing build/run
+  testing data-table      Create a Copado Robotic Testing data table
+  testing job             Create a Copado Robotic Testing job/test from uploaded
+                          files or Git storage
+  testing live            Manage Copado Robotic Testing live sessions
+  testing project         Create a Copado Robotic Testing project
+  testing robot           Create a Copado Robotic Testing robot
+  testing test            Create a Copado Robotic Testing job/test from uploaded
+                          files or Git storage
+  testing user-parameter  Create an account-scoped Copado Robotic Testing user
+                          parameter
+  testing variable        Create a Copado Robotic Testing variable/secret
+
+COMMANDS
+  testing create  Create a Copado Robotic Testing job/test from uploaded files
+                  or Git storage
+  testing logs    Get logs for a Copado Robotic Testing run
+  testing run     Run a Copado Robotic Testing test
+  testing status  List Copado Robotic Testing run status
+  testing update  Update a Copado Robotic Testing test by uploading file
+                  operations
+

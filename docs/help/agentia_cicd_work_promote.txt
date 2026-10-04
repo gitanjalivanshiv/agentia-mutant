@@ -1,0 +1,98 @@
+Experimental: skips Quality Gates. Requires enableLocalPromote true in .agentia/config.json. Create a promotion for one or more user stories and merge each feature/<name> branch into promotion/<promotionName>. The promotion branch is created from the destination environment branch. Without --backpromote, the stories promote forward from their source environment to the next pipeline environment. With --backpromote, pass --destination-branch. The destination environment is the pipeline environment whose connection branch matches that name, and the source is the next environment above it. Story merges stop at the first conflict and the promotion status is set to Merge Conflict. Resolve those files, then re-run with --promotion=<name-or-id> --continue to commit the merge, merge any remaining stories, and finish the promotion. To discard a conflicted merge, re-run with --promotion=<name-or-id> --abort (runs git merge --abort and sets the promotion status to Draft). That continue command repeats --validate or --deploy and --sf-alias when the original command used them. After every story merges, the promotion branch is pushed. Without --validate or --deploy, the promotion status is set to Completed. With --validate or --deploy, --sf-alias is required. The command writes a temporary package.xml and postdestructivechanges.xml from the promotion metadata and runs sf project deploy start --test-level NoTestRun -o <alias>. --validate adds --dry-run, does not merge the destination branch, and sets the promotion status to Validated. --deploy merges the promotion branch into the destination branch and sets the promotion status to Completed only after that deployment succeeds. User story records are not updated.
+
+USAGE
+  $ agentia cicd work promote [USERSTORYIDS...] [--json] [--abort | --continue]
+    [--deploy | --validate] [--destination-branch <value> --backpromote]
+    [--destination-credential <value>] [--promotion <value>] [--sf-alias
+    <value>]
+
+ARGUMENTS
+  [USERSTORYIDS...]  User story ID. Pass more than one to merge those feature
+                     branches in order. Omit when using --promotion with
+                     --continue or --abort.
+
+FLAGS
+  --abort
+      Abort an in-progress merge (`git merge --abort`) and set the promotion
+      status to Draft. Requires --promotion. Exclusive with --continue.
+
+  --backpromote
+      Create a back promotion. Requires --destination-branch. Omit to promote
+      forward to the next pipeline environment.
+
+  --continue
+      Commit a resolved merge on promotion/<name> and finish the remaining story
+      merges. Requires --promotion.
+
+  --deploy
+      Deploy the promotion metadata with sf project deploy start, then merge the
+      promotion branch into the destination branch and set the promotion status to
+      Completed. Requires --sf-alias.
+
+  --destination-branch=<value>
+      Destination environment Git branch for --backpromote. The destination
+      environment is the pipeline environment whose connection branch matches this
+      name.
+
+  --destination-credential=<value>
+      Credential ID posted as destinationCredentialId. Defaults to the destination
+      environment default credential for a forward promotion, or the next/source
+      environment default credential for --backpromote.
+
+  --promotion=<value>
+      Promotion Id or name for --continue after a merge conflict, or for --abort.
+
+  --sf-alias=<value>
+      Salesforce org alias or username for --validate or --deploy. Passed to sf
+      project deploy start -o.
+
+  --validate
+      Validate the promotion metadata with sf project deploy start --dry-run. Does
+      not merge the destination branch. Sets the promotion status to Validated.
+      Requires --sf-alias.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Experimental: skips Quality Gates. Requires enableLocalPromote true in
+  .agentia/config.json. Create a promotion for one or more user stories and
+  merge each feature/<name> branch into promotion/<promotionName>. The promotion
+  branch is created from the destination environment branch. Without
+  --backpromote, the stories promote forward from their source environment to
+  the next pipeline environment. With --backpromote, pass --destination-branch.
+  The destination environment is the pipeline environment whose connection
+  branch matches that name, and the source is the next environment above it.
+  Story merges stop at the first conflict and the promotion status is set to
+  Merge Conflict. Resolve those files, then re-run with --promotion=<name-or-id>
+  --continue to commit the merge, merge any remaining stories, and finish the
+  promotion. To discard a conflicted merge, re-run with --promotion=<name-or-id>
+  --abort (runs git merge --abort and sets the promotion status to Draft). That
+  continue command repeats --validate or --deploy and --sf-alias when the
+  original command used them. After every story merges, the promotion branch is
+  pushed. Without --validate or --deploy, the promotion status is set to
+  Completed. With --validate or --deploy, --sf-alias is required. The command
+  writes a temporary package.xml and postdestructivechanges.xml from the
+  promotion metadata and runs sf project deploy start --test-level NoTestRun -o
+  <alias>. --validate adds --dry-run, does not merge the destination branch, and
+  sets the promotion status to Validated. --deploy merges the promotion branch
+  into the destination branch and sets the promotion status to Completed only
+  after that deployment succeeds. User story records are not updated.
+
+EXAMPLES
+  $ agentia cicd work promote a16P7000006By3pIAC
+
+  $ agentia cicd work promote a16P7000006By3pIAC a16P7000006By4qIAC
+
+  $ agentia cicd work promote a16P7000006By3pIAC --backpromote --destination-branch dev1-sfp
+
+  $ agentia cicd work promote a16P7000006By3pIAC --validate --sf-alias destOrg
+
+  $ agentia cicd work promote a16P7000006By3pIAC --deploy --sf-alias destOrg
+
+  $ agentia cicd work promote --promotion=P29354 --continue
+
+  $ agentia cicd work promote --promotion=P29354 --abort
+
+  $ agentia cicd work promote a16P7000006By3pIAC --json
+

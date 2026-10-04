@@ -1,0 +1,27 @@
+List or save bounded report artifacts from an active CRT live session
+
+USAGE
+  $ agentia testing live reports [JOB-ID] -p <value> [--json] [--session-id
+    <value>] [--output-dir <value>]
+
+ARGUMENTS
+  [JOB-ID]  Optional CRT job/test ID guard.
+
+FLAGS
+  -p, --project=<value>     (required) CRT project ID.
+      --output-dir=<value>  Explicit directory for log.html, report.html, and
+                            output.xml.
+      --session-id=<value>  Guard that must match the locally active CRT live
+                            session.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List or save bounded report artifacts from an active CRT live session
+
+EXAMPLES
+  $ agentia testing live reports --project <project-id>
+
+  $ agentia testing live reports --project <project-id> --output-dir ./reports
+

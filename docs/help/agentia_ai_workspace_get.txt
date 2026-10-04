@@ -1,0 +1,22 @@
+Get a Copado AI workspace
+
+USAGE
+  $ agentia ai workspace get ID [--json] [--timeout <value>]
+
+ARGUMENTS
+  ID  Copado AI workspace UUID.
+
+FLAGS
+  --timeout=<value>  AI gateway timeout in seconds.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Get a Copado AI workspace
+
+EXAMPLES
+  $ agentia ai workspace get 42d0b908-37b7-4565-9ec9-86eda40c9782
+
+  $ agentia ai workspace get 42d0b908-37b7-4565-9ec9-86eda40c9782 --json
+

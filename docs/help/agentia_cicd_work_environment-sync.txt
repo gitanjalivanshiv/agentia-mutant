@@ -1,0 +1,73 @@
+Sync committed metadata from the next environment onto the destination environment (or current feature branch). Back-promotes every user story behind the destination environment from the next environment branch. GET user stories ahead and behind. If none are behind, log that and stop. Otherwise create a back-promotion and POST those behind stories onto the promotion. Resolves the next-environment Git branch from --destination-environment or --dev-org-branch (the dest pipeline connection destinationBranch, or that destination environment's outbound branch). Merges origin/<next-env> with --no-ff --no-commit, restores every other path from HEAD, commits the guessed pathspecs, and pushes the dest org branch (and the feature branch when HEAD starts with feature/). If guessed pathspecs still conflict, PATCH the back-promotion status to Merge Conflict, resolve the files, and re-run with --promotion and --continue. The promotion destination environment supplies the dest org branch and the next-env branch. To discard a conflicted merge, re-run with --promotion and --abort (runs git merge --abort and sets the back-promotion status to Draft). After a successful sync, PATCH the back-promotion status to Completed.
+
+USAGE
+  $ agentia cicd work environment-sync [--json] [--abort | --continue]
+    [--destination-credential <value>] [--destination-environment <value> |
+    --dev-org-branch <value>] [--pipeline-id <value>] [--promotion <value>]
+
+FLAGS
+  --abort
+      Abort an in-progress merge (`git merge --abort`) and set the back-promotion
+      status to Draft. Requires --promotion. Exclusive with --continue.
+
+  --continue
+      Commit resolved merge conflicts and finish the remaining environment-sync
+      git steps.
+
+  --destination-credential=<value>
+      Credential ID posted as destinationCredentialId when creating the
+      back-promotion. Copado requires a credential on the next/source environment
+      (PRO-033 if a dest/dev credential is sent) and then stores the dest/dev
+      credential. Defaults to that source environment defaultCredential, otherwise
+      the first source credential.
+
+  --destination-environment=<value>
+      Destination org environment name or Id. Resolves to that environment's
+      pipeline connection Git branch.
+
+  --dev-org-branch=<value>
+      Destination org Git branch. Defaults to lastDevOrgBranch from `cicd work
+      set`.
+
+  --pipeline-id=<value>
+      Pipeline ID. Defaults to the active work item from `cicd work set`.
+
+  --promotion=<value>
+      Back-promotion Id or name to PATCH when this run stops on merge conflicts,
+      finishes successfully, continues, or aborts. Included in the conflict
+      continue and abort commands. Defaults to the back-promotion created in this
+      run.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Sync committed metadata from the next environment onto the destination
+  environment (or current feature branch). Back-promotes every user story behind
+  the destination environment from the next environment branch. GET user stories
+  ahead and behind. If none are behind, log that and stop. Otherwise create a
+  back-promotion and POST those behind stories onto the promotion. Resolves the
+  next-environment Git branch from --destination-environment or --dev-org-branch
+  (the dest pipeline connection destinationBranch, or that destination
+  environment's outbound branch). Merges origin/<next-env> with --no-ff
+  --no-commit, restores every other path from HEAD, commits the guessed
+  pathspecs, and pushes the dest org branch (and the feature branch when HEAD
+  starts with feature/). If guessed pathspecs still conflict, PATCH the
+  back-promotion status to Merge Conflict, resolve the files, and re-run with
+  --promotion and --continue. The promotion destination environment supplies the
+  dest org branch and the next-env branch. To discard a conflicted merge, re-run
+  with --promotion and --abort (runs git merge --abort and sets the
+  back-promotion status to Draft). After a successful sync, PATCH the
+  back-promotion status to Completed.
+
+EXAMPLES
+  $ agentia cicd work environment-sync --destination-environment=dev1
+
+  $ agentia cicd work environment-sync --dev-org-branch=dev1-sfp
+
+  $ agentia cicd work environment-sync --promotion=P29334 --continue
+
+  $ agentia cicd work environment-sync --promotion=P29334 --abort
+
+  $ agentia cicd work environment-sync --destination-environment=dev1 --json
+

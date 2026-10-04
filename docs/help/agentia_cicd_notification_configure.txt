@@ -1,0 +1,54 @@
+Configure one Slack notification subscription for the current user on a pipeline
+
+USAGE
+  $ agentia cicd notification configure --destination-id <value> --destination-type
+    user|channel --event
+    Promotion_Success|Promotion_Failed|Promotion_Conflict|Failed_Promotion_Creat
+    ion|Deploy_Success|Deploy_Failed|Commit_Failed|Successful_Snapshot|Failed_Sn
+    apshot|ManualTask_Assigned|Test_Success|Test_Failed|Test_Cancelled|Test_Not
+    Started|Quality_Gate_Success|Quality_Gate_Failed|Quality_Gate_Cancelled|Qual
+    ity_Gate_Not Started|Create_Package_Success|Create_Package_Failure|Generate_
+    Package_Version_Success|Generate_Package_Version_Failure|Import_Package_Succ
+    ess|Import_Package_Failure|Publish_Package_Success|Publish_Package_Failure
+    -p <value> --subscription user|all [--json]
+
+FLAGS
+  -p, --pipeline-id=<value>
+      (required) Copado pipeline Salesforce Id
+
+  --destination-id=<value>
+      (required) Slack user or channel id or name
+
+  --destination-type=<option>
+      (required) Slack destination type
+      <options: user|channel>
+
+  --event=<option>
+      (required) Notification event
+      <options:
+      Promotion_Success|Promotion_Failed|Promotion_Conflict|Failed_Promotion_Creat
+      ion|Deploy_Success|Deploy_Failed|Commit_Failed|Successful_Snapshot|Failed_Sn
+      apshot|ManualTask_Assigned|Test_Success|Test_Failed|Test_Cancelled|Test_Not
+      Started|Quality_Gate_Success|Quality_Gate_Failed|Quality_Gate_Cancelled|Qual
+      ity_Gate_Not Started|Create_Package_Success|Create_Package_Failure|Generate_
+      Package_Version_Success|Generate_Package_Version_Failure|Import_Package_Succ
+      ess|Import_Package_Failure|Publish_Package_Success|Publish_Package_Failure>
+
+  --subscription=<option>
+      (required) Notification audience for this event
+      <options: user|all>
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Configure one Slack notification subscription for the current user on a
+  pipeline
+
+EXAMPLES
+  $ agentia cicd notification configure --pipeline-id <pipeline-id> --event Promotion_Failed --destination-type user --destination-id U0123ABCD --subscription user
+
+  $ agentia cicd notification configure -p <pipeline-id> --event Commit_Failed --destination-type channel --destination-id C0123ABCD --subscription all
+
+  $ agentia cicd notification configure --pipeline-id <pipeline-id> --event "Test_Not Started" --destination-type user --destination-id @jane --subscription user --json
+

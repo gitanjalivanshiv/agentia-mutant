@@ -1,0 +1,33 @@
+Remove project default values from the current project or globally
+
+USAGE
+  $ agentia cicd project default unset [--json] [--assign-me] [--credential]
+    [--environment] [--epic] [--feature] [--global] [--project] [--sprint]
+    [--team]
+
+FLAGS
+  --assign-me    Select the assign-me default
+  --credential   Select the default source credential
+  --environment  Select the default environment
+  --epic         Select the default epic
+  --feature      Select the default feature
+  --global       Use machine-wide defaults instead of project-local defaults
+  --project      Select the default project
+  --sprint       Select the default sprint
+  --team         Select the default team
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Remove project default values from the current project or globally
+
+EXAMPLES
+  $ agentia cicd project default unset --project
+
+  $ agentia cicd project default unset --environment --team
+
+  $ agentia cicd project default unset --assign-me --global
+
+  $ agentia cicd project default unset --project --json
+

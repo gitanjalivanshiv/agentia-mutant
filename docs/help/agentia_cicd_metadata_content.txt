@@ -1,0 +1,11 @@
+Inspect and compare Copado metadata content
+
+USAGE
+  $ agentia cicd metadata content COMMAND
+
+COMMANDS
+  cicd metadata content compare  Compare metadata file content between two orgs
+                                 or Git branches
+  cicd metadata content get      Retrieve metadata file content via the CICD
+                                 gateway
+

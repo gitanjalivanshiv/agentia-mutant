@@ -1,0 +1,8 @@
+Manage Copado users
+
+USAGE
+  $ agentia cicd user COMMAND
+
+COMMANDS
+  cicd user get  Get a Copado user by ID (defaults to the authenticated user)
+

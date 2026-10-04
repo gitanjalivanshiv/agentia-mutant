@@ -1,0 +1,9 @@
+Create and list data commits
+
+USAGE
+  $ agentia cicd data commit COMMAND
+
+COMMANDS
+  cicd data commit create  Create a data commit for a user story
+  cicd data commit list    List data commits for a user story
+

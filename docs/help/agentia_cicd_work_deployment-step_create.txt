@@ -1,0 +1,67 @@
+Create a deployment step for a user story
+
+USAGE
+  $ agentia cicd work deployment-step create [--json] [--apex-script <value> |
+    --apex-script-file <value>] [--assignee-id <value>] [--assignee-name
+    <value>] [--config-file <value> | --config-json <value>] [--crt-run-on
+    source|destination] [--crt-test-id <value>] [--custom-step-api-name <value>
+    | --type Manual Task|Salesforce Flow|Function|Apex|Data Set -
+    Salesforce|Data Template - Salesforce|Robotic Test] [--data-set-id <value>]
+    [--data-template-id <value>] [--environment source|destination|both]
+    [--flow-name <value>] [--function-name <value>] [--instructions <value>]
+    [--interactive] [--name <value>] [--parameter <value>...] [--queue-name
+    <value>] [--run-on-validation] [--sequence before|after]
+    [--skip-back-promotion] [--skip-condition <value>] [--user-story <value>]
+
+FLAGS
+  --apex-script=<value>           Apex script for a guided Apex step
+  --apex-script-file=<value>      Path to an Apex script for a guided Apex step
+  --assignee-id=<value>           Manual Task assignee Salesforce user ID
+  --assignee-name=<value>         Manual Task assignee display name
+  --config-file=<value>           Path to deployment step config JSON
+  --config-json=<value>           Inline deployment step config JSON
+  --crt-run-on=<option>           Environment where the Robotic Test runs
+                                  <options: source|destination>
+  --crt-test-id=<value>           Robotic Test Salesforce ID
+  --custom-step-api-name=<value>  Custom deployment step API name
+  --data-set-id=<value>           Salesforce Data Set ID
+  --data-template-id=<value>      Salesforce Data Template ID
+  --environment=<option>          Manual Task execution environment
+                                  <options: source|destination|both>
+  --flow-name=<value>             Salesforce Flow API name
+  --function-name=<value>         Function name
+  --instructions=<value>          Manual Task instructions
+  --interactive                   Prompt for the type and all required
+                                  configuration
+  --name=<value>                  Deployment step name
+  --parameter=<value>...          Flow or Function parameter as name=value
+                                  (repeatable)
+  --queue-name=<value>            Queue name
+  --[no-]run-on-validation        Run or skip the step during validation
+  --sequence=<option>             Place the deployment step before or after
+                                  deployment
+                                  <options: before|after>
+  --[no-]skip-back-promotion      Skip or include the step during back promotion
+  --skip-condition=<value>        Deployment step skip condition
+  --type=<option>                 Standard deployment step type
+                                  <options: Manual Task|Salesforce
+                                  Flow|Function|Apex|Data Set - Salesforce|Data
+                                  Template - Salesforce|Robotic Test>
+  --user-story=<value>            User story ID (defaults to the active work
+                                  item from `work set`)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a deployment step for a user story
+
+EXAMPLES
+  $ agentia cicd work deployment-step create --interactive
+
+  $ agentia cicd work deployment-step create --name "Run robotic smoke test" --type "Robotic Test" --crt-test-id a1t... --crt-run-on destination
+
+  $ agentia cicd work deployment-step create --name "Run post-deploy flow" --type "Salesforce Flow" --sequence after --config-json '{"flowName":"Post_Deploy","parameters":[]}'
+
+  $ agentia cicd work deployment-step create --name "Deploy Mule application" --custom-step-api-name Deploy_Mule --config-file config.json --json
+

@@ -1,0 +1,19 @@
+Open a Copado job execution in the browser
+
+USAGE
+  $ agentia cicd job open ID [--json]
+
+ARGUMENTS
+  ID  JobExecution ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Open a Copado job execution in the browser
+
+EXAMPLES
+  $ agentia cicd job open <job-id>
+
+  $ agentia cicd job open <job-id> --json
+

@@ -1,0 +1,22 @@
+Delete a pipeline stage connection
+
+USAGE
+  $ agentia cicd pipeline stage-connection delete ID --pipeline-id <value>
+  [--json] [-y]
+
+ARGUMENTS
+  ID  Pipeline stage connection ID
+
+FLAGS
+  -y, --yes                  Confirm deletion without prompting
+      --pipeline-id=<value>  (required) Pipeline ID
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a pipeline stage connection
+
+EXAMPLES
+  $ agentia cicd pipeline stage-connection delete connection-1 --pipeline-id pipeline-1 --yes
+
