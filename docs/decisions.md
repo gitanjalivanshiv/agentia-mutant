@@ -28,3 +28,7 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 | CRT | Mutant creates its own CRT project (prefixed `Mutant –`). |
 | Git repository | The pipeline's repo is shared with Time Machine. Mutant only commits on its own `feature/<Mutant Lab story>` branch; Copado merges it into `dev2-sfp` and `int-sfp`. Mutant never pushes to `main`, `dev1-sfp`, or Time Machine branches. The local clone lives in `~/hackathon/mutant-lab/`, separate from this plugin repo. |
 | Environments (assigned) | Mutant: source **Dev2-SFP** → lab **INT-SFP** (user-approved 2026-10-04). Time Machine: **Dev1-SFP**. |
+
+## 2026-10-04 — Blockers found while preparing the measured cycle
+- **Pipeline Git repo access:** private repo, SSH key not loaded, `gh` account has no access → cannot clone for the local flow.
+- **CRT permissions:** the configured PAK sees zero projects and `testing project create` returns 403. A CRT admin must create the project (or grant the PAK's user a role that can).

@@ -40,6 +40,7 @@ interface AgentiaErr {
 | Missing required flag | 1 | `AgentiaErr` with huge `oclif`/`parse` blobs |
 | CRT run failed with `--wait-for-result` | non-zero unless `--no-exit-code` | 📄 |
 | Cloud commit / promote job failed or timed out | non-zero, diagnostic IDs preserved | 📄 (skill doc) |
+| CRT HTTP error (e.g. 403 on `testing project create`) | 1 | ✅ `error: { name: "TestingGatewayError", message, statusCode, requestMethod, requestUrl }` — `requestUrl` contains the CRT org ID, never log it |
 
 **Adapter rules:** parse stdout as JSON regardless of exit code; discriminate on `"error" in doc`; cap stdout buffer generously (≥ 5 MB) because parse errors are large; never print `result` of `auth get` (contains masked keys and org IDs).
 
@@ -69,7 +70,7 @@ Readiness rule for `mutant doctor`: CRT → `ready === true`; CICD → `set === 
 
 ---
 
-## 3. CI/CD (⛔ all blocked until `agentia auth set --cicd` is done)
+## 3. CI/CD (✅ auth configured; read calls observed)
 
 ### Stories
 | Command | Purpose |
@@ -108,8 +109,11 @@ Readiness rule for `mutant doctor`: CRT → `ready === true`; CICD → `set === 
 | `cicd metadata content compare --metadata-type <T> --api-name <N> [--source ENVIRONMENT\|REPOSITORY\|GIT_MIRROR\|ORG_CACHE] [--target-source …] [--source-org-id/--target-org-id] [--source-credential-id] [--source-branch/--target-branch] [--pipeline-id] --json` | per-component diff lab vs baseline branch — **the `verify` step** |
 | `cicd metadata index compare --comparison-mode BRANCH_COMPARE\|INDEX_FILE\|MIX …` | whole-org drift check for `doctor` |
 | `cicd metadata list --source Changed --metadata-types … --change-date-from …` | planner: "recently changed" components |
-| `cicd environment list [--name] [--type] --json`, `environment get <id>` | resolve `labEnvironment` name → id; safety name check |
-| `cicd pipeline list/get`, `pipeline connection list --pipeline-id` | confirm lab is a promotion destination |
+| `cicd environment list [--name] [--type] [--page-size] --json` ✅ | `result: { data: Environment[]; currentPage; pageSize; totalPages; totalRecords; hasMore; nextCursor }`. Environment keys: `id, name, type, platform, orgId, credentials[], sourcePipelineConnections, destinationPipelineConnections, promotionDefaultCredential, apexTestLevel, runLocalTests, …` |
+| `cicd environment auth status <envId> --json` ✅ | `result: { validated: boolean, … }` |
+| `cicd pipeline list --json` ✅ | paged `data[]`: `id, name, platform, active, mainBranch, gitRepositoryId, blockCommits, …` |
+| `cicd pipeline connection list --pipeline-id <id> --json` ✅ | `data[]`: `sourceEnvironmentId, destinationEnvironmentId, branch, destinationBranch, stage, …` — confirm lab is a promotion destination |
+| `cicd repository get <id> --json` ✅ | `name, provider, authType, uri, pullRequestBaseUrl, …` |
 
 ---
 
@@ -118,6 +122,7 @@ Readiness rule for `mutant doctor`: CRT → `ready === true`; CICD → `set === 
 | Command | Status | Notes |
 |---|---|---|
 | `testing project list --json` | ✅ | `result: CrtProject[]` — **currently empty** for the configured CRT org |
+| `testing project create --name … [--description] [--type ta\|rpa] --json` | ✅ 403 | PAK lacks permission to create projects in the CRT org |
 | `testing robot list -p <project> --json` | 📄 | `--project` is required |
 | `testing job list -p <project> [--name] --json`, `testing job get <job> -p <project>` | 📄 | CRT job = test definition (≠ `cicd job`) |
 | `testing test create -p <project> --robot <id> --name … --file x.robot \| --dir … --json` | 📄 | creates CRT job from local .robot files |
