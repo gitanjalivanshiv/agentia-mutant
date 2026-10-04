@@ -26,3 +26,5 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 | Agentia auth | Project-local (`--local`) in each folder; never change the global keychain entries. |
 | `.agentia/config.user.json` | Per-project folder; `work set` in one project does not affect the other. |
 | CRT | Mutant creates its own CRT project (prefixed `Mutant –`). |
+| Git repository | The pipeline's repo is shared with Time Machine. Mutant only commits on its own `feature/<Mutant Lab story>` branch; Copado merges it into `dev2-sfp` and `int-sfp`. Mutant never pushes to `main`, `dev1-sfp`, or Time Machine branches. The local clone lives in `~/hackathon/mutant-lab/`, separate from this plugin repo. |
+| Environments (assigned) | Mutant: source **Dev2-SFP** → lab **INT-SFP** (user-approved 2026-10-04). Time Machine: **Dev1-SFP**. |

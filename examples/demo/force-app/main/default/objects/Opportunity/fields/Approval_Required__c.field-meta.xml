@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approval_Required__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Set by the Discount Approval flow when the discount is above 20% (Mutant demo app).</description>
+    <externalId>false</externalId>
+    <label>Approval Required</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
