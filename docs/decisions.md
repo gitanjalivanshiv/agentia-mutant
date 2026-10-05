@@ -32,3 +32,6 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 ## 2026-10-04 — Blockers found while preparing the measured cycle
 - **Pipeline Git repo access:** private repo, SSH key not loaded, `gh` account has no access → cannot clone for the local flow.
 - **CRT permissions:** the configured PAK sees zero projects and `testing project create` returns 403. A CRT admin must create the project (or grant the PAK's user a role that can).
+- **Resolved (2026-10-05):** CRT now uses a second account in a different CRT region/org, stored with `agentia auth set --crt … --local` in this folder only (`source: "local"`). Mutant's CRT project, robot and job were created there. CRT IDs live only in the git-ignored `.mutant/config.json`.
+- **Resolved:** GitHub collaborator access granted; pipeline repo cloned to `~/hackathon/mutant-lab` with a repo-local `gh` credential helper.
+- **AI workspace:** a Copado AI workspace "Mutant – Discount Approval Lab" exists; `heal` passes it via `--workspace`.

@@ -42,7 +42,7 @@ interface AgentiaErr {
 | Cloud commit / promote job failed or timed out | non-zero, diagnostic IDs preserved | 📄 (skill doc) |
 | CRT HTTP error (e.g. 403 on `testing project create`) | 1 | ✅ `error: { name: "TestingGatewayError", message, statusCode, requestMethod, requestUrl }` — `requestUrl` contains the CRT org ID, never log it |
 
-**Adapter rules:** parse stdout as JSON regardless of exit code; discriminate on `"error" in doc`; cap stdout buffer generously (≥ 5 MB) because parse errors are large; never print `result` of `auth get` (contains masked keys and org IDs).
+**Adapter rules:** ignore stderr (other linked plugins print oclif warnings there, e.g. `agentia-plugin-timemachine is a linked ESM module…`); parse stdout as JSON regardless of exit code; discriminate on `"error" in doc`; cap stdout buffer generously (≥ 5 MB) because parse errors are large; never print `result` of `auth get` (contains masked keys and org IDs).
 
 ---
 
@@ -121,11 +121,14 @@ Readiness rule for `mutant doctor`: CRT → `ready === true`; CICD → `set === 
 
 | Command | Status | Notes |
 |---|---|---|
-| `testing project list --json` | ✅ | `result: CrtProject[]` — **currently empty** for the configured CRT org |
-| `testing project create --name … [--description] [--type ta\|rpa] --json` | ✅ 403 | PAK lacks permission to create projects in the CRT org |
-| `testing robot list -p <project> --json` | 📄 | `--project` is required |
+| `testing project list --json` | ✅ | `result: { id: number; name: string; … }[]` |
+| `testing project create --name … [--description] [--type ta\|rpa] --json` | ✅ | returned 403 under the first CRT org (no CRT entitlement); project was then created in the UI under a second org |
+| `testing robot list -p <project> --json` | ✅ | `result: { id: number; name: string; … }[]` — projects start with a "Default Robot" |
+| `testing robot create -p <project> --name … [--description] --json` | ✅ ~1 s | `result: { id: number; name; description; projectId; fwVersion; os; reporting; robotType; runEnvironment; createdDate }` |
 | `testing job list -p <project> [--name] --json`, `testing job get <job> -p <project>` | 📄 | CRT job = test definition (≠ `cicd job`) |
-| `testing test create -p <project> --robot <id> --name … --file x.robot \| --dir … --json` | 📄 | creates CRT job from local .robot files |
+| `testing test create -p <project> --robot <id> --name … --dir <d> --base-path <d> [--message] --json` | ✅ ~2 s | `result: { jobId: number; projectId: number; filesUploaded: number; job: { id; name; description; projectId; robotId; storage; suiteType; parallelExecution; showVideoParams; createdDate } }` |
+| `testing job files <job> -p <project> --json` | ✅ | `result: { path: string; size: number }[]` |
+| `testing variable create -p <project> --key K [--type secret\|config\|…] [--sensitive] [--job\|--robot <id>] --value-stdin --json` | 📄 | secrets via stdin only |
 | `testing job upload <job> -p <project> --add\|--replace local[:remote] [--remove path] [--message] [--dry-run] --json` | 📄 | **`heal --apply` uploads tests here**; `--dry-run` gives a plan without mutation |
 | `testing job files <job> -p <project>` / `job download` | 📄 | snapshot current suite before heal |
 | `testing build run <job> -p <project> [--test …] [--include tag] [--wait-for-result] [--timeout min] [--no-exit-code] [--xunit <path>] [--save-artifacts <path>] [--run-type regression\|development] --json` | 📄 | same flags as `testing test run`. `--stream-logs`/`--watch` incompatible with `--json` |
