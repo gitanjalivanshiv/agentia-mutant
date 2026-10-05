@@ -35,3 +35,8 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 - **Resolved (2026-10-05):** CRT now uses a second account in a different CRT region/org, stored with `agentia auth set --crt … --local` in this folder only (`source: "local"`). Mutant's CRT project, robot and job were created there. CRT IDs live only in the git-ignored `.mutant/config.json`.
 - **Resolved:** GitHub collaborator access granted; pipeline repo cloned to `~/hackathon/mutant-lab` with a repo-local `gh` credential helper.
 - **AI workspace:** a Copado AI workspace "Mutant – Discount Approval Lab" exists; `heal` passes it via `--workspace`.
+
+## 2026-10-05 — Seed attempt (US-0000025)
+- `work create` 9 s, `work set` 4 s, `work publish` 25 s (+ ~60 s server-side "SFDX Commit" job, Successful). Brand-new PermissionSet auto-sent as `fullMetadata`.
+- **`work submit --done` fails in preflight**: `GET /agentia/headless/work/user-stories-ahead-behind` → `CicdGatewayError` 404. No promotion created; INT untouched. CLI 1.0.0-beta.2 is the newest published. `promotion list --work-id <id>` also fails (500; id sent truncated to 15 chars). Both look like the org's Copado gateway being older than the CLI. Reported to the user; awaiting choice of workaround.
+- `CicdGatewayError` shape: `{ name, message, statusCode, requestMethod, requestUrl, categories[] }` (`requestUrl` has the API key masked, still never log it).
