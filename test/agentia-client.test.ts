@@ -1,0 +1,105 @@
+import {describe, expect, it} from 'vitest'
+import {z} from 'zod'
+
+import {
+  AgentiaError,
+  describeCommand,
+  FakeAgentiaClient,
+  parseStdout,
+  unwrap,
+} from '../src/lib/agentia/index.js'
+
+describe('unwrap', () => {
+  it('returns result on success', () => {
+    expect(unwrap({result: {a: 1}, status: 0}, 0, ['x'])).toEqual({a: 1})
+  })
+
+  it('validates with a schema and keeps unknown fields', () => {
+    const schema = z.looseObject({a: z.number()})
+    expect(unwrap({result: {a: 1, extra: true}, status: 0}, 0, ['x'], schema)).toEqual({a: 1, extra: true})
+  })
+
+  it('throws AgentiaError with only safe fields from the error envelope', () => {
+    const doc = {
+      error: {
+        name: 'CicdGatewayError',
+        message: 'CICD Gateway request failed (404).',
+        statusCode: 404,
+        requestUrl: 'https://na.api.copado.com/...?api_key=secret',
+        oclif: {huge: 'x'.repeat(1000)},
+      },
+    }
+    try {
+      unwrap(doc, 1, ['cicd', 'work', 'submit'])
+      expect.unreachable()
+    } catch (e) {
+      expect(e).toBeInstanceOf(AgentiaError)
+      const err = e as AgentiaError
+      expect(err.message).toBe('CICD Gateway request failed (404).')
+      expect(err.details).toEqual({
+        command: 'agentia cicd work submit',
+        exitCode: 1,
+        errorName: 'CicdGatewayError',
+        statusCode: 404,
+        code: undefined,
+      })
+      expect(JSON.stringify(err.details)).not.toContain('api_key')
+    }
+  })
+
+  it('throws on schema mismatch', () => {
+    expect(() => unwrap({result: {a: 'nope'}}, 0, ['x'], z.object({a: z.number()}))).toThrow(
+      /Unexpected JSON shape/,
+    )
+  })
+
+  it('throws when there is no JSON', () => {
+    expect(() => unwrap(undefined, 2, ['x'])).toThrow(/no JSON/)
+  })
+
+  it('throws on non-zero exit without an error envelope', () => {
+    expect(() => unwrap({result: {}}, 3, ['x'])).toThrow(/exited with 3/)
+  })
+})
+
+describe('parseStdout', () => {
+  it('parses plain JSON', () => expect(parseStdout('{"result":1}')).toEqual({result: 1}))
+  it('tolerates noise before the document', () =>
+    expect(parseStdout('warning\n{"result":1}')).toEqual({result: 1}))
+  it('returns undefined for empty or invalid output', () => {
+    expect(parseStdout('')).toBeUndefined()
+    expect(parseStdout('not json')).toBeUndefined()
+  })
+})
+
+describe('describeCommand', () => {
+  it('hides values of secret flags', () => {
+    expect(describeCommand(['auth', 'set', '--crt', 'PAK123', '--crt-org', '9'])).toBe(
+      'agentia auth set --crt *** --crt-org 9',
+    )
+  })
+})
+
+describe('FakeAgentiaClient', () => {
+  it('matches on args regardless of --json', async () => {
+    const fake = new FakeAgentiaClient().ok(['a', 'b'], {x: 1})
+    await expect(fake.run(['a', 'b', '--json'])).resolves.toEqual({x: 1})
+    expect(fake.calls).toEqual([['a', 'b']])
+  })
+
+  it('replays a queue in order and repeats the last entry (polling)', async () => {
+    const fake = new FakeAgentiaClient().ok(['poll'], 'executing').ok(['poll'], 'succeeded')
+    expect(await fake.run(['poll'])).toBe('executing')
+    expect(await fake.run(['poll'])).toBe('succeeded')
+    expect(await fake.run(['poll'])).toBe('succeeded')
+  })
+
+  it('replays failures as AgentiaError', async () => {
+    const fake = new FakeAgentiaClient().fail(['x'], {message: 'boom', statusCode: 403})
+    await expect(fake.run(['x'])).rejects.toMatchObject({name: 'AgentiaError', details: {statusCode: 403}})
+  })
+
+  it('fails loudly when no fixture matches', async () => {
+    await expect(new FakeAgentiaClient().run(['missing'])).rejects.toThrow(/no fixture/)
+  })
+})
