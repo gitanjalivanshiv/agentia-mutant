@@ -101,20 +101,30 @@ const PromotionSummary = z.looseObject({
 })
 export type PromotionSummary = z.infer<typeof PromotionSummary>
 
-const PromotionDetail = PromotionSummary.extend({
-  userStories: z
-    .array(z.looseObject({id: z.string().nullish(), name: z.string(), title: z.string().nullish()}))
-    .nullish(),
-  includedMetadata: z
-    .array(
-      z.looseObject({
-        type: z.string().nullish(),
-        metadataApiName: z.string().nullish(),
-        name: z.string().nullish(),
-      }),
-    )
-    .nullish(),
-})
+/** `promotion get` differs from `promotion list`: the name lives in identification.promotionName. */
+const PromotionDetail = z
+  .looseObject({
+    id: z.string(),
+    name: z.string().nullish(),
+    identification: z.looseObject({promotionName: z.string().nullish()}).nullish(),
+    status: z.string().nullish(),
+    sourceEnvironmentName: z.string().nullish(),
+    destinationEnvironmentName: z.string().nullish(),
+    isBackPromotion: z.boolean().nullish(),
+    userStories: z
+      .array(z.looseObject({id: z.string().nullish(), name: z.string(), title: z.string().nullish()}))
+      .nullish(),
+    includedMetadata: z
+      .array(
+        z.looseObject({
+          type: z.string().nullish(),
+          metadataApiName: z.string().nullish(),
+          name: z.string().nullish(),
+        }),
+      )
+      .nullish(),
+  })
+  .transform((p) => ({...p, name: p.name ?? p.identification?.promotionName ?? p.id}))
 export type PromotionDetail = z.infer<typeof PromotionDetail>
 
 const PromotionRun = z.looseObject({

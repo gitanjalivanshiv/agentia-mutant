@@ -1,0 +1,101 @@
+{
+  "args": ["cicd", "promotion", "get", "PROMO"],
+  "exitCode": 0,
+  "stdout": {
+    "result": {
+      "id": "a00000000000001",
+      "status": "Completed",
+      "salesforceStatus": "Completed",
+      "pipelineId": "a00000000000000002",
+      "userStoryCount": 1,
+      "includedMetadataCount": 1,
+      "sourceEnvironmentName": "Dev2-SFP",
+      "destinationEnvironmentName": "INT-SFP",
+      "sourceEnvironmentId": "a00000000000000003",
+      "destinationEnvironmentId": "a00000000000000004",
+      "createdBy": "<redacted>",
+      "createdDate": "2026-10-06T10:53:16.000+0000",
+      "lastModifiedBy": "<redacted>",
+      "lastModifiedDate": "2026-10-06T10:56:00.000+0000",
+      "identification": {
+        "promotionName": "P00004",
+        "projectId": "a00000000000000005",
+        "projectName": "Trial - Salesforce Source Format",
+        "releaseId": "",
+        "releaseName": "",
+        "pipelineId": "a00000000000000002",
+        "pipelineName": "Trial - Salesforce Source Format Pipeline"
+      },
+      "mainSettings": {
+        "platform": "SFDX",
+        "destinationCredential": "INT-SFP",
+        "destinationCredentialId": "a00000000000000006",
+        "sourceEnv": "Dev2-SFP",
+        "destinationEnv": "INT-SFP",
+        "isBackPromotion": false,
+        "promotionDirectionKind": "forward_promotion"
+      },
+      "viewInGitLink": "https://example.invalid/7",
+      "openPullRequest": {
+        "gitProvider": "Github",
+        "pullRequestBaseUrl": "<redacted>",
+        "destinationEnvironmentBranch": "int-sfp",
+        "compareBranch": "promotion/P00004",
+        "isMerged": true
+      },
+      "userStories": [
+        {
+          "id": "a00000000000000008",
+          "name": "US-0000028",
+          "title": "Mutant Lab – M1 revert Discount_Max",
+          "status": "Draft",
+          "assigneeName": "<redacted>",
+          "ownerId": "a00000000000000009",
+          "ownerName": "<redacted>",
+          "latestCommitDate": "2026-10-06T10:20:11.000+0000",
+          "lastPromotionDate": "2026-10-06T10:56:01.000+0000",
+          "isBundle": false,
+          "deploymentStepsCount": 0,
+          "componentsCount": 1,
+          "createdDate": "2026-10-06T10:18:18.000+0000",
+          "lastModifiedDate": "2026-10-06T10:56:02.000+0000",
+          "projectId": "a00000000000000005",
+          "projectName": "Trial - Salesforce Source Format",
+          "releaseName": "",
+          "ignored": false
+        }
+      ],
+      "includedMetadata": [
+        {
+          "id": "a00000000000000010",
+          "name": "US-0000028 Add ValidationRule.Opportunity.Discount_Max",
+          "userStoryId": "a00000000000000008",
+          "userStoryName": "US-0000028",
+          "userStoryTitle": "Mutant Lab – M1 revert Discount_Max",
+          "type": "ValidationRule",
+          "action": "Add",
+          "metadataApiName": "Opportunity.Discount_Max",
+          "moduleDirectory": "force-app/main/default",
+          "ignored": false,
+          "lastModifiedDate": "2026-10-06T10:20:12.000+0000",
+          "lastModifiedById": "a00000000000000009",
+          "lastModifiedByName": "<redacted>"
+        }
+      ],
+      "lastPromotionExecutionId": "a00000000000000011",
+      "lastDeploymentExecutionId": "a00000000000000012",
+      "lastPromotionExecutionStatus": "Successful",
+      "lastDeploymentExecutionStatus": "Successful",
+      "apexTestLevel": "No Test Run",
+      "debugMode": false,
+      "isValidationRun": false,
+      "recreatePromotionBranch": false,
+      "isRolledBack": false,
+      "ignoreDeploymentWarnings": false,
+      "rollbackStatus": "Not Started",
+      "ignoreRollbackDeploymentWarnings": false
+    },
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000013"
+  }
+}

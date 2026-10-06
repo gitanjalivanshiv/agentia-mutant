@@ -90,7 +90,38 @@ Writes ONLY to the configured labEnvironment, holds the shared org lock while ru
         this.error(`No run "${flags.resume}" in .mutant/runs/.`, {exit: 2})
       store = new RunStore(root, runId)
       state = store.load()
-      if (state.phase === 'done' || state.phase === 'failed') {
+      const nothingDeployed = state.units.every(
+        (u) => !u.deploy || (u.deploy.started !== true && !u.deploy.jobIds.length),
+      )
+      if (state.phase === 'failed' && nothingDeployed && state.units.every((u) => u.committed)) {
+        // A failed attempt that never started a deploy left the lab untouched: retry with the same
+        // stories, re-matching their (still Draft) promotions.
+        for (const u of state.units) {
+          u.deploy = undefined
+          u.promotion = undefined
+        }
+        state.mutants = state.mutants.map(
+          ({id, operator, component, file, description, shouldCheck, diff}) => ({
+            id,
+            operator,
+            component,
+            file,
+            description,
+            shouldCheck,
+            diff,
+          }),
+        )
+        delete state.failure
+        delete state.score
+        delete state.verify
+        delete state.finishedAt
+        state.phase = 'awaiting-promotions'
+        this.log(
+          chalk.dim(
+            'The failed attempt never started a deploy, so the lab is untouched: retrying with the same stories.',
+          ),
+        )
+      } else if (state.phase === 'done' || state.phase === 'failed') {
         this.error(`Run ${runId} already finished (${state.phase}). Start a new run instead.`, {exit: 2})
       }
       this.log(chalk.bold(`Resuming ${runId}`) + chalk.dim(` from phase "${state.phase}"`))

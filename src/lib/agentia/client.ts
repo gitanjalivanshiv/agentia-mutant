@@ -61,6 +61,8 @@ export class AgentiaError extends Error {
       errorName?: string
       statusCode?: number
       code?: string
+      /** `result` of a command that exited non-zero without an error envelope (e.g. a failed job it waited for). */
+      result?: unknown
     },
   ) {
     super(message)
@@ -108,7 +110,7 @@ export function unwrap<T>(doc: unknown, exitCode: number, args: string[], schema
     })
   }
   if (exitCode !== 0) {
-    throw new AgentiaError(`agentia exited with ${exitCode}`, {command, exitCode})
+    throw new AgentiaError(`agentia exited with ${exitCode}`, {command, exitCode, result: d.result})
   }
   if (!schema) return d.result as T
   const parsed = schema.safeParse(d.result)

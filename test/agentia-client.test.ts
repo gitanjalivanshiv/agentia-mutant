@@ -57,8 +57,13 @@ describe('unwrap', () => {
     expect(() => unwrap(undefined, 2, ['x'])).toThrow(/no JSON/)
   })
 
-  it('throws on non-zero exit without an error envelope', () => {
-    expect(() => unwrap({result: {}}, 3, ['x'])).toThrow(/exited with 3/)
+  it('throws on non-zero exit without an error envelope, keeping the result for diagnosis', () => {
+    expect(() => unwrap({result: {jobMonitors: []}}, 3, ['x'])).toThrow(/exited with 3/)
+    try {
+      unwrap({result: {jobMonitors: [{jobExecutionStatus: 'Failed'}]}}, 1, ['x'])
+    } catch (e) {
+      expect((e as AgentiaError).details.result).toEqual({jobMonitors: [{jobExecutionStatus: 'Failed'}]})
+    }
   })
 })
 
@@ -101,5 +106,20 @@ describe('FakeAgentiaClient', () => {
 
   it('fails loudly when no fixture matches', async () => {
     await expect(new FakeAgentiaClient().run(['missing'])).rejects.toThrow(/no fixture/)
+  })
+})
+
+describe('Copado.promotion (real `promotion get` shape)', () => {
+  it('takes the name from identification.promotionName', async () => {
+    const {Copado} = await import('../src/lib/agentia/index.js')
+    const fs = await import('node:fs')
+    const path = await import('node:path')
+    const exchange = JSON.parse(
+      fs.readFileSync(path.resolve(__dirname, 'samples/agentia/promotion-get.json'), 'utf8'),
+    )
+    const detail = await new Copado(new FakeAgentiaClient([exchange])).promotion('PROMO')
+    expect(detail.name).toBe('P00004')
+    expect(detail.sourceEnvironmentName).toBe('Dev2-SFP')
+    expect(detail.userStories?.map((u) => u.name)).toEqual(['US-0000028'])
   })
 })

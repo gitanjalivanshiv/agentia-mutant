@@ -64,3 +64,20 @@ run_total(N) ≈ baseline 50 s + N × per_mutant + final revert 210 s + verify
 | 12 | ~57 min | ~43 min |
 
 **10–12 mutants per demo run are affordable** (time-lapsed video), provided promotions don't need a human click each (see decisions.md).
+
+## First real `agentia mutant run` (3 mutants, 2026-10-06, run r-20261006-114841)
+
+| Step | Duration |
+|---|---|
+| Doctor (12 checks incl. drift) | ~40 s |
+| Baseline CRT run | 52 s |
+| Prepare + publish 4 stories (incl. commit jobs) | ~4 min |
+| User creates 4 promotions | manual (~2 min) |
+| Unit 1 deploy (1 component) / test | 239 s / 41 s |
+| Unit 2 deploy (2 components, permission set Full) / test | 235 s / 41 s |
+| Unit 3 deploy (3 components) — rejected by Salesforce | 108 s |
+| Final revert deploy (3 components) | 149 s |
+| Verify 3 components | ~10 s |
+| **Wall clock (excluding the earlier promotion-ID retry)** | **≈ 24 min** |
+
+Deploys inside a run were slower than the earlier single-component promotions (235–239 s vs 135–169 s). `mutant plan` learns from each run's `results.json`, so estimates now use the observed averages.

@@ -130,6 +130,18 @@ describe('classify', () => {
     })
   })
 
+  it('error, not invalid, when Copado never started a deploy (request rejected)', () => {
+    expect(
+      classify({
+        deploy: {ok: false, started: false, message: 'Promotion ID must be an 18-character Salesforce ID'},
+        passingAtBaseline: passing,
+      }),
+    ).toEqual({
+      outcome: 'error',
+      reason: 'Could not start the deploy: Promotion ID must be an 18-character Salesforce ID',
+    })
+  })
+
   it('timeout: deploy timed out or the budget was exceeded', () => {
     expect(classify({deploy: {ok: false, timedOut: true}, passingAtBaseline: passing}).outcome).toBe(
       'timeout',

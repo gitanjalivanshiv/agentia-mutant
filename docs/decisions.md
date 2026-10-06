@@ -79,3 +79,12 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 - `--story <US>` resolves components from the story's branch diff in the lab clone (`cicd work get` → `projectPipelineMainBranch`, `git fetch`, `git diff origin/<main>...origin/feature/<US>`); read-only.
 - Estimate models the chained, batch-promotion run (decisions 11 and option A): (N+1) × prep up front, baseline test, N × (deploy + test), final revert deploy, per-component verify. Defaults are the measured timings; later runs' `results.json` averages override them.
 - Plans store the baseline hash and each mutant's mutated-file sha256 so `mutant run` can refuse a stale plan; they are written to `.mutant/plans/` (git-ignored) plus `latest.json`.
+
+## 2026-10-06 — Phase 4 (runner) and the first real run
+- **Real 3-mutant run completed end to end; INT-SFP verified identical to the baseline afterwards.** Stories US-0000029…32, promotions P00005…08 (created by the user in one sitting and matched automatically).
+- `promotion get` returns the **15-char** ID in `id` and the name in `identification.promotionName`; `promotion run` accepts only the **18-char** ID, which `promotion list` returns. The runner stores the list ID.
+- The CLI reports a failed deploy job as an error envelope ("Promotion job … finished with status Error: …"); the runner treats that as a deploy that ran (→ `invalid`), while a request rejected before any job starts is `error` (a Mutant/CLI problem, not a mutant property).
+- `run --resume` may retry a **failed** run when no deploy ever started (the lab is untouched): same stories, promotions re-matched.
+- `FLOW_DROP_ASSIGNMENT` must keep `<defaultConnectorLabel>` when removing a decision's default connector: Salesforce rejected the mutant with "Enter a label for the default outcome". Operator fixed.
+- **Open:** `PERMSET_FLS_REVOKE` (edit on Discount_Percent__c) **survived** although Copado deployed the permission set as Full (P00006, jobs Successful) and the Standard User profile grants no access to the field. The robot user must get edit access from another profile/permission set; to confirm with the user. Until then the demo's permission-set mutants measure nothing.
+- Permission sets are published with `--full-metadata PermissionSet:<name>` (decision 6 confirmed: Copado shows the change as action "Full").

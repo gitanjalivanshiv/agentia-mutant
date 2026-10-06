@@ -112,14 +112,17 @@ class SimCopado {
       // Plus someone else's unrelated promotion that must be ignored.
       this.promotionsCreated.push({id: 'PROMO_OTHER', name: 'P-OTHER', story: 'US-9999999'})
     }
-    return this.promotionsCreated.map((p) => ({id: p.id, name: p.name, status: 'Draft'}))
+    // Like the real CLI: `promotion list` gives 18-char IDs…
+    return this.promotionsCreated.map((p) => ({id: `${p.id}AAA`, name: p.name, status: 'Draft'}))
   }
 
-  async promotion(id: string) {
+  async promotion(id18: string) {
+    const id = id18.replace(/AAA$/, '')
     const p = this.promotionsCreated.find((x) => x.id === id)!
     return (
       this.overridePromotion?.(id) ?? {
-        id,
+        id, // …while `promotion get` gives the 15-char ID
+
         name: p.name,
         status: this.deployed.includes(p.story) ? 'Completed' : 'Draft',
         sourceEnvironmentName: 'Dev2',
@@ -131,7 +134,9 @@ class SimCopado {
   }
 
   async promotionRunDeploy(id: string) {
-    const p = this.promotionsCreated.find((x) => x.id === id)!
+    if (!id.endsWith('AAA'))
+      throw new Error('Promotion ID must be an 18-character Salesforce ID, not a display name.')
+    const p = this.promotionsCreated.find((x) => `${x.id}AAA` === id)!
     this.calls.push(`deploy ${p.story}`)
     if (this.failDeployOf.has(p.story))
       return {jobMonitors: [{jobExecutionId: 'JE', jobExecutionStatus: 'Failed'}]}
@@ -346,6 +351,27 @@ describe('Runner end to end (simulated lab)', () => {
     expect(labMatchesBaseline()).toBe(true)
   })
 
+  it('counts a deploy job that ran and failed (CLI error envelope) as invalid', async () => {
+    const {state, store} = newState()
+    const orig = sim.promotionRunDeploy.bind(sim)
+    sim.promotionRunDeploy = async (id: string) => {
+      if (id.includes(sim.stories[1]!.name)) {
+        const {AgentiaError} = await import('../../src/lib/agentia/index.js')
+        throw new AgentiaError(
+          'Promotion job a0sXXXXXXXXXXXXXXX finished with status Error: Metadata Deployment - Flow:X - Enter a label for the default outcome.',
+          {command: 'agentia cicd promotion run', exitCode: 1},
+        )
+      }
+      return orig(id)
+    }
+    expect(await runner(state, store).run()).toBe('done')
+    expect(state.mutants[1]).toMatchObject({
+      outcome: 'invalid',
+      reason: expect.stringContaining('default outcome'),
+    })
+    expect(labMatchesBaseline()).toBe(true)
+  })
+
   it('pauses when promotions are not created in time, and resumes later', async () => {
     sim.createPromotionsAfterPolls = 1_000
     const {state, store} = newState()
@@ -411,7 +437,7 @@ describe('Runner end to end (simulated lab)', () => {
     expect(await runner(state, store).run()).toBe('failed')
     expect(state.verify?.ok).toBe(false)
     expect(state.failure).toMatch(/does not match the baseline/)
-    expect(state.failure).toMatch(/agentia cicd promotion run PROMO_US-\d+ --operation merge_and_deploy/)
+    expect(state.failure).toMatch(/agentia cicd promotion run PROMO_US-\d+AAA --operation merge_and_deploy/)
   })
 })
 

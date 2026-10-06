@@ -87,11 +87,12 @@ describe('FLOW_DROP_ASSIGNMENT', () => {
     expect(flag!.mutated).toContain('<name>Flag_Approval</name>')
   })
 
-  it('removes a default connector together with its label', () => {
+  it('removes a default connector but keeps its label (Salesforce requires it)', () => {
     const [, clear] = run(FLOW_DROP_ASSIGNMENT, FLOW, 'Discount_Approval', discount)
     expectSane(clear!)
     expect(clear!.mutated).not.toContain('<defaultConnector>')
-    expect(clear!.mutated).not.toContain('<defaultConnectorLabel>')
+    expect(clear!.mutated).toContain('<defaultConnectorLabel>Within Limit</defaultConnectorLabel>')
+    expect(clear!.stats).toEqual({added: 0, removed: 3})
   })
 
   it('removes one item at a time from a multi-item assignment', () => {

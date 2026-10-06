@@ -142,12 +142,9 @@ function bypass(xml: string, root: XmlNode, name: string, next: string | undefin
         childText(xml, c, 'targetReference') === name
       ) {
         const ref = child(c, 'targetReference') as XmlNode
+        // Salesforce requires a decision's default outcome label even without a connector
+        // ("Enter a label for the default outcome"), so only the connector is removed.
         edits.push(next ? replaceText(ref, next) : removeElement(xml, c))
-        // A removed default connector leaves its label dangling; drop it too.
-        if (!next && c.name === 'defaultConnector') {
-          const label = child(node, 'defaultConnectorLabel')
-          if (label) edits.push(removeElement(xml, label))
-        }
       } else walk(c)
     }
   }

@@ -44,7 +44,15 @@ export interface DeployUnit {
   commitJobId?: string
   committed?: boolean
   promotion?: {id: string; name: string}
-  deploy?: {ok: boolean; seconds: number; message?: string; jobIds: string[]; timedOut?: boolean}
+  deploy?: {
+    ok: boolean
+    /** False when Copado never started a deploy job (the request itself was rejected). */
+    started?: boolean
+    seconds: number
+    message?: string
+    jobIds: string[]
+    timedOut?: boolean
+  }
 }
 
 export interface MutantResult {

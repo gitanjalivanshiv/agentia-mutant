@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import {AgentiaError, type Copado, type PromotionDetail} from '../agentia/index.js'
+import {AgentiaError, type Copado, type PromotionDetail, type PromotionRunResult} from '../agentia/index.js'
 import type {MutantConfig} from '../config.js'
 import {git, trackedChanges} from '../git.js'
 import type {LabContext} from '../lab.js'
@@ -254,7 +254,13 @@ export class Runner {
       })
       for (const p of drafts) {
         if (inspected.has(p.id) || this.state.units.some((u) => u.promotion?.id === p.id)) continue
-        const detail = await copado.promotion(p.id)
+        let detail: PromotionDetail
+        try {
+          detail = await copado.promotion(p.id)
+        } catch (error) {
+          io.warn(`Could not read promotion ${p.name}: ${(error as Error).message}`)
+          continue
+        }
         const names = (detail.userStories ?? []).map((u) => u.name)
         const unit = this.state.units.find((u) => u.story && names.includes(u.story.name))
         if (!unit) {
@@ -267,7 +273,8 @@ export class Runner {
           )
           continue
         }
-        unit.promotion = {id: detail.id, name: detail.name}
+        // `promotion get` returns a 15-char ID; `promotion run` needs the 18-char ID from `promotion list`.
+        unit.promotion = {id: p.id, name: detail.name}
         inspected.add(p.id)
         this.save()
         io.info(
@@ -335,6 +342,7 @@ export class Runner {
       const ok = jobs.length > 0 && jobs.every((j) => j.jobExecutionStatus === 'Successful')
       unit.deploy = {
         ok,
+        started: true,
         seconds: Math.round((this.now() - started) / 1000),
         jobIds: jobs.map((j) => j.jobExecutionId ?? '').filter(Boolean),
         ...(ok
@@ -345,12 +353,21 @@ export class Runner {
       }
     } catch (error) {
       const message = error instanceof AgentiaError ? error.message : String(error)
+      // A failed or timed-out deploy job makes the CLI exit non-zero but still report its jobs.
+      const result =
+        error instanceof AgentiaError ? (error.details.result as PromotionRunResult | undefined) : undefined
+      const jobs = result?.jobMonitors ?? []
+      const timedOut = /timed? ?out/i.test(message)
+      // The CLI reports failed deploy jobs as an error envelope too: "Promotion job <id> finished with status Error: …".
+      const jobRan = /\bjob\s+\S+\s+finished with status/i.test(message)
       unit.deploy = {
         ok: false,
         seconds: Math.round((this.now() - started) / 1000),
-        jobIds: [],
+        jobIds: jobs.map((j) => j.jobExecutionId ?? '').filter(Boolean),
         message,
-        ...(/timed? ?out/i.test(message) ? {timedOut: true} : {}),
+        // No job means Copado never started a deploy (e.g. the CLI rejected the request).
+        started: jobs.length > 0 || timedOut || jobRan,
+        ...(timedOut ? {timedOut: true} : {}),
       }
     }
     this.save()

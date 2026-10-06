@@ -89,7 +89,7 @@ export interface Classification {
 
 /** Classifies one mutant from its deploy and test results against the baseline's passing tests. */
 export function classify(input: {
-  deploy: {ok: boolean; message?: string; timedOut?: boolean}
+  deploy: {ok: boolean; started?: boolean; message?: string; timedOut?: boolean}
   test?: TestRunRecord
   passingAtBaseline: string[]
   overBudget?: boolean
@@ -98,6 +98,12 @@ export function classify(input: {
     return {
       outcome: 'timeout',
       reason: input.deploy.timedOut ? 'Deploy did not finish in time.' : 'Over the per-mutant time budget.',
+    }
+  }
+  if (!input.deploy.ok && input.deploy.started === false) {
+    return {
+      outcome: 'error',
+      reason: `Could not start the deploy: ${input.deploy.message ?? 'unknown error'}`,
     }
   }
   if (!input.deploy.ok) return {outcome: 'invalid', reason: input.deploy.message ?? 'Deploy failed.'}
