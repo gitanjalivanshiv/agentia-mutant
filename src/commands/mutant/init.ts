@@ -52,11 +52,23 @@ Installs the Agent Skill into .agents/skills/mutant (and .claude/skills/mutant w
     verify: Flags.boolean({description: 'Verify names against Copado', default: true, allowNo: true}),
     force: Flags.boolean({description: 'Overwrite an existing .mutant/config.json'}),
     'skip-skill': Flags.boolean({description: 'Do not install the Agent Skill'}),
+    'skill-only': Flags.boolean({description: 'Only (re)install the Agent Skill; leave the config alone'}),
   }
 
   public async run(): Promise<InitResult> {
     const {flags} = await this.parse(MutantInit)
     const root = process.cwd()
+    if (flags['skill-only']) {
+      const skill = installSkill(root)
+      for (const s of skill)
+        this.log(chalk.green('✔ ') + `Agent Skill ${s.action}: ${path.relative(root, s.target)}`)
+      return {
+        configFile: configPath(root),
+        config: undefined as unknown as MutantConfig,
+        verified: false,
+        skill,
+      }
+    }
     const file = configPath(root)
     if (fs.existsSync(file) && !flags.force) {
       this.error(`${file} already exists. Use --force to overwrite.`, {exit: 2})

@@ -107,3 +107,10 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 - **Root cause of the "permission set" survivor (Phase 4 open item): the original test, not the robot user.** With edit revoked, Salesforce still let the robot type into Discount Percent on the create form, but the value was not saved. The happy-path test never checked the saved value, so it passed. The healed tests check persisted values / error messages and fail. No change to the robot user is needed.
 - `compare` credits the test `heal` wrote for a mutant when it is among the killers (otherwise the first failing test).
 - The baseline gate caught a broken AI-written test before anything was deployed (r-20261006-132706): proposals must pass on the clean lab.
+
+## 2026-10-06 — Phase 7 (skill, demo, seed/reset)
+- The Agent Skill is a folder (`SKILL.md` + `references/commands.md` + `references/workflow.md`), mirroring the Agentia skills. `mutant init` installs the whole folder into `.agents/skills/mutant` (and `.claude/skills/mutant` when `.claude/` exists), pruning files no longer shipped; `init --skill-only` refreshes it without touching the config.
+- **Skill gate passed:** a fresh headless Claude Code session, with the build brief removed and only read-only tools allowed, loaded the skill unprompted, ran `doctor` first, stopped on a failing check and laid out plan → ask → run → report (docs/agent-skill-test.md).
+- `agentia mutant reset` (used by `examples/demo/seed.sh` with `--force` and `reset.sh`): drift check; if needed, ONE story deploying the whole baseline through Copado (a `reset` run kind on the same runner: promotion matching, safety checks, verify, resume); with `--suite`, restores the CRT suite file. Reset runs are named `reset-…` and are ignored by "latest run" lookups.
+- The CICD gateway is intermittently flaky (alternating 500 and "Unauthorized" within seconds, auth unchanged). The Copado facade now retries **read-only** calls (get/list/status/files/download) up to 3 times with backoff; writes are never retried automatically.
+- Drift comparison is one shared module (`src/lib/drift.ts`) used by doctor, the runner's verify step and reset.

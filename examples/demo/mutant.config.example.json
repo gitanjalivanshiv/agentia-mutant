@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "labEnvironment": "MutationLab",
+  "sourceEnvironment": "Dev2",
+  "pipeline": "Your Salesforce Source Format Pipeline",
+  "labRepoPath": "../your-pipeline-repo-clone",
+  "packageDirectory": "examples/demo/force-app",
+  "labPackageDirectory": "force-app",
+  "storyTitlePrefix": "Mutant Lab –",
+  "crt": {"projectId": 12345, "jobId": 67890},
+  "ai": {"workspaceId": "00000000-0000-0000-0000-000000000000"},
+  "budget": {"maxMutants": 10, "mutantTimeoutMinutes": 20},
+  "operators": {"allow": [], "deny": []},
+  "lockFile": "~/hackathon/.org-busy",
+  "iKnowThisIsALab": false
+}

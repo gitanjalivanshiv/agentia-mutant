@@ -195,6 +195,24 @@ describe('runDoctor', () => {
     expect(report.checks.find((c) => c.id === 'crt-job')?.fix).toMatch(/folder-scoped/)
   })
 
+  it('rides out a transient "Unauthorized" on the lab credential check', async () => {
+    const fake = healthyFake()
+    const args = ['cicd', 'environment', 'auth', 'status', 'ENV_LAB', '--credentialid', 'CRED_LAB']
+    fake.replace({
+      args,
+      exitCode: 1,
+      stdout: {error: {name: 'CicdGatewayError', message: 'Unauthorized', statusCode: 401}},
+    })
+    fake.add({args, exitCode: 0, stdout: {result: {validated: true}, status: 0}})
+    const report = await runDoctor({
+      root,
+      config,
+      copado: new Copado(fake, root, async () => {}),
+      skipDrift: true,
+    })
+    expect(statusOf(report, 'lab-auth')).toBe('pass')
+  })
+
   it('fails when the lab clone has uncommitted tracked changes', async () => {
     const lab = path.join(root, 'lab')
     fs.writeFileSync(path.join(lab, 'a.txt'), 'x')

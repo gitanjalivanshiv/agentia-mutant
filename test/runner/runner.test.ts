@@ -453,6 +453,60 @@ describe('Runner end to end (simulated lab)', () => {
   })
 })
 
+describe('Runner reset run', () => {
+  it('deploys the whole baseline through one story, runs no tests, and verifies', async () => {
+    // Start from a drifted lab: a mutant left behind.
+    const vr = generateMutants(demo).find((m) => m.id === PICK[0])!
+    sim.org.set(vr.file, vr.mutated)
+    const plan = buildPlan({
+      packageDir: demo,
+      scope: {kind: 'all'},
+      max: 0,
+      operators: OPERATORS,
+      lab: {environment: 'MutationLab', source: 'Dev2', pipeline: 'Demo Pipeline'},
+    })
+    const files = Object.fromEntries(
+      components.map((c) => [c.file, fs.readFileSync(path.join(demo, c.file), 'utf8')]),
+    )
+    const now = new Date().toISOString()
+    const state: RunState = {
+      version: 1,
+      runId: 'reset-test',
+      kind: 'reset',
+      phase: 'created',
+      createdAt: now,
+      updatedAt: now,
+      plan,
+      lab: plan.lab,
+      units: [
+        {
+          index: 0,
+          files,
+          components: components.map((c) => `${c.type}:${c.apiName}`),
+          title: 'Mutant Lab – reset-test restore baseline',
+        },
+      ],
+      mutants: [],
+    }
+    const store = new RunStore(root, 'reset-test')
+    expect(await runner(state, store).run()).toBe('done')
+    expect(sim.calls).not.toContain('crtRun')
+    expect(sim.deployed).toHaveLength(1)
+    expect(state.verify).toMatchObject({ok: true})
+    expect(labMatchesBaseline()).toBe(true)
+  })
+})
+
+describe('RunStore.latest', () => {
+  it('ignores reset runs', () => {
+    for (const id of ['r-20261006-100000', 'reset-20261007-100000']) {
+      fs.mkdirSync(path.join(root, '.mutant/runs', id), {recursive: true})
+      fs.writeFileSync(path.join(root, '.mutant/runs', id, 'state.json'), '{}')
+    }
+    expect(RunStore.latest(root)).toBe('r-20261006-100000')
+  })
+})
+
 describe('unsafePromotion', () => {
   const unit = {index: 0, files: {}, components: [], title: 't', story: {id: 'S', name: 'US-1'}}
   const good = {

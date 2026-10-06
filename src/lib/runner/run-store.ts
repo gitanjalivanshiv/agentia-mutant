@@ -5,9 +5,9 @@ import {runsDir} from '../history.js'
 import type {RunState} from './types.js'
 
 /** Run ID like `r-20261006-142501`: sortable and short enough for story titles. */
-export function newRunId(now: Date = new Date()): string {
+export function newRunId(now: Date = new Date(), prefix = 'r'): string {
   const p = (n: number) => String(n).padStart(2, '0')
-  return `r-${now.getUTCFullYear()}${p(now.getUTCMonth() + 1)}${p(now.getUTCDate())}-${p(now.getUTCHours())}${p(now.getUTCMinutes())}${p(now.getUTCSeconds())}`
+  return `${prefix}-${now.getUTCFullYear()}${p(now.getUTCMonth() + 1)}${p(now.getUTCDate())}-${p(now.getUTCHours())}${p(now.getUTCMinutes())}${p(now.getUTCSeconds())}`
 }
 
 export class RunStore {
@@ -28,11 +28,14 @@ export class RunStore {
   static latest(root: string): string | undefined {
     const dir = runsDir(root)
     if (!fs.existsSync(dir)) return undefined
-    return fs
-      .readdirSync(dir)
-      .filter((d) => fs.existsSync(path.join(dir, d, 'state.json')))
-      .sort()
-      .pop()
+    return (
+      fs
+        .readdirSync(dir)
+        // Mutation runs only (`r-…`); reset runs (`reset-…`) have no results worth reporting.
+        .filter((d) => d.startsWith('r-') && fs.existsSync(path.join(dir, d, 'state.json')))
+        .sort()
+        .pop()
+    )
   }
 
   path(...parts: string[]): string {

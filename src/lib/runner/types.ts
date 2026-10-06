@@ -97,6 +97,8 @@ export interface Score {
 export interface RunState {
   version: 1
   runId: string
+  /** `reset`: one deploy that restores the lab to the baseline (no baseline tests, no mutants). */
+  kind?: 'mutation' | 'reset'
   phase: Phase
   createdAt: string
   updatedAt: string

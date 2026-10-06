@@ -1,6 +1,6 @@
 import {z} from 'zod'
 
-import type {AgentiaClient} from './client.js'
+import {type AgentiaClient, AgentiaError, isTransient} from './client.js'
 
 /**
  * Typed wrappers for the Agentia commands Mutant uses. Every schema is a loose object:
@@ -188,15 +188,39 @@ export interface OrgRef {
   credentialId: string
 }
 
+const READ_VERBS = new Set(['get', 'list', 'status', 'files', 'download'])
+
+/** `cicd environment list`, `testing job get …`, `cicd metadata content get …`: safe to retry. */
+export function isReadOnly(args: string[]): boolean {
+  return args.slice(0, 5).some((a) => READ_VERBS.has(a))
+}
+
 export class Copado {
   constructor(
     readonly client: AgentiaClient,
     /** Project root: project-scoped (--local) auth is resolved from here. */
     readonly cwd?: string,
+    private readonly sleep: (ms: number) => Promise<void> = (ms) => new Promise((r) => setTimeout(r, ms)),
   ) {}
 
-  private run<T>(args: string[], schema?: z.ZodType<T>, timeoutMs?: number, cwd?: string): Promise<T> {
-    return this.client.run(args, {cwd: cwd ?? this.cwd, schema, timeoutMs})
+  /**
+   * Read-only calls are retried (3 attempts, short backoff) on transient failures: the CICD gateway
+   * intermittently answers 500 or "Unauthorized" for requests that succeed seconds later. Writes
+   * (create, set, publish, run, upload, ask) are never retried automatically: they could duplicate.
+   */
+  private async run<T>(args: string[], schema?: z.ZodType<T>, timeoutMs?: number, cwd?: string): Promise<T> {
+    const call = () => this.client.run(args, {cwd: cwd ?? this.cwd, schema, timeoutMs})
+    if (!isReadOnly(args)) return call()
+    for (let attempt = 1; ; attempt++) {
+      try {
+        return await call()
+      } catch (error) {
+        const retryable =
+          isTransient(error) || (error instanceof AgentiaError && /unauthori[sz]ed/i.test(error.message))
+        if (!retryable || attempt >= 3) throw error
+        await this.sleep(2000 * attempt)
+      }
+    }
   }
 
   async auth(): Promise<AuthCredential[]> {

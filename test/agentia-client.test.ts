@@ -123,3 +123,45 @@ describe('Copado.promotion (real `promotion get` shape)', () => {
     expect(detail.userStories?.map((u) => u.name)).toEqual(['US-0000028'])
   })
 })
+
+describe('Copado read retries', () => {
+  it('retries read-only calls on transient gateway errors', async () => {
+    const {Copado} = await import('../src/lib/agentia/index.js')
+    const args = ['cicd', 'environment', 'list', '--page-size', '200']
+    const fake = new FakeAgentiaClient()
+      .fail(args, {message: 'CICD Gateway request failed (500).', statusCode: 500})
+      .fail(args, {message: 'Unauthorized. Request: GET /corpus/environments'})
+      .ok(args, {data: [{id: 'E', name: 'Lab'}]})
+    const copado = new Copado(fake, undefined, async () => {})
+    expect((await copado.environments()).map((e) => e.name)).toEqual(['Lab'])
+    expect(fake.calls).toHaveLength(3)
+  })
+
+  it('gives up after 3 attempts', async () => {
+    const {Copado} = await import('../src/lib/agentia/index.js')
+    const args = ['ai', 'quota', 'get']
+    const fake = new FakeAgentiaClient().fail(args, {message: 'read ECONNRESET'})
+    await expect(new Copado(fake, undefined, async () => {}).aiQuota()).rejects.toThrow(/ECONNRESET/)
+    expect(fake.calls).toHaveLength(3)
+  })
+
+  it('never retries writes', async () => {
+    const {Copado} = await import('../src/lib/agentia/index.js')
+    const args = ['cicd', 'promotion', 'run', 'P', '--operation', 'merge_and_deploy', '--wait-timeout', '120']
+    const fake = new FakeAgentiaClient().fail(args, {
+      message: 'CICD Gateway request failed (500).',
+      statusCode: 500,
+    })
+    await expect(new Copado(fake, undefined, async () => {}).promotionRunDeploy('P', 120)).rejects.toThrow()
+    expect(fake.calls).toHaveLength(1)
+  })
+
+  it('classifies commands', async () => {
+    const {isReadOnly} = await import('../src/lib/agentia/index.js')
+    expect(isReadOnly(['cicd', 'metadata', 'content', 'get', '--api-name', 'x'])).toBe(true)
+    expect(isReadOnly(['testing', 'job', 'download', '1', '-p', '2'])).toBe(true)
+    expect(isReadOnly(['cicd', 'work', 'set', 'US-1'])).toBe(false)
+    expect(isReadOnly(['testing', 'test', 'run', '1', '-p', '2'])).toBe(false)
+    expect(isReadOnly(['ai', 'agent', 'ask', '-p', 'list all the things'])).toBe(false)
+  })
+})

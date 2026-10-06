@@ -203,3 +203,15 @@ export class ProcessAgentiaClient implements AgentiaClient {
 export function stripJson(args: string[]): string[] {
   return args.filter((a) => a !== '--json')
 }
+
+/** Network failures and gateway 5xx/429 responses that are worth retrying. */
+export function isTransient(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error)
+  const status = error instanceof AgentiaError ? error.details.statusCode : undefined
+  return (
+    /ENOTFOUND|EAI_AGAIN|ECONNRESET|ECONNREFUSED|ETIMEDOUT|EPIPE|socket hang up|network|fetch failed|timed? ?out|\(5\d\d\)/i.test(
+      message,
+    ) ||
+    (status !== undefined && (status >= 500 || status === 429))
+  )
+}

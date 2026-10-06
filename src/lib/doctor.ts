@@ -1,13 +1,12 @@
 import fs from 'node:fs'
-import os from 'node:os'
-import path from 'node:path'
 
 import {AgentiaError, type AuthCredential, type Copado} from './agentia/index.js'
 import {labNameProblem, type MutantConfig, resolveFromRoot} from './config.js'
 import {isGitRepo, remoteUrl, repoSlug, trackedChanges} from './git.js'
 import {type LabContext, resolveLab} from './lab.js'
+import {checkDrift} from './drift.js'
 import {readLock} from './lock.js'
-import {driftSummary, listComponents, matchesBaseline} from './metadata.js'
+import {listComponents} from './metadata.js'
 
 export type CheckStatus = 'pass' | 'warn' | 'fail' | 'skip'
 
@@ -160,6 +159,7 @@ export async function runDoctor(options: DoctorOptions): Promise<DoctorReport> {
   // 6. Lab org credential
   if (lab) {
     try {
+      // Copado retries read-only calls itself (the gateway sometimes answers "Unauthorized" spuriously).
       const valid = await copado.environmentAuthStatus(lab.lab.id, lab.labOrg.credentialId)
       add(
         valid
@@ -317,26 +317,7 @@ export async function runDoctor(options: DoctorOptions): Promise<DoctorReport> {
       fix: 'Point packageDirectory at a Source Format package directory.',
     })
   } else {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'mutant-drift-'))
-    const drifted: string[] = []
-    const errors: string[] = []
-    try {
-      for (const c of components) {
-        const out = path.join(tmp, `${c.type}-${c.apiName}.xml`.replace(/[^\w.-]+/g, '_'))
-        try {
-          await copado.metadataContentGet(lab.labOrg, c.type, c.apiName, out)
-          const baseline = fs.readFileSync(path.join(packageDir, c.file), 'utf8')
-          const org = fs.readFileSync(out, 'utf8')
-          if (!matchesBaseline(baseline, org)) {
-            drifted.push(`${c.type} ${c.apiName} (${driftSummary(baseline, org).join(', ')})`)
-          }
-        } catch (e) {
-          errors.push(`${c.type} ${c.apiName}: ${errorText(e)}`)
-        }
-      }
-    } finally {
-      fs.rmSync(tmp, {recursive: true, force: true})
-    }
+    const {drifted, unreadable: errors} = await checkDrift(copado, lab.labOrg, packageDir, components)
     if (drifted.length || errors.length) {
       add({
         id: 'drift',

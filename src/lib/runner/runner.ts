@@ -1,11 +1,20 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import {AgentiaError, type Copado, type PromotionDetail, type PromotionRunResult} from '../agentia/index.js'
+import {
+  AgentiaError,
+  type Copado,
+  isTransient,
+  type PromotionDetail,
+  type PromotionRunResult,
+} from '../agentia/index.js'
+
+export {isTransient} from '../agentia/index.js'
 import type {MutantConfig} from '../config.js'
 import {git, trackedChanges} from '../git.js'
 import type {LabContext} from '../lab.js'
-import {matchesBaseline, driftSummary, listComponents} from '../metadata.js'
+import {checkDrift} from '../drift.js'
+import {listComponents} from '../metadata.js'
 import {classify, computeScore, judgeBaseline, parseXunit} from './classify.js'
 import type {RunStore} from './run-store.js'
 import type {DeployUnit, MutantResult, RunState, TestRunRecord} from './types.js'
@@ -79,6 +88,10 @@ export class Runner {
   /** Runs (or resumes) every phase. The final revert always runs once any mutant was deployed. */
   async run(): Promise<RunOutcome> {
     const s = this.state
+    if (s.kind === 'reset' && s.phase === 'created') {
+      s.phase = 'prepare'
+      this.save()
+    }
     if (s.phase === 'created' || s.phase === 'baseline') {
       const ok = await this.baseline()
       if (!ok) return 'failed'
@@ -422,7 +435,8 @@ export class Runner {
     const s = this.state
     const final = s.units[s.units.length - 1]
     const anyDeployed = s.units.some((u) => u.deploy)
-    if (!final || final.mutantId || !anyDeployed) {
+    // A reset run's only unit IS the revert, so it always deploys.
+    if (!final || final.mutantId || (!anyDeployed && s.kind !== 'reset')) {
       s.phase = 'verify'
       this.save()
       return true
@@ -452,21 +466,14 @@ export class Runner {
     this.deps.io.info(
       `Verifying ${components.length} component(s) in ${this.deps.lab.lab.name} match the baseline`,
     )
-    const drifted: string[] = []
-    const dir = this.deps.store.path('verify')
-    fs.mkdirSync(dir, {recursive: true})
-    for (const c of components) {
-      const out = path.join(dir, `${c.type}-${c.apiName}.xml`.replace(/[^\w.-]+/g, '_'))
-      try {
-        await this.deps.copado.metadataContentGet(this.deps.lab.labOrg, c.type, c.apiName, out)
-        const baseline = fs.readFileSync(path.join(this.deps.packageDir, c.file), 'utf8')
-        const org = fs.readFileSync(out, 'utf8')
-        if (!matchesBaseline(baseline, org))
-          drifted.push(`${c.type} ${c.apiName} (${driftSummary(baseline, org).join(', ')})`)
-      } catch (error) {
-        drifted.push(`${c.type} ${c.apiName} (unreadable: ${(error as Error).message})`)
-      }
-    }
+    const result = await checkDrift(
+      this.deps.copado,
+      this.deps.lab.labOrg,
+      this.deps.packageDir,
+      components,
+      this.deps.store.path('verify'),
+    )
+    const drifted = [...result.drifted, ...result.unreadable.map((u) => `unreadable: ${u}`)]
     s.verify = {ok: drifted.length === 0, drifted, checkedAt: new Date(this.now()).toISOString()}
     this.save()
     return s.verify.ok
@@ -507,16 +514,4 @@ export function unsafePromotion(
     return `its status is ${detail.status}`
   }
   return undefined
-}
-
-/** Network failures and gateway 5xx/429 responses that are worth retrying while polling. */
-export function isTransient(error: unknown): boolean {
-  const message = error instanceof Error ? error.message : String(error)
-  const status = error instanceof AgentiaError ? error.details.statusCode : undefined
-  return (
-    /ENOTFOUND|EAI_AGAIN|ECONNRESET|ECONNREFUSED|ETIMEDOUT|EPIPE|socket hang up|network|fetch failed|timed? ?out/i.test(
-      message,
-    ) ||
-    (status !== undefined && (status >= 500 || status === 429))
-  )
 }
