@@ -13,6 +13,8 @@ import {loadHistory} from '../../lib/history.js'
 import {resolveLab, resolveProject} from '../../lib/lab.js'
 import {acquireLock, readLock, releaseLock} from '../../lib/lock.js'
 import {loadPlan, plansDir} from '../../lib/plan-file.js'
+import {renderHtml} from '../../lib/report/html.js'
+import {buildReportModel, loadResults} from '../../lib/report/model.js'
 import {buildPlan, type Plan} from '../../lib/planner.js'
 import {newRunId, RunStore} from '../../lib/runner/run-store.js'
 import {Runner, type RunnerIO, type RunOutcome} from '../../lib/runner/runner.js'
@@ -26,6 +28,7 @@ interface RunCommandResult {
   phase?: string
   score?: Score
   resultsFile?: string
+  reportFile?: string
   failure?: string
   /** When paused for promotions: stories that still need one. */
   storiesAwaitingPromotion?: string[]
@@ -338,13 +341,22 @@ Writes ONLY to the configured labEnvironment, holds the shared org lock while ru
       this.log(`\n${chalk.red.bold('Run failed:')} ${state.failure}`)
       process.exitCode = 1
     }
-    if (resultsFile) this.log(`\nResults: ${path.relative(process.cwd(), resultsFile)}`)
+    let reportFile: string | undefined
+    if (resultsFile) {
+      reportFile = store.path('report.html')
+      fs.writeFileSync(reportFile, renderHtml(buildReportModel(loadResults(store.dir))))
+      this.log(`\nResults: ${path.relative(process.cwd(), resultsFile)}`)
+      this.log(
+        `Report:  ${path.relative(process.cwd(), reportFile)}  ${chalk.dim('(agentia mutant report for details)')}`,
+      )
+    }
     return {
       runId: state.runId,
       outcome,
       phase: state.phase,
       score: state.score,
       resultsFile,
+      reportFile,
       failure: state.failure,
     }
   }

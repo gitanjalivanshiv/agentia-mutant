@@ -1,0 +1,206 @@
+{
+  "version": 1,
+  "runId": "r-fixture",
+  "phase": "done",
+  "createdAt": "2026-10-06T10:00:00.000Z",
+  "finishedAt": "2026-10-06T10:41:00.000Z",
+  "lab": {
+    "environment": "MutationLab",
+    "source": "Dev",
+    "pipeline": "Demo Pipeline"
+  },
+  "baseline": {
+    "runs": [
+      {
+        "seconds": 50,
+        "tests": []
+      }
+    ],
+    "flaky": [],
+    "passing": [
+      "Suite :: Create opportunity with a small discount"
+    ]
+  },
+  "verify": {
+    "ok": true,
+    "drifted": [],
+    "checkedAt": "2026-10-06T10:41:00.000Z"
+  },
+  "mutants": [
+    {
+      "id": "LAYOUT_FIELD_REMOVE:Layout:Opportunity-Opportunity Layout:Discount_Percent__c",
+      "operator": "LAYOUT_FIELD_REMOVE",
+      "component": {
+        "type": "Layout",
+        "apiName": "Opportunity-Opportunity Layout"
+      },
+      "file": "main/default/layouts/Opportunity-Opportunity Layout.layout-meta.xml",
+      "description": "Field Discount_Percent__c removed from page layout \"Opportunity-Opportunity Layout\"",
+      "shouldCheck": "Discount_Percent__c is visible and editable on the record page for users of \"Opportunity-Opportunity Layout\".",
+      "diff": "--- a/main/default/layouts/Opportunity-Opportunity Layout.layout-meta.xml\n+++ b/main/default/layouts/Opportunity-Opportunity Layout.layout-meta.xml\n@@ -46,10 +46,6 @@\n                 <behavior>Edit</behavior>\n                 <field>Amount</field>\n             </layoutItems>\n-            <layoutItems>\n-                <behavior>Edit</behavior>\n-                <field>Discount_Percent__c</field>\n-            </layoutItems>\n             <layoutItems>\n                 <behavior>Readonly</behavior>\n                 <field>Approval_Required__c</field>\n",
+      "story": "US-0000100",
+      "promotion": "P00100",
+      "durations": {
+        "deploySeconds": 150,
+        "testSeconds": 45
+      },
+      "outcome": "killed",
+      "killedBy": [
+        {
+          "name": "Create opportunity with a small discount",
+          "message": "QWebElementNotFoundError: Unable to find element for locator Discount Percent in 20.0 sec"
+        }
+      ]
+    },
+    {
+      "id": "VR_NEGATE:ValidationRule:Opportunity.Discount_Max:formula",
+      "operator": "VR_NEGATE",
+      "component": {
+        "type": "ValidationRule",
+        "apiName": "Opportunity.Discount_Max"
+      },
+      "file": "main/default/objects/Opportunity/validationRules/Discount_Max.validationRule-meta.xml",
+      "description": "Validation rule `Discount_Max` on Opportunity inverted: it now blocks valid records and lets invalid ones through",
+      "shouldCheck": "A valid Opportunity saves without error, and one that breaks `Discount_Max` (Discount_Percent__c > 0.40) is rejected.",
+      "diff": "--- a/main/default/objects/Opportunity/validationRules/Discount_Max.validationRule-meta.xml\n+++ b/main/default/objects/Opportunity/validationRules/Discount_Max.validationRule-meta.xml\n@@ -3,7 +3,7 @@\n     <fullName>Discount_Max</fullName>\n     <active>true</active>\n     <description>Discounts above 40% are not allowed (Mutant demo app).</description>\n-    <errorConditionFormula>Discount_Percent__c &gt; 0.40</errorConditionFormula>\n+    <errorConditionFormula>NOT( Discount_Percent__c &gt; 0.40 )</errorConditionFormula>\n     <errorDisplayField>Discount_Percent__c</errorDisplayField>\n     <errorMessage>Discount cannot exceed 40%.</errorMessage>\n </ValidationRule>\n",
+      "story": "US-0000100",
+      "promotion": "P00100",
+      "durations": {
+        "deploySeconds": 150,
+        "testSeconds": 45
+      },
+      "outcome": "killed",
+      "killedBy": [
+        {
+          "name": "Create opportunity with a small discount",
+          "message": "Discount cannot exceed 40%."
+        }
+      ]
+    },
+    {
+      "id": "PERMSET_OBJ_REVOKE:PermissionSet:Sales_Discounts:Opportunity:create",
+      "operator": "PERMSET_OBJ_REVOKE",
+      "component": {
+        "type": "PermissionSet",
+        "apiName": "Sales_Discounts"
+      },
+      "file": "main/default/permissionsets/Sales_Discounts.permissionset-meta.xml",
+      "description": "Permission set \"Sales Discounts\" can no longer create Opportunity records",
+      "shouldCheck": "A user with \"Sales Discounts\" can create an Opportunity.",
+      "diff": "--- a/main/default/permissionsets/Sales_Discounts.permissionset-meta.xml\n+++ b/main/default/permissionsets/Sales_Discounts.permissionset-meta.xml\n@@ -14,7 +14,7 @@\n     <hasActivationRequired>false</hasActivationRequired>\n     <label>Sales Discounts</label>\n     <objectPermissions>\n-        <allowCreate>true</allowCreate>\n+        <allowCreate>false</allowCreate>\n         <allowDelete>false</allowDelete>\n         <allowEdit>true</allowEdit>\n         <allowRead>true</allowRead>\n",
+      "story": "US-0000100",
+      "promotion": "P00100",
+      "durations": {
+        "deploySeconds": 150,
+        "testSeconds": 45
+      },
+      "outcome": "killed",
+      "killedBy": [
+        {
+          "name": "Create opportunity with a small discount"
+        }
+      ]
+    },
+    {
+      "id": "VR_DEACTIVATE:ValidationRule:Opportunity.Discount_Max:active",
+      "operator": "VR_DEACTIVATE",
+      "component": {
+        "type": "ValidationRule",
+        "apiName": "Opportunity.Discount_Max"
+      },
+      "file": "main/default/objects/Opportunity/validationRules/Discount_Max.validationRule-meta.xml",
+      "description": "Validation rule `Discount_Max` on Opportunity switched off",
+      "shouldCheck": "Saving an Opportunity that breaks `Discount_Max` (Discount_Percent__c > 0.40) is rejected with \"Discount cannot exceed 40%\".",
+      "diff": "--- a/main/default/objects/Opportunity/validationRules/Discount_Max.validationRule-meta.xml\n+++ b/main/default/objects/Opportunity/validationRules/Discount_Max.validationRule-meta.xml\n@@ -1,7 +1,7 @@\n <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n <ValidationRule xmlns=\"http://soap.sforce.com/2006/04/metadata\">\n     <fullName>Discount_Max</fullName>\n-    <active>true</active>\n+    <active>false</active>\n     <description>Discounts above 40% are not allowed (Mutant demo app).</description>\n     <errorConditionFormula>Discount_Percent__c &gt; 0.40</errorConditionFormula>\n     <errorDisplayField>Discount_Percent__c</errorDisplayField>\n",
+      "story": "US-0000100",
+      "promotion": "P00100",
+      "durations": {
+        "deploySeconds": 150,
+        "testSeconds": 45
+      },
+      "outcome": "survived",
+      "healedBy": [
+        {
+          "name": "Reject discounts above 40 percent"
+        }
+      ]
+    },
+    {
+      "id": "FLOW_DECISION_FLIP:Flow:Discount_Approval:Needs_Approval/0",
+      "operator": "FLOW_DECISION_FLIP",
+      "component": {
+        "type": "Flow",
+        "apiName": "Discount_Approval"
+      },
+      "file": "main/default/flows/Discount_Approval.flow-meta.xml",
+      "description": "Flow \"Discount Approval\": decision \"Discount Above Threshold\" now checks Discount_Percent__c ≤ 20.0 instead of Discount_Percent__c > 20.0",
+      "shouldCheck": "Records on both sides of the \"Discount Above Threshold\" condition (Discount_Percent__c > 20.0) take the right path, e.g. one clearly above and one clearly below 20.0.",
+      "diff": "--- a/main/default/flows/Discount_Approval.flow-meta.xml\n+++ b/main/default/flows/Discount_Approval.flow-meta.xml\n@@ -41,7 +41,7 @@\n             <conditionLogic>and</conditionLogic>\n             <conditions>\n                 <leftValueReference>$Record.Discount_Percent__c</leftValueReference>\n-                <operator>GreaterThan</operator>\n+                <operator>LessThanOrEqualTo</operator>\n                 <rightValue>\n                     <numberValue>20.0</numberValue>\n                 </rightValue>\n",
+      "story": "US-0000100",
+      "promotion": "P00100",
+      "durations": {
+        "deploySeconds": 150,
+        "testSeconds": 45
+      },
+      "outcome": "survived"
+    },
+    {
+      "id": "FLOW_BOUNDARY:Flow:Discount_Approval:Needs_Approval/0/minus",
+      "operator": "FLOW_BOUNDARY",
+      "component": {
+        "type": "Flow",
+        "apiName": "Discount_Approval"
+      },
+      "file": "main/default/flows/Discount_Approval.flow-meta.xml",
+      "description": "Flow \"Discount Approval\": threshold in \"Discount Above Threshold\" moved from 20.0 to 19.0",
+      "shouldCheck": "The \"Discount Above Threshold\" boundary is exact: test Discount_Percent__c at 20.0 and just below it.",
+      "diff": "--- a/main/default/flows/Discount_Approval.flow-meta.xml\n+++ b/main/default/flows/Discount_Approval.flow-meta.xml\n@@ -43,7 +43,7 @@\n                 <leftValueReference>$Record.Discount_Percent__c</leftValueReference>\n                 <operator>GreaterThan</operator>\n                 <rightValue>\n-                    <numberValue>20.0</numberValue>\n+                    <numberValue>19.0</numberValue>\n                 </rightValue>\n             </conditions>\n             <connector>\n",
+      "story": "US-0000100",
+      "promotion": "P00100",
+      "durations": {
+        "deploySeconds": 150,
+        "testSeconds": 45
+      },
+      "outcome": "survived"
+    },
+    {
+      "id": "CHECKBOX_DEFAULT_FLIP:CustomField:Opportunity.Approval_Required__c:defaultValue",
+      "operator": "CHECKBOX_DEFAULT_FLIP",
+      "component": {
+        "type": "CustomField",
+        "apiName": "Opportunity.Approval_Required__c"
+      },
+      "file": "main/default/objects/Opportunity/fields/Approval_Required__c.field-meta.xml",
+      "description": "Checkbox \"Approval Required\" (Opportunity.Approval_Required__c) now defaults to true",
+      "shouldCheck": "A new Opportunity starts with \"Approval Required\" unchecked.",
+      "diff": "--- a/main/default/objects/Opportunity/fields/Approval_Required__c.field-meta.xml\n+++ b/main/default/objects/Opportunity/fields/Approval_Required__c.field-meta.xml\n@@ -1,7 +1,7 @@\n <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n <CustomField xmlns=\"http://soap.sforce.com/2006/04/metadata\">\n     <fullName>Approval_Required__c</fullName>\n-    <defaultValue>false</defaultValue>\n+    <defaultValue>true</defaultValue>\n     <description>Set by the Discount Approval flow when the discount is above 20% (Mutant demo app).</description>\n     <externalId>false</externalId>\n     <label>Approval Required</label>\n",
+      "story": "US-0000100",
+      "promotion": "P00100",
+      "durations": {
+        "deploySeconds": 150,
+        "testSeconds": 45
+      },
+      "outcome": "survived"
+    },
+    {
+      "id": "FLOW_DROP_ASSIGNMENT:Flow:Discount_Approval:Flag_Approval/bypass",
+      "operator": "FLOW_DROP_ASSIGNMENT",
+      "component": {
+        "type": "Flow",
+        "apiName": "Discount_Approval"
+      },
+      "file": "main/default/flows/Discount_Approval.flow-meta.xml",
+      "description": "Flow \"Discount Approval\": step \"Flag Approval\" is skipped, so Approval_Required__c is never set to true",
+      "shouldCheck": "When the flow reaches \"Flag Approval\", Approval_Required__c becomes true.",
+      "diff": "--- a/main/default/flows/Discount_Approval.flow-meta.xml\n+++ b/main/default/flows/Discount_Approval.flow-meta.xml\n@@ -46,9 +46,6 @@\n                     <numberValue>20.0</numberValue>\n                 </rightValue>\n             </conditions>\n-            <connector>\n-                <targetReference>Flag_Approval</targetReference>\n-            </connector>\n             <label>Needs Approval</label>\n         </rules>\n     </decisions>\n",
+      "story": "US-0000100",
+      "promotion": "P00100",
+      "durations": {
+        "deploySeconds": 150,
+        "testSeconds": 45
+      },
+      "outcome": "invalid",
+      "reason": "Promotion job finished with status Error: Metadata Deployment - Flow: example deploy error"
+    }
+  ]
+}

@@ -88,3 +88,9 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 - `FLOW_DROP_ASSIGNMENT` must keep `<defaultConnectorLabel>` when removing a decision's default connector: Salesforce rejected the mutant with "Enter a label for the default outcome". Operator fixed.
 - **Open:** `PERMSET_FLS_REVOKE` (edit on Discount_Percent__c) **survived** although Copado deployed the permission set as Full (P00006, jobs Successful) and the Standard User profile grants no access to the field. The robot user must get edit access from another profile/permission set; to confirm with the user. Until then the demo's permission-set mutants measure nothing.
 - Permission sets are published with `--full-metadata PermissionSet:<name>` (decision 6 confirmed: Copado shows the change as action "Full").
+
+## 2026-10-06 — Phase 5 (scorer + report)
+- One report model from `results.json` feeds four outputs: terminal summary, JSON (`--format json` / `--json`), Markdown (`--format md`, for PRs/Slack) and a single-file HTML report.
+- HTML report: no scripts, external fonts, stylesheets or images (asserted by tests), light/dark via `prefers-color-scheme` (plus `data-theme`), responsive to phone width, print-friendly. Sections: score dial + counts + verified-lab line, blind-spot cards (description, "a test should check", diff, healed badge), per-type table, caught list (killing test + message), not-scored list, flaky tests. A before/after block is ready for `mutant compare`.
+- `mutant run` writes `report.html` into the run directory when it finishes.
+- `test/fixtures/results-mixed.json` is a **synthetic** results file built from the demo app's real mutants, used only by tests.
