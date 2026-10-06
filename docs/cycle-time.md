@@ -1,6 +1,6 @@
 # Mutation cycle time
 
-> **Status: PARTIALLY MEASURED** (seed deploy done 2026-10-06; mutant cycle pending).
+> **Status: MEASURED** — one full mutation cycle (M1, `VR_DEACTIVATE` on `Discount_Max`) completed 2026-10-06.
 >
 > Original blockers (all resolved): The manual cycle (§4.5 of the brief) is blocked on:
 > 1. CI/CD API key not configured (`agentia auth get --cicd` → `set: false`).
@@ -25,24 +25,42 @@
 
 So every `agentia` spawn costs roughly 1–5 s of overhead before any real work.
 
-## Cycle to measure (per mutant)
+## Measured mutation cycle M1 (2026-10-06)
+
+`VR_DEACTIVATE` on `Opportunity.Discount_Max` → **survived** (happy-path suite stayed green).
 
 | # | Step | Command | Duration |
 |---|---|---|---|
-| 1 | Apply mutation + commit | `git commit` | ~0 s |
-| 2 | Publish | `agentia cicd work publish --json` | TBD |
-| 3 | Promote + deploy to lab | `agentia cicd work submit --done --skip-local-tests --skip-pull-request --json` | TBD |
-| 4 | Wait for promotion/deploy job | `agentia cicd job get <id> --json` (poll) | TBD |
-| 5 | Run CRT suite | `agentia testing build run <job> -p <proj> --json` → poll `build get` | TBD |
-| 6 | Collect evidence | `build get --full`, `build logs -o …` | TBD |
-| 7 | Revert commit + publish + promote/deploy | as 1–4 | TBD |
-| 8 | Verify lab == baseline | `agentia cicd metadata content compare …` | TBD |
+| 1 | New story from Dev2 | `cicd work create --source-credential <Dev2>` | 2 s |
+| 2 | Activate | `cicd work set US-… --json` | 4 s |
+| 3 | Apply mutation + commit | edit XML, `git commit` | ~0 s |
+| 4 | Publish | `cicd work publish --json` | 14 s |
+| 5 | Wait for SFDX Commit job | poll `cicd job get` | 49 s |
+| 6 | *(human)* Create Promotion in Pipeline Manager | — | manual |
+| 7 | Safety check + promote/deploy to INT | `cicd promotion list --name`, `cicd promotion run … merge_and_deploy` | 142 s |
+| 8 | Run CRT suite + evidence | `testing test run … --wait-for-result --save-artifacts --xunit` | 51 s |
+| 9 | Revert story: create + set + commit + publish + commit job | as 1–5 | 118 s |
+| 10 | *(human)* Create Promotion | — | manual |
+| 11 | Promote/deploy revert | `cicd promotion run …` | 139 s |
+| 12 | Verify INT == baseline | `cicd metadata content get --source ENVIRONMENT` + semantic XML compare | 3 s |
+| | **Total machine time** | | **≈ 522 s (8.7 min)** + 2 manual clicks |
 
-## Budget model (to fill in)
+Observed spread across 4 promotions: 135–169 s (1-component ≈ 135–142 s). Commit job: 20–60 s. CRT run: 40–61 s.
+
+## Budget per demo run
+
+Chained mode (deploy *k* = revert *k−1* + apply *k*, one promotion per mutant):
 
 ```
-per_mutant = publish + promote_deploy + crt_run (+ revert_publish + revert_deploy if not chained)
-run_total  = baseline_crt + N × per_mutant + final_verify
+per_mutant ≈ prep 70 s + promote 140 s + test 50 s ≈ 260 s (4.3 min)
+prep of mutant k+1 can overlap promote+test of mutant k → ≈ 190 s (3.2 min)
+run_total(N) ≈ baseline 50 s + N × per_mutant + final revert 210 s + verify
 ```
 
-Target: 10–12 mutants per demo run.
+| N | Sequential | With prep overlap |
+|---|---|---|
+| 3 | ~18 min | ~14 min |
+| 10 | ~48 min | ~37 min |
+| 12 | ~57 min | ~43 min |
+
+**10–12 mutants per demo run are affordable** (time-lapsed video), provided promotions don't need a human click each (see decisions.md).
