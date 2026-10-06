@@ -1,0 +1,22 @@
+{
+  "args": [
+    "cicd",
+    "environment",
+    "auth",
+    "status",
+    "a00000000000000012",
+    "--credentialid",
+    "a00000000000000023"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "result": {
+      "credentialId": "a00000000000000023",
+      "credentialName": "INT-SFP",
+      "environmentId": "a00000000000000012",
+      "validated": true
+    },
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000041"
+  }
+}

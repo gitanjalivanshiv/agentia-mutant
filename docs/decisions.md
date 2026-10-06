@@ -58,3 +58,11 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 - **Verification method:** `cicd metadata content get --metadata-type ValidationRule --api-name Opportunity.Discount_Max --source ENVIRONMENT` (3 s) + canonical XML compare ignoring `fullName`. Simpler and more predictable than `content compare`; adopt for the runner's verify step.
 - **Open: promotions need a human click.** `work submit` is blocked (gateway 404) and the CLI has no promotion-create command. Options proposed to the user in the Phase 0 report.
 - **Promotion creation: option A chosen (2026-10-06).** `mutant run` prepares and publishes every mutant story (plus the final revert) up front, then prints the list of stories for the user to "Create Promotion" in Pipeline Manager in one sitting; the runner polls `promotion list` until each Draft promotion exists and then executes them in order, unattended.
+
+## 2026-10-06 — Phase 1 (scaffold, AgentiaClient, init, doctor)
+- Scaffolded with `npm init @copado/agentia-plugin` (`@copado/create-agentia-plugin@0.3.0`; interactive only — answers fed line by line) and linked with `agentia plugins link .`. Package `agentia-plugin-mutant`, topic `mutant`.
+- Plugin commands' `--json` output is oclif's raw return value (no `{result,status}` envelope like core Agentia commands); exit code 1 when `doctor` is not ready.
+- `cicd pipeline connection list` returns a **bare array**, unlike the paged `environment list` / `pipeline list`; schemas accept both.
+- Salesforce omits `false` boolean elements (e.g. `externalId`) when Copado fetches content; the baseline compare treats a missing element as `false`.
+- Record mode (`MUTANT_RECORD=<dir>`) writes scrubbed exchanges, including small text files written via `--output-file`; replay (`MUTANT_FAKE=<dir>` / `FakeAgentiaClient.fromDirectory`) matches on args with output paths normalised to `<path>`. Scrubbing: Salesforce IDs (incl. org IDs) → consistent placeholders, CRT numeric IDs (also inside paths) → placeholders, UUIDs, emails, URLs, ssh repo URIs, people's names, home directory → `~`.
+- `fixtures/doctor/` is a scrubbed recording of the first real `agentia mutant doctor` pass against INT-SFP (12/12); `test/doctor-replay.test.ts` replays it offline.

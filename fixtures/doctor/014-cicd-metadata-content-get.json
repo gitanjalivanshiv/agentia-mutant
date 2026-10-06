@@ -1,0 +1,42 @@
+{
+  "args": [
+    "cicd",
+    "metadata",
+    "content",
+    "get",
+    "--metadata-type",
+    "ValidationRule",
+    "--api-name",
+    "Opportunity.Discount_Max",
+    "--source",
+    "ENVIRONMENT",
+    "--pipeline-id",
+    "a00000000000000011",
+    "--source-org-id",
+    "a00000000000000022",
+    "--source-credential-id",
+    "a00000000000000023",
+    "--output-file",
+    "<path>"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "result": [
+      {
+        "pipelineId": "a00000000000000011",
+        "sourceOrgId": "a00000000000000022",
+        "sourceCredentialId": "a00000000000000023",
+        "metadataType": "ValidationRule",
+        "apiName": "Opportunity.Discount_Max",
+        "source": "ENVIRONMENT",
+        "branch": "",
+        "contentBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48VmFsaWRhdGlvblJ1bGUgeG1sbnM9Imh0dHA6Ly9zb2FwLnNmb3JjZS5jb20vMjAwNi8wNC9tZXRhZGF0YSI+PGZ1bGxOYW1lPk9wcG9ydHVuaXR5LkRpc2NvdW50X01heDwvZnVsbE5hbWU+PGFjdGl2ZT50cnVlPC9hY3RpdmU+PGRlc2NyaXB0aW9uPkRpc2NvdW50cyBhYm92ZSA0MCUgYXJlIG5vdCBhbGxvd2VkIChNdXRhbnQgZGVtbyBhcHApLjwvZGVzY3JpcHRpb24+PGVycm9yQ29uZGl0aW9uRm9ybXVsYT5EaXNjb3VudF9QZXJjZW50X19jICZndDsgMC40MDwvZXJyb3JDb25kaXRpb25Gb3JtdWxhPjxlcnJvckRpc3BsYXlGaWVsZD5EaXNjb3VudF9QZXJjZW50X19jPC9lcnJvckRpc3BsYXlGaWVsZD48ZXJyb3JNZXNzYWdlPkRpc2NvdW50IGNhbm5vdCBleGNlZWQgNDAlLjwvZXJyb3JNZXNzYWdlPjwvVmFsaWRhdGlvblJ1bGU+"
+      }
+    ],
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000059"
+  },
+  "writes": {
+    "--output-file": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><ValidationRule xmlns=\"https://example.invalid/55\"><fullName>Opportunity.Discount_Max</fullName><active>true</active><description>Discounts above 40% are not allowed (Mutant demo app).</description><errorConditionFormula>Discount_Percent__c &gt; 0.40</errorConditionFormula><errorDisplayField>Discount_Percent__c</errorDisplayField><errorMessage>Discount cannot exceed 40%.</errorMessage></ValidationRule>"
+  }
+}

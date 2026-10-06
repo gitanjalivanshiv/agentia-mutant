@@ -1,0 +1,42 @@
+{
+  "args": [
+    "cicd",
+    "metadata",
+    "content",
+    "get",
+    "--metadata-type",
+    "Flow",
+    "--api-name",
+    "Discount_Approval",
+    "--source",
+    "ENVIRONMENT",
+    "--pipeline-id",
+    "a00000000000000011",
+    "--source-org-id",
+    "a00000000000000022",
+    "--source-credential-id",
+    "a00000000000000023",
+    "--output-file",
+    "<path>"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "result": [
+      {
+        "pipelineId": "a00000000000000011",
+        "sourceOrgId": "a00000000000000022",
+        "sourceCredentialId": "a00000000000000023",
+        "metadataType": "Flow",
+        "apiName": "Discount_Approval",
+        "source": "ENVIRONMENT",
+        "branch": "",
+        "contentBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48RmxvdyB4bWxucz0iaHR0cDovL3NvYXAuc2ZvcmNlLmNvbS8yMDA2LzA0L21ldGFkYXRhIj48ZnVsbE5hbWU+RGlzY291bnRfQXBwcm92YWw8L2Z1bGxOYW1lPjxhcGlWZXJzaW9uPjYyLjA8L2FwaVZlcnNpb24+PGFyZU1ldHJpY3NMb2dnZWRUb0RhdGFDbG91ZD5mYWxzZTwvYXJlTWV0cmljc0xvZ2dlZFRvRGF0YUNsb3VkPjxhc3NpZ25tZW50cz48bmFtZT5DbGVhcl9BcHByb3ZhbDwvbmFtZT48bGFiZWw+Q2xlYXIgQXBwcm92YWw8L2xhYmVsPjxsb2NhdGlvblg+MzE0PC9sb2NhdGlvblg+PGxvY2F0aW9uWT40MDA8L2xvY2F0aW9uWT48YXNzaWdubWVudEl0ZW1zPjxhc3NpZ25Ub1JlZmVyZW5jZT4kUmVjb3JkLkFwcHJvdmFsX1JlcXVpcmVkX19jPC9hc3NpZ25Ub1JlZmVyZW5jZT48b3BlcmF0b3I+QXNzaWduPC9vcGVyYXRvcj48dmFsdWU+PGJvb2xlYW5WYWx1ZT5mYWxzZTwvYm9vbGVhblZhbHVlPjwvdmFsdWU+PC9hc3NpZ25tZW50SXRlbXM+PC9hc3NpZ25tZW50cz48YXNzaWdubWVudHM+PG5hbWU+RmxhZ19BcHByb3ZhbDwvbmFtZT48bGFiZWw+RmxhZyBBcHByb3ZhbDwvbGFiZWw+PGxvY2F0aW9uWD41MDwvbG9jYXRpb25YPjxsb2NhdGlvblk+NDAwPC9sb2NhdGlvblk+PGFzc2lnbm1lbnRJdGVtcz48YXNzaWduVG9SZWZlcmVuY2U+JFJlY29yZC5BcHByb3ZhbF9SZXF1aXJlZF9fYzwvYXNzaWduVG9SZWZlcmVuY2U+PG9wZXJhdG9yPkFzc2lnbjwvb3BlcmF0b3I+PHZhbHVlPjxib29sZWFuVmFsdWU+dHJ1ZTwvYm9vbGVhblZhbHVlPjwvdmFsdWU+PC9hc3NpZ25tZW50SXRlbXM+PC9hc3NpZ25tZW50cz48ZGVjaXNpb25zPjxuYW1lPkRpc2NvdW50X0Fib3ZlX1RocmVzaG9sZDwvbmFtZT48bGFiZWw+RGlzY291bnQgQWJvdmUgVGhyZXNob2xkPC9sYWJlbD48bG9jYXRpb25YPjE4MjwvbG9jYXRpb25YPjxsb2NhdGlvblk+MjkwPC9sb2NhdGlvblk+PGRlZmF1bHRDb25uZWN0b3I+PHRhcmdldFJlZmVyZW5jZT5DbGVhcl9BcHByb3ZhbDwvdGFyZ2V0UmVmZXJlbmNlPjwvZGVmYXVsdENvbm5lY3Rvcj48ZGVmYXVsdENvbm5lY3RvckxhYmVsPldpdGhpbiBMaW1pdDwvZGVmYXVsdENvbm5lY3RvckxhYmVsPjxydWxlcz48bmFtZT5OZWVkc19BcHByb3ZhbDwvbmFtZT48Y29uZGl0aW9uTG9naWM+YW5kPC9jb25kaXRpb25Mb2dpYz48Y29uZGl0aW9ucz48bGVmdFZhbHVlUmVmZXJlbmNlPiRSZWNvcmQuRGlzY291bnRfUGVyY2VudF9fYzwvbGVmdFZhbHVlUmVmZXJlbmNlPjxvcGVyYXRvcj5HcmVhdGVyVGhhbjwvb3BlcmF0b3I+PHJpZ2h0VmFsdWU+PG51bWJlclZhbHVlPjIwLjA8L251bWJlclZhbHVlPjwvcmlnaHRWYWx1ZT48L2NvbmRpdGlvbnM+PGNvbm5lY3Rvcj48dGFyZ2V0UmVmZXJlbmNlPkZsYWdfQXBwcm92YWw8L3RhcmdldFJlZmVyZW5jZT48L2Nvbm5lY3Rvcj48bGFiZWw+TmVlZHMgQXBwcm92YWw8L2xhYmVsPjwvcnVsZXM+PC9kZWNpc2lvbnM+PGRlc2NyaXB0aW9uPkZsYWdzIG9wcG9ydHVuaXRpZXMgd2l0aCBhIGRpc2NvdW50IGFib3ZlIDIwJSBmb3IgYXBwcm92YWwgKE11dGFudCBkZW1vIGFwcCkuPC9kZXNjcmlwdGlvbj48aW50ZXJ2aWV3TGFiZWw+RGlzY291bnQgQXBwcm92YWwgeyEkRmxvdy5DdXJyZW50RGF0ZVRpbWV9PC9pbnRlcnZpZXdMYWJlbD48bGFiZWw+RGlzY291bnQgQXBwcm92YWw8L2xhYmVsPjxwcm9jZXNzTWV0YWRhdGFWYWx1ZXM+PG5hbWU+QnVpbGRlclR5cGU8L25hbWU+PHZhbHVlPjxzdHJpbmdWYWx1ZT5MaWdodG5pbmdGbG93QnVpbGRlcjwvc3RyaW5nVmFsdWU+PC92YWx1ZT48L3Byb2Nlc3NNZXRhZGF0YVZhbHVlcz48cHJvY2Vzc01ldGFkYXRhVmFsdWVzPjxuYW1lPkNhbnZhc01vZGU8L25hbWU+PHZhbHVlPjxzdHJpbmdWYWx1ZT5BVVRPX0xBWU9VVF9DQU5WQVM8L3N0cmluZ1ZhbHVlPjwvdmFsdWU+PC9wcm9jZXNzTWV0YWRhdGFWYWx1ZXM+PHByb2Nlc3NUeXBlPkF1dG9MYXVuY2hlZEZsb3c8L3Byb2Nlc3NUeXBlPjxzdGFydD48bG9jYXRpb25YPjU2PC9sb2NhdGlvblg+PGxvY2F0aW9uWT4wPC9sb2NhdGlvblk+PGNvbm5lY3Rvcj48dGFyZ2V0UmVmZXJlbmNlPkRpc2NvdW50X0Fib3ZlX1RocmVzaG9sZDwvdGFyZ2V0UmVmZXJlbmNlPjwvY29ubmVjdG9yPjxvYmplY3Q+T3Bwb3J0dW5pdHk8L29iamVjdD48cmVjb3JkVHJpZ2dlclR5cGU+Q3JlYXRlQW5kVXBkYXRlPC9yZWNvcmRUcmlnZ2VyVHlwZT48dHJpZ2dlclR5cGU+UmVjb3JkQmVmb3JlU2F2ZTwvdHJpZ2dlclR5cGU+PC9zdGFydD48c3RhdHVzPkFjdGl2ZTwvc3RhdHVzPjwvRmxvdz4="
+      }
+    ],
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000054"
+  },
+  "writes": {
+    "--output-file": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Flow xmlns=\"https://example.invalid/55\"><fullName>Discount_Approval</fullName><apiVersion>62.0</apiVersion><areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud><assignments><name>Clear_Approval</name><label>Clear Approval</label><locationX>314</locationX><locationY>400</locationY><assignmentItems><assignToReference>$Record.Approval_Required__c</assignToReference><operator>Assign</operator><value><booleanValue>false</booleanValue></value></assignmentItems></assignments><assignments><name>Flag_Approval</name><label>Flag Approval</label><locationX>50</locationX><locationY>400</locationY><assignmentItems><assignToReference>$Record.Approval_Required__c</assignToReference><operator>Assign</operator><value><booleanValue>true</booleanValue></value></assignmentItems></assignments><decisions><name>Discount_Above_Threshold</name><label>Discount Above Threshold</label><locationX>182</locationX><locationY>290</locationY><defaultConnector><targetReference>Clear_Approval</targetReference></defaultConnector><defaultConnectorLabel>Within Limit</defaultConnectorLabel><rules><name>Needs_Approval</name><conditionLogic>and</conditionLogic><conditions><leftValueReference>$Record.Discount_Percent__c</leftValueReference><operator>GreaterThan</operator><rightValue><numberValue>20.0</numberValue></rightValue></conditions><connector><targetReference>Flag_Approval</targetReference></connector><label>Needs Approval</label></rules></decisions><description>Flags opportunities with a discount above 20% for approval (Mutant demo app).</description><interviewLabel>Discount Approval {!$Flow.CurrentDateTime}</interviewLabel><label>Discount Approval</label><processMetadataValues><name>BuilderType</name><value><stringValue>LightningFlowBuilder</stringValue></value></processMetadataValues><processMetadataValues><name>CanvasMode</name><value><stringValue>AUTO_LAYOUT_CANVAS</stringValue></value></processMetadataValues><processType>AutoLaunchedFlow</processType><start><locationX>56</locationX><locationY>0</locationY><connector><targetReference>Discount_Above_Threshold</targetReference></connector><object>Opportunity</object><recordTriggerType>CreateAndUpdate</recordTriggerType><triggerType>RecordBeforeSave</triggerType></start><status>Active</status></Flow>"
+  }
+}

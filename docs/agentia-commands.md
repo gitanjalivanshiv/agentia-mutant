@@ -112,7 +112,7 @@ Readiness rule for `mutant doctor`: CRT → `ready === true`; CICD → `set === 
 | `cicd environment list [--name] [--type] [--page-size] --json` ✅ | `result: { data: Environment[]; currentPage; pageSize; totalPages; totalRecords; hasMore; nextCursor }`. Environment keys: `id, name, type, platform, orgId, credentials[], sourcePipelineConnections, destinationPipelineConnections, promotionDefaultCredential, apexTestLevel, runLocalTests, …` |
 | `cicd environment auth status <envId> --json` ✅ | `result: { validated: boolean, … }` |
 | `cicd pipeline list --json` ✅ | paged `data[]`: `id, name, platform, active, mainBranch, gitRepositoryId, blockCommits, …` |
-| `cicd pipeline connection list --pipeline-id <id> --json` ✅ | `data[]`: `sourceEnvironmentId, destinationEnvironmentId, branch, destinationBranch, stage, …` — confirm lab is a promotion destination |
+| `cicd pipeline connection list --pipeline-id <id> --json` ✅ | **bare array** (not paged): `sourceEnvironmentId, destinationEnvironmentId, branch, destinationBranch, stage, …` — confirm lab is a promotion destination |
 | `cicd repository get <id> --json` ✅ | `name, provider, authType, uri, pullRequestBaseUrl, …` |
 
 ---

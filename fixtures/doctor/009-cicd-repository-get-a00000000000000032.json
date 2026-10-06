@@ -1,0 +1,49 @@
+{
+  "args": [
+    "cicd",
+    "repository",
+    "get",
+    "a00000000000000032"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "result": {
+      "lastModifiedDate": "2026-10-02T18:36:57Z",
+      "lastModifiedBy": "<redacted>",
+      "createdDate": "2026-10-02T18:36:57Z",
+      "createdBy": "<redacted>",
+      "name": "Trial - Salesforce Source Format Pipeline Repository",
+      "sourceFormat": "DX",
+      "provider": "Github",
+      "authType": "SSH",
+      "uri": "<redacted>",
+      "tagBaseUrl": "<redacted>",
+      "pullRequestBaseUrl": "<redacted>",
+      "commitBaseUrl": "<redacted>",
+      "branchBaseUrl": "<redacted>",
+      "isCopadoTunnelEnabled": false,
+      "allowFunctionsGitCache": false,
+      "id": "a00000000000000032",
+      "pipelines": [
+        {
+          "lastModifiedDate": "2026-10-06T10:53:07Z",
+          "lastModifiedBy": "<redacted>",
+          "createdDate": "2026-10-02T18:38:19Z",
+          "createdBy": "<redacted>",
+          "name": "Trial - Salesforce Source Format Pipeline",
+          "mainBranch": "main",
+          "gitRepositoryId": "a00000000000000032",
+          "active": true,
+          "blockCommits": false,
+          "enableSmartConflictResolution": true,
+          "calculateBasedOn": "User Story",
+          "platform": "SFDX",
+          "id": "a00000000000000011"
+        }
+      ],
+      "snapshots": []
+    },
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000053"
+  }
+}

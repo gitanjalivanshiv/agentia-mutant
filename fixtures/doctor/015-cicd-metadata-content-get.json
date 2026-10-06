@@ -1,0 +1,42 @@
+{
+  "args": [
+    "cicd",
+    "metadata",
+    "content",
+    "get",
+    "--metadata-type",
+    "PermissionSet",
+    "--api-name",
+    "Sales_Discounts",
+    "--source",
+    "ENVIRONMENT",
+    "--pipeline-id",
+    "a00000000000000011",
+    "--source-org-id",
+    "a00000000000000022",
+    "--source-credential-id",
+    "a00000000000000023",
+    "--output-file",
+    "<path>"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "result": [
+      {
+        "pipelineId": "a00000000000000011",
+        "sourceOrgId": "a00000000000000022",
+        "sourceCredentialId": "a00000000000000023",
+        "metadataType": "PermissionSet",
+        "apiName": "Sales_Discounts",
+        "source": "ENVIRONMENT",
+        "branch": "",
+        "contentBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48UGVybWlzc2lvblNldCB4bWxucz0iaHR0cDovL3NvYXAuc2ZvcmNlLmNvbS8yMDA2LzA0L21ldGFkYXRhIj48ZnVsbE5hbWU+U2FsZXNfRGlzY291bnRzPC9mdWxsTmFtZT48ZGVzY3JpcHRpb24+TGV0cyBzYWxlcyByZXBzIHNldCBkaXNjb3VudHMgb24gb3Bwb3J0dW5pdGllcyAoTXV0YW50IGRlbW8gYXBwKS48L2Rlc2NyaXB0aW9uPjxmaWVsZFBlcm1pc3Npb25zPjxlZGl0YWJsZT5mYWxzZTwvZWRpdGFibGU+PGZpZWxkPk9wcG9ydHVuaXR5LkFwcHJvdmFsX1JlcXVpcmVkX19jPC9maWVsZD48cmVhZGFibGU+dHJ1ZTwvcmVhZGFibGU+PC9maWVsZFBlcm1pc3Npb25zPjxmaWVsZFBlcm1pc3Npb25zPjxlZGl0YWJsZT50cnVlPC9lZGl0YWJsZT48ZmllbGQ+T3Bwb3J0dW5pdHkuRGlzY291bnRfUGVyY2VudF9fYzwvZmllbGQ+PHJlYWRhYmxlPnRydWU8L3JlYWRhYmxlPjwvZmllbGRQZXJtaXNzaW9ucz48aGFzQWN0aXZhdGlvblJlcXVpcmVkPmZhbHNlPC9oYXNBY3RpdmF0aW9uUmVxdWlyZWQ+PGxhYmVsPlNhbGVzIERpc2NvdW50czwvbGFiZWw+PG9iamVjdFBlcm1pc3Npb25zPjxhbGxvd0NyZWF0ZT50cnVlPC9hbGxvd0NyZWF0ZT48YWxsb3dEZWxldGU+ZmFsc2U8L2FsbG93RGVsZXRlPjxhbGxvd0VkaXQ+dHJ1ZTwvYWxsb3dFZGl0PjxhbGxvd1JlYWQ+dHJ1ZTwvYWxsb3dSZWFkPjxtb2RpZnlBbGxSZWNvcmRzPmZhbHNlPC9tb2RpZnlBbGxSZWNvcmRzPjxvYmplY3Q+T3Bwb3J0dW5pdHk8L29iamVjdD48dmlld0FsbEZpZWxkcz5mYWxzZTwvdmlld0FsbEZpZWxkcz48dmlld0FsbFJlY29yZHM+ZmFsc2U8L3ZpZXdBbGxSZWNvcmRzPjwvb2JqZWN0UGVybWlzc2lvbnM+PC9QZXJtaXNzaW9uU2V0Pg=="
+      }
+    ],
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000060"
+  },
+  "writes": {
+    "--output-file": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><PermissionSet xmlns=\"https://example.invalid/55\"><fullName>Sales_Discounts</fullName><description>Lets sales reps set discounts on opportunities (Mutant demo app).</description><fieldPermissions><editable>false</editable><field>Opportunity.Approval_Required__c</field><readable>true</readable></fieldPermissions><fieldPermissions><editable>true</editable><field>Opportunity.Discount_Percent__c</field><readable>true</readable></fieldPermissions><hasActivationRequired>false</hasActivationRequired><label>Sales Discounts</label><objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Opportunity</object><viewAllFields>false</viewAllFields><viewAllRecords>false</viewAllRecords></objectPermissions></PermissionSet>"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "args": [
+    "auth",
+    "get",
+    "--ai",
+    "--cicd",
+    "--crt"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "result": {
+      "configFiles": [
+        {
+          "exists": false,
+          "label": "Project config",
+          "path": "~/hackathon/mutant/.agentia/config.json",
+          "scope": "project"
+        },
+        {
+          "exists": true,
+          "label": "User config",
+          "path": "~/hackathon/mutant/.agentia/config.user.json",
+          "scope": "user"
+        }
+      ],
+      "credentials": [
+        {
+          "baseUrl": "https://example.invalid/1",
+          "label": "Copado API key (CICD)",
+          "masked": "<redacted>",
+          "set": true,
+          "source": "global",
+          "type": "cicd"
+        },
+        {
+          "domain": "<redacted>",
+          "issues": [],
+          "label": "PAK (CRT)",
+          "masked": "<redacted>",
+          "missing": [],
+          "orgId": "<redacted>",
+          "ready": true,
+          "set": true,
+          "source": "local",
+          "type": "crt"
+        },
+        {
+          "domain": "<redacted>",
+          "gatewayUrl": null,
+          "label": "PAK (AI)",
+          "masked": "<redacted>",
+          "orgId": "<redacted>",
+          "set": true,
+          "source": "global",
+          "type": "ai",
+          "workspaceId": "00000000-0000-4000-8000-000000000002"
+        }
+      ]
+    },
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000003"
+  }
+}

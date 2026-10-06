@@ -1,0 +1,42 @@
+{
+  "args": [
+    "cicd",
+    "metadata",
+    "content",
+    "get",
+    "--metadata-type",
+    "CustomField",
+    "--api-name",
+    "Opportunity.Discount_Percent__c",
+    "--source",
+    "ENVIRONMENT",
+    "--pipeline-id",
+    "a00000000000000011",
+    "--source-org-id",
+    "a00000000000000022",
+    "--source-credential-id",
+    "a00000000000000023",
+    "--output-file",
+    "<path>"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "result": [
+      {
+        "pipelineId": "a00000000000000011",
+        "sourceOrgId": "a00000000000000022",
+        "sourceCredentialId": "a00000000000000023",
+        "metadataType": "CustomField",
+        "apiName": "Opportunity.Discount_Percent__c",
+        "source": "ENVIRONMENT",
+        "branch": "",
+        "contentBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48Q3VzdG9tRmllbGQgeG1sbnM9Imh0dHA6Ly9zb2FwLnNmb3JjZS5jb20vMjAwNi8wNC9tZXRhZGF0YSI+PGZ1bGxOYW1lPk9wcG9ydHVuaXR5LkRpc2NvdW50X1BlcmNlbnRfX2M8L2Z1bGxOYW1lPjxkZXNjcmlwdGlvbj5EaXNjb3VudCBvZmZlcmVkIG9uIHRoZSBvcHBvcnR1bml0eSAoTXV0YW50IGRlbW8gYXBwKS48L2Rlc2NyaXB0aW9uPjxpbmxpbmVIZWxwVGV4dD5EaXNjb3VudHMgYWJvdmUgMjAlIG5lZWQgYXBwcm92YWwuIERpc2NvdW50cyBhYm92ZSA0MCUgYXJlIG5vdCBhbGxvd2VkLjwvaW5saW5lSGVscFRleHQ+PGxhYmVsPkRpc2NvdW50IFBlcmNlbnQ8L2xhYmVsPjxwcmVjaXNpb24+NTwvcHJlY2lzaW9uPjxyZXF1aXJlZD5mYWxzZTwvcmVxdWlyZWQ+PHNjYWxlPjI8L3NjYWxlPjx0cmFja0ZlZWRIaXN0b3J5PmZhbHNlPC90cmFja0ZlZWRIaXN0b3J5Pjx0cmFja1RyZW5kaW5nPmZhbHNlPC90cmFja1RyZW5kaW5nPjx0eXBlPlBlcmNlbnQ8L3R5cGU+PC9DdXN0b21GaWVsZD4="
+      }
+    ],
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000058"
+  },
+  "writes": {
+    "--output-file": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><CustomField xmlns=\"https://example.invalid/55\"><fullName>Opportunity.Discount_Percent__c</fullName><description>Discount offered on the opportunity (Mutant demo app).</description><inlineHelpText>Discounts above 20% need approval. Discounts above 40% are not allowed.</inlineHelpText><label>Discount Percent</label><precision>5</precision><required>false</required><scale>2</scale><trackFeedHistory>false</trackFeedHistory><trackTrending>false</trackTrending><type>Percent</type></CustomField>"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "args": [
+    "cicd",
+    "metadata",
+    "content",
+    "get",
+    "--metadata-type",
+    "CustomField",
+    "--api-name",
+    "Opportunity.Approval_Required__c",
+    "--source",
+    "ENVIRONMENT",
+    "--pipeline-id",
+    "a00000000000000011",
+    "--source-org-id",
+    "a00000000000000022",
+    "--source-credential-id",
+    "a00000000000000023",
+    "--output-file",
+    "<path>"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "result": [
+      {
+        "pipelineId": "a00000000000000011",
+        "sourceOrgId": "a00000000000000022",
+        "sourceCredentialId": "a00000000000000023",
+        "metadataType": "CustomField",
+        "apiName": "Opportunity.Approval_Required__c",
+        "source": "ENVIRONMENT",
+        "branch": "",
+        "contentBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48Q3VzdG9tRmllbGQgeG1sbnM9Imh0dHA6Ly9zb2FwLnNmb3JjZS5jb20vMjAwNi8wNC9tZXRhZGF0YSI+PGZ1bGxOYW1lPk9wcG9ydHVuaXR5LkFwcHJvdmFsX1JlcXVpcmVkX19jPC9mdWxsTmFtZT48ZGVmYXVsdFZhbHVlPmZhbHNlPC9kZWZhdWx0VmFsdWU+PGRlc2NyaXB0aW9uPlNldCBieSB0aGUgRGlzY291bnQgQXBwcm92YWwgZmxvdyB3aGVuIHRoZSBkaXNjb3VudCBpcyBhYm92ZSAyMCUgKE11dGFudCBkZW1vIGFwcCkuPC9kZXNjcmlwdGlvbj48bGFiZWw+QXBwcm92YWwgUmVxdWlyZWQ8L2xhYmVsPjx0cmFja0ZlZWRIaXN0b3J5PmZhbHNlPC90cmFja0ZlZWRIaXN0b3J5Pjx0cmFja1RyZW5kaW5nPmZhbHNlPC90cmFja1RyZW5kaW5nPjx0eXBlPkNoZWNrYm94PC90eXBlPjwvQ3VzdG9tRmllbGQ+"
+      }
+    ],
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000057"
+  },
+  "writes": {
+    "--output-file": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><CustomField xmlns=\"https://example.invalid/55\"><fullName>Opportunity.Approval_Required__c</fullName><defaultValue>false</defaultValue><description>Set by the Discount Approval flow when the discount is above 20% (Mutant demo app).</description><label>Approval Required</label><trackFeedHistory>false</trackFeedHistory><trackTrending>false</trackTrending><type>Checkbox</type></CustomField>"
+  }
+}

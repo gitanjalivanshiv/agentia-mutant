@@ -1,0 +1,16 @@
+{
+  "args": [
+    "ai",
+    "quota",
+    "get"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "result": {
+      "limit": 30000,
+      "usage": 3909
+    },
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000047"
+  }
+}

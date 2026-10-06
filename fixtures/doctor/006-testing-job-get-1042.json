@@ -1,0 +1,31 @@
+{
+  "args": [
+    "testing",
+    "job",
+    "get",
+    "1042",
+    "-p",
+    "1043"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "result": {
+      "createdDate": "2026-10-05T13:02:48.544Z",
+      "description": "Mutant demo: deliberately incomplete happy-path suite",
+      "parallelExecution": "disabled",
+      "storage": {
+        "kind": "snapshot",
+        "snapshotPath": "/next/project/1043/job/1042/snapshot",
+        "snapshotUrl": "https://example.invalid/45"
+      },
+      "id": 1042,
+      "name": "Discount Approval Suite",
+      "projectId": 1043,
+      "showVideoParams": true,
+      "suiteType": "default",
+      "robotId": 1044
+    },
+    "status": 0,
+    "transactionId": "00000000-0000-4000-8000-000000000046"
+  }
+}
