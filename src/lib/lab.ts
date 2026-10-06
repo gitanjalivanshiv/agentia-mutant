@@ -46,3 +46,24 @@ export async function resolveLab(copado: Copado, config: MutantConfig): Promise<
     connection: {sourceBranch: edge.branch, destinationBranch: edge.destinationBranch},
   }
 }
+
+/** The Copado project mutant stories are created in: the one tied to the lab pipeline. */
+export async function resolveProject(
+  copado: Copado,
+  config: MutantConfig,
+  lab: LabContext,
+): Promise<{id: string; name: string}> {
+  const projects = (await copado.projects()).filter(
+    (p) =>
+      (p.pipelineId ?? p.pipeline?.id) === lab.pipeline.id && (!config.project || p.name === config.project),
+  )
+  if (projects.length === 1) return {id: projects[0]!.id, name: projects[0]!.name}
+  if (projects.length === 0) {
+    throw new LabResolutionError(
+      `No Copado project uses pipeline "${lab.pipeline.name}"${config.project ? ` with name "${config.project}"` : ''}.`,
+    )
+  }
+  throw new LabResolutionError(
+    `Several Copado projects use pipeline "${lab.pipeline.name}" (${projects.map((p) => p.name).join(', ')}). Set "project" in .mutant/config.json.`,
+  )
+}

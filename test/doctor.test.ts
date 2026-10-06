@@ -94,6 +94,7 @@ beforeEach(async () => {
     pipeline: 'Demo Pipeline',
     labRepoPath: 'lab',
     packageDirectory: demo,
+    labPackageDirectory: 'force-app',
     storyTitlePrefix: 'Mutant Lab –',
     crt: {projectId: 1, jobId: 2},
     ai: {},

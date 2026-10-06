@@ -19,6 +19,7 @@ export const sampleConfig = (over: Partial<MutantConfig> = {}): MutantConfig => 
   pipeline: 'Demo Pipeline',
   labRepoPath: '../lab',
   packageDirectory: 'force-app',
+  labPackageDirectory: 'force-app',
   storyTitlePrefix: 'Mutant Lab –',
   crt: {projectId: 1, jobId: 2},
   ai: {},

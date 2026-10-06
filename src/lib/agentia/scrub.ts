@@ -35,6 +35,14 @@ const SENSITIVE_KEYS = new Set([
   'modified_by',
   'owner',
   'ownerName',
+  'assigneeName',
+  // CRT build secrets and session data
+  'runTokenHash',
+  'permitTokenHash',
+  'archiveTokenHash',
+  'mobileApiKey',
+  'sessionData',
+  'executionParameters',
 ])
 const NUMERIC_ID_KEYS = new Set([
   'id',

@@ -51,6 +51,7 @@ describe('doctor replay (recorded against the real lab)', () => {
         pipeline: 'Trial - Salesforce Source Format Pipeline',
         labRepoPath: 'lab',
         packageDirectory: demo,
+        labPackageDirectory: 'force-app',
         storyTitlePrefix: 'Mutant Lab –',
         crt: {projectId: Number(jobArgs[5]), jobId: Number(jobArgs[3])},
         ai: {workspaceId},

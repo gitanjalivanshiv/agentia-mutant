@@ -70,6 +70,80 @@ const WorkItem = z.looseObject({
 })
 export type WorkItem = z.infer<typeof WorkItem>
 
+const JobStep = z.looseObject({name: z.string().nullish(), status: z.string().nullish()})
+const Job = z.looseObject({
+  id: z.string(),
+  name: z.string().nullish(),
+  status: z.string().nullish(),
+  steps: z.array(JobStep).nullish(),
+})
+export type Job = z.infer<typeof Job>
+
+const Publish = z.looseObject({
+  branch: z.string().nullish(),
+  push: z.looseObject({message: z.string().nullish(), jobId: z.string().nullish()}).nullish(),
+})
+
+const WorkSet = z.looseObject({
+  message: z.string().nullish(),
+  warnings: z.array(z.string()).nullish(),
+  git: z.looseObject({branch: z.string().nullish()}).nullish(),
+})
+
+const PromotionSummary = z.looseObject({
+  id: z.string(),
+  name: z.string(),
+  status: z.string().nullish(),
+  sourceEnvironmentName: z.string().nullish(),
+  destinationEnvironmentName: z.string().nullish(),
+  isBackPromotion: z.boolean().nullish(),
+  createdDate: z.string().nullish(),
+})
+export type PromotionSummary = z.infer<typeof PromotionSummary>
+
+const PromotionDetail = PromotionSummary.extend({
+  userStories: z
+    .array(z.looseObject({id: z.string().nullish(), name: z.string(), title: z.string().nullish()}))
+    .nullish(),
+  includedMetadata: z
+    .array(
+      z.looseObject({
+        type: z.string().nullish(),
+        metadataApiName: z.string().nullish(),
+        name: z.string().nullish(),
+      }),
+    )
+    .nullish(),
+})
+export type PromotionDetail = z.infer<typeof PromotionDetail>
+
+const PromotionRun = z.looseObject({
+  promotionAfter: z.looseObject({status: z.string().nullish()}).nullish(),
+  jobMonitors: z
+    .array(z.looseObject({jobExecutionId: z.string().nullish(), jobExecutionStatus: z.string().nullish()}))
+    .nullish(),
+})
+export type PromotionRunResult = z.infer<typeof PromotionRun>
+
+const CrtBuild = z.looseObject({
+  id: z.number().nullish(),
+  status: z.string().nullish(),
+  duration: z.number().nullish(),
+})
+const CrtTestRun = z.looseObject({
+  finalBuild: CrtBuild.nullish(),
+  artifacts: z.looseObject({archive: z.string().nullish(), xunit: z.string().nullish()}).nullish(),
+})
+export type CrtTestRun = z.infer<typeof CrtTestRun>
+
+const Project = z.looseObject({
+  id: z.string(),
+  name: z.string(),
+  pipelineId: z.string().nullish(),
+  pipeline: z.looseObject({id: z.string().nullish()}).nullish(),
+})
+export type Project = z.infer<typeof Project>
+
 const Repository = z.looseObject({name: z.string().nullish(), uri: z.string().nullish()})
 
 const EnvAuthStatus = z.looseObject({validated: z.boolean().nullish()})
@@ -97,8 +171,8 @@ export class Copado {
     readonly cwd?: string,
   ) {}
 
-  private run<T>(args: string[], schema?: z.ZodType<T>, timeoutMs?: number): Promise<T> {
-    return this.client.run(args, {cwd: this.cwd, schema, timeoutMs})
+  private run<T>(args: string[], schema?: z.ZodType<T>, timeoutMs?: number, cwd?: string): Promise<T> {
+    return this.client.run(args, {cwd: cwd ?? this.cwd, schema, timeoutMs})
   }
 
   async auth(): Promise<AuthCredential[]> {
@@ -128,6 +202,10 @@ export class Copado {
       ['cicd', 'pipeline', 'connection', 'list', '--pipeline-id', pipelineId],
       List(PipelineConnection),
     )
+  }
+
+  async projects(): Promise<Project[]> {
+    return this.run(['cicd', 'project', 'list'], List(Project))
   }
 
   async workItem(idOrName: string): Promise<WorkItem> {
@@ -183,6 +261,115 @@ export class Copado {
         outputFile,
       ],
       ContentGet,
+    )
+  }
+
+  // ---- Runner operations (writes). Lab-clone operations take the clone as cwd explicitly. ----
+
+  async workCreate(input: {title: string; projectId: string; sourceCredentialId: string}): Promise<WorkItem> {
+    return this.run(
+      [
+        'cicd',
+        'work',
+        'create',
+        '--title',
+        input.title,
+        '--project',
+        input.projectId,
+        '--source-credential',
+        input.sourceCredentialId,
+        '--status',
+        'Draft',
+      ],
+      WorkItem,
+    )
+  }
+
+  async workSet(story: string, labRepo: string) {
+    return this.run(['cicd', 'work', 'set', story], WorkSet, undefined, labRepo)
+  }
+
+  async workSetNone(labRepo: string) {
+    return this.run(['cicd', 'work', 'set', '--none'], z.unknown(), undefined, labRepo)
+  }
+
+  async workPublish(labRepo: string, fullMetadata: string[] = []) {
+    const args = ['cicd', 'work', 'publish']
+    if (fullMetadata.length) args.push('--full-metadata', fullMetadata.join(','))
+    return this.run(args, Publish, 10 * 60 * 1000, labRepo)
+  }
+
+  async job(id: string): Promise<Job> {
+    return this.run(['cicd', 'job', 'get', id], Job)
+  }
+
+  async promotions(filter: {
+    source: string
+    destination: string
+    status?: string
+  }): Promise<PromotionSummary[]> {
+    const args = [
+      'cicd',
+      'promotion',
+      'list',
+      '--source-environment-name',
+      filter.source,
+      '--destination-environment-name',
+      filter.destination,
+      '--page-size',
+      '200',
+    ]
+    if (filter.status) args.push('--status', filter.status)
+    return this.run(args, List(PromotionSummary))
+  }
+
+  async promotion(id: string): Promise<PromotionDetail> {
+    return this.run(['cicd', 'promotion', 'get', id], PromotionDetail)
+  }
+
+  async promotionRunDeploy(id: string, waitTimeoutSeconds: number): Promise<PromotionRunResult> {
+    return this.run(
+      [
+        'cicd',
+        'promotion',
+        'run',
+        id,
+        '--operation',
+        'merge_and_deploy',
+        '--wait-timeout',
+        String(Math.max(60, Math.round(waitTimeoutSeconds))),
+      ],
+      PromotionRun,
+      (waitTimeoutSeconds + 120) * 1000,
+    )
+  }
+
+  /** Runs the CRT suite and waits; artifacts and xUnit go to explicit paths (never implicit). */
+  async crtRun(
+    projectId: number,
+    jobId: number,
+    out: {archive: string; xunit: string},
+    timeoutMinutes: number,
+  ): Promise<CrtTestRun> {
+    return this.run(
+      [
+        'testing',
+        'test',
+        'run',
+        String(jobId),
+        '-p',
+        String(projectId),
+        '--wait-for-result',
+        '--timeout',
+        String(Math.max(1, Math.round(timeoutMinutes))),
+        '--no-exit-code',
+        '--save-artifacts',
+        out.archive,
+        '--xunit',
+        out.xunit,
+      ],
+      CrtTestRun,
+      (timeoutMinutes * 60 + 120) * 1000,
     )
   }
 }

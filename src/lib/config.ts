@@ -16,10 +16,14 @@ export const MutantConfigSchema = z.object({
   /** Environment each mutant story starts from; promotions must go source → lab. */
   sourceEnvironment: z.string().min(1),
   pipeline: z.string().min(1),
+  /** Copado project for mutant stories; only needed when several projects use the pipeline. */
+  project: z.string().optional(),
   /** Local clone of the pipeline's Git repository (relative to the project root or absolute). */
   labRepoPath: z.string().min(1),
   /** Source Format package directory holding the baseline metadata to mutate. */
   packageDirectory: z.string().min(1),
+  /** Package directory inside the lab clone where mutated files are written (sfdx-project.json). */
+  labPackageDirectory: z.string().min(1).default('force-app'),
   storyTitlePrefix: z.string().min(1).default('Mutant Lab –'),
   crt: z.object({projectId: z.number().int().positive(), jobId: z.number().int().positive()}),
   ai: z.object({workspaceId: z.string().optional()}).default({}),

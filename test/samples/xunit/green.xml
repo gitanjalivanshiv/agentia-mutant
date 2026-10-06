@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Discount Approval Suite" tests="1" errors="0" failures="0" skipped="0" time="34.713" timestamp="2026-10-06T10:10:48.579648">
+<testsuite name="Discount Happy Path" tests="1" errors="0" failures="0" skipped="0" time="34.698" timestamp="2026-10-06T10:10:48.593507">
+<testcase classname="Discount Approval Suite.Discount Happy Path" name="Create opportunity with a small discount" time="31.543">
+</testcase>
+<properties>
+<property name="Documentation" value="Discount Approval demo app: deliberately incomplete suite (happy path only).&#10;Mutant measures how many configuration breakages this suite misses."/>
+</properties>
+</testsuite>
+</testsuite>
