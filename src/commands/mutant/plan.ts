@@ -38,6 +38,11 @@ Writes the plan to .mutant/plans/ (and .mutant/plans/latest.json) for \`agentia 
       exclusive: ['story'],
     }),
     operators: Flags.string({description: 'Only these operators (comma-separated IDs); overrides config'}),
+    mutants: Flags.string({
+      description: 'Exactly these mutant IDs, in order (comma-separated; see --list)',
+      exclusive: ['max'],
+    }),
+    list: Flags.boolean({description: 'List every possible mutant ID in scope and exit'}),
     output: Flags.string({description: 'Write the plan to this file instead of .mutant/plans/'}),
   }
 
@@ -64,12 +69,23 @@ Writes the plan to .mutant/plans/ (and .mutant/plans/latest.json) for \`agentia 
     }
 
     const packageDir = resolveFromRoot(root, config.packageDirectory)
+    const lab = {
+      environment: config.labEnvironment,
+      source: config.sourceEnvironment,
+      pipeline: config.pipeline,
+    }
+    if (flags.list) {
+      const all = buildPlan({packageDir, scope, max: Number.MAX_SAFE_INTEGER, operators, lab})
+      for (const m of all.mutants) this.log(`${m.id}\n    ${chalk.dim(m.description)}`)
+      return {...all, planFile: ''}
+    }
     const plan = buildPlan({
+      mutantIds: flags.mutants?.split(',').map((s) => s.trim()),
       packageDir,
       scope,
       max: flags.max ?? config.budget.maxMutants,
       operators,
-      lab: {environment: config.labEnvironment, source: config.sourceEnvironment, pipeline: config.pipeline},
+      lab,
       history: loadHistory(root),
       lastChanged: await lastChangedFromGit(packageDir),
     })

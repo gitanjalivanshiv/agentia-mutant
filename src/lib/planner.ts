@@ -48,6 +48,8 @@ export interface PlanInput {
   operators: readonly Operator[]
   lab: Plan['lab']
   history?: History
+  /** Explicit mutant IDs, in this order (overrides scoring and --max). */
+  mutantIds?: string[]
   /** Component key (`Type:apiName`) → last change, epoch seconds. Missing = unknown. */
   lastChanged?: Record<string, number>
   now?: Date
@@ -152,7 +154,13 @@ export function buildPlan(input: PlanInput): Plan {
   const oldest = times.length ? Math.min(...times) : 0
   const scored = candidates.map((m) => ({m, ...score(m, input, newest, oldest)}))
   const reasonsById = new Map(scored.map((s) => [s.m.id, {score: s.score, reasons: s.reasons}]))
-  const selected = selectMutants(scored, input.max)
+  let selected: Mutant[]
+  if (input.mutantIds?.length) {
+    const byId = new Map(candidates.map((m) => [m.id, m]))
+    const unknown = input.mutantIds.filter((id) => !byId.has(id))
+    if (unknown.length) throw new Error(`Unknown mutant ID(s) in this scope: ${unknown.join(', ')}`)
+    selected = input.mutantIds.map((id) => byId.get(id)!)
+  } else selected = selectMutants(scored, input.max)
   const selectedIds = new Set(selected.map((m) => m.id))
   const touched = new Set(selected.map((m) => key(m.component)))
   const timings = {...MEASURED_TIMINGS, ...input.history?.timings}
@@ -177,7 +185,10 @@ export function buildPlan(input: PlanInput): Plan {
     })),
     notSelected: candidates
       .filter((m) => !selectedIds.has(m.id))
-      .map((m) => ({id: m.id, reason: `over budget (--max ${input.max})`})),
+      .map((m) => ({
+        id: m.id,
+        reason: input.mutantIds?.length ? 'not in --mutants' : `over budget (--max ${input.max})`,
+      })),
     estimate: estimateRun(selected.length, touched.size, timings),
   }
 }

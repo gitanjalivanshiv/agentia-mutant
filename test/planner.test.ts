@@ -89,6 +89,17 @@ describe('buildPlan', () => {
     expect(plan.mutants[0]!.priority.reasons).toContain('changed in US-1')
   })
 
+  it('takes explicit mutant IDs in the given order', () => {
+    const ids = [
+      'VR_DEACTIVATE:ValidationRule:Opportunity.Discount_Max:active',
+      'LAYOUT_FIELD_REMOVE:Layout:Opportunity-Opportunity Layout:Discount_Percent__c',
+    ]
+    const plan = buildPlan(input({mutantIds: ids}))
+    expect(plan.mutants.map((m) => m.id)).toEqual(ids)
+    expect(plan.notSelected[0]!.reason).toBe('not in --mutants')
+    expect(() => buildPlan(input({mutantIds: ['NOPE']}))).toThrow(/Unknown mutant ID/)
+  })
+
   it('returns an empty plan for an empty scope', () => {
     const plan = buildPlan(input({scope: {kind: 'components', components: ['Nope']}}))
     expect(plan.mutants).toEqual([])
