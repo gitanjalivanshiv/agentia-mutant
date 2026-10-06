@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import {stripVTControlCharacters} from 'node:util'
 import {describe, expect, it} from 'vitest'
 
 import {renderHtml} from '../src/lib/report/html.js'
@@ -101,7 +102,7 @@ describe('text renderers', () => {
   })
 
   it('renders a terminal summary', () => {
-    const text = renderTerminal(model).replace(/\x1b\[[0-9;]*m/g, '')
+    const text = stripVTControlCharacters(renderTerminal(model))
     expect(text).toContain('Mutation score 43%')
     expect(text).toContain('✔ 3 caught')
     expect(text).toContain('✘ 4 blind spot(s)')
