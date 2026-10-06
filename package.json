@@ -15,7 +15,8 @@
   "files": [
     "/dist",
     "/oclif.manifest.json",
-    "/skills"
+    "/skills",
+    "/bin"
   ],
   "dependencies": {
     "@oclif/core": "^4",
@@ -48,7 +49,8 @@
       "mutant": {
         "description": "Mutation-test your Salesforce configuration through Copado: does your test suite notice when config breaks?"
       }
-    }
+    },
+    "topicSeparator": " "
   },
   "scripts": {
     "build": "shx rm -rf dist && tsc -p tsconfig.build.json",

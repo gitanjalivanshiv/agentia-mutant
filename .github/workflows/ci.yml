@@ -22,3 +22,5 @@ jobs:
       - run: npm run build
       # Fakes and recorded fixtures only: CI never talks to Copado.
       - run: npm test
+      # The offline quickstart a judge would run (Copado calls replayed from fixtures).
+      - run: examples/quickstart/run.sh

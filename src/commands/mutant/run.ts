@@ -92,6 +92,9 @@ Writes ONLY to the configured labEnvironment, holds the shared org lock while ru
       if (!runId || !RunStore.exists(root, runId))
         this.error(`No run "${flags.resume}" in .mutant/runs/.`, {exit: 2})
       store = new RunStore(root, runId)
+      if (!fs.existsSync(store.path('state.json'))) {
+        this.error(`Run ${runId} has results but no resumable state.`, {exit: 2})
+      }
       state = store.load()
       const nothingDeployed = state.units.every(
         (u) => !u.deploy || (u.deploy.started !== true && !u.deploy.jobIds.length),

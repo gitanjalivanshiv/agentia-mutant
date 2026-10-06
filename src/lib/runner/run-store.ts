@@ -20,8 +20,10 @@ export class RunStore {
     this.dir = path.join(runsDir(root), runId)
   }
 
+  /** A run directory with state (resumable) or just results (finished, e.g. a shared sample run). */
   static exists(root: string, runId: string): boolean {
-    return fs.existsSync(path.join(runsDir(root), runId, 'state.json'))
+    const dir = path.join(runsDir(root), runId)
+    return fs.existsSync(path.join(dir, 'state.json')) || fs.existsSync(path.join(dir, 'results.json'))
   }
 
   /** Most recent run ID, if any. */
@@ -32,7 +34,7 @@ export class RunStore {
       fs
         .readdirSync(dir)
         // Mutation runs only (`r-…`); reset runs (`reset-…`) have no results worth reporting.
-        .filter((d) => d.startsWith('r-') && fs.existsSync(path.join(dir, d, 'state.json')))
+        .filter((d) => d.startsWith('r-') && RunStore.exists(root, d))
         .sort()
         .pop()
     )

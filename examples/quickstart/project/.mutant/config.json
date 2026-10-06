@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "labEnvironment": "INT-SFP",
+  "sourceEnvironment": "Dev2-SFP",
+  "pipeline": "Trial - Salesforce Source Format Pipeline",
+  "labRepoPath": "lab",
+  "packageDirectory": "__PACKAGE_DIR__",
+  "labPackageDirectory": "force-app",
+  "storyTitlePrefix": "Mutant Lab –",
+  "crt": {"projectId": 1043, "jobId": 1042},
+  "ai": {"workspaceId": "00000000-0000-4000-8000-000000000048"},
+  "budget": {"maxMutants": 10, "mutantTimeoutMinutes": 20},
+  "operators": {"allow": [], "deny": []},
+  "lockFile": "__LOCK_FILE__",
+  "iKnowThisIsALab": false
+}

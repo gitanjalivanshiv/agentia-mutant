@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mutation Test Report</title>
+<style>
+:root{--bg:#f6f7f9;--panel:#fff;--ink:#14171c;--muted:#5f6876;--line:#e3e6eb;--accent:#4f46e5;--good:#0f9d58;--mid:#d98a00;--bad:#d93025;--good-bg:#e6f4ea;--bad-bg:#fce8e6;--add:#e6f4ea;--del:#fce8e6;--add-ink:#0b6b3a;--del-ink:#a1251b;--code:#f1f3f6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1115;--panel:#171a21;--ink:#e8eaee;--muted:#9aa3b2;--line:#2a2f3a;--accent:#8b85ff;--good:#3ccf7c;--mid:#f0b23e;--bad:#ff6b5e;--good-bg:#12301f;--bad-bg:#3a1714;--add:#12301f;--del:#3a1714;--add-ink:#8ee6b0;--del-ink:#ffb1a8;--code:#20242d}}
+:root[data-theme="dark"]{--bg:#0f1115;--panel:#171a21;--ink:#e8eaee;--muted:#9aa3b2;--line:#2a2f3a;--accent:#8b85ff;--good:#3ccf7c;--mid:#f0b23e;--bad:#ff6b5e;--good-bg:#12301f;--bad-bg:#3a1714;--add:#12301f;--del:#3a1714;--add-ink:#8ee6b0;--del-ink:#ffb1a8;--code:#20242d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:28px 16px 48px}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.brand{font-weight:800;letter-spacing:-.02em;font-size:20px}.brand span{color:var(--accent)}
+.meta{color:var(--muted);font-size:13px}
+.hero{display:grid;grid-template-columns:220px 1fr;gap:24px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;align-items:center}
+.dial{width:200px;height:200px}.dial circle{fill:none;stroke-width:16}.dial .track{stroke:var(--line)}.dial .value{stroke-linecap:round;stroke:var(--muted)}
+.dial.bad .value{stroke:var(--bad)}.dial.mid .value{stroke:var(--mid)}.dial.good .value{stroke:var(--good)}
+.dial .pct{font-size:40px;font-weight:800;text-anchor:middle;fill:var(--ink)}.dial .sub{font-size:13px;text-anchor:middle;fill:var(--muted)}
+h1{font-size:24px;line-height:1.25;margin:0 0 6px;letter-spacing:-.01em}h1 strong{color:var(--accent)}
+.lede{color:var(--muted);margin:0 0 16px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.tile{border:1px solid var(--line);border-radius:12px;padding:10px 12px}.tile b{display:block;font-size:24px}.tile span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.tile.k b{color:var(--good)}.tile.s b{color:var(--bad)}
+.verified{margin-top:12px;font-size:13px;color:var(--good)}.verified.no{color:var(--bad)}
+section{margin-top:28px}h2{font-size:17px;margin:0 0 12px}
+.card{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:12px;padding:16px 18px;margin-bottom:12px}
+.card.healed{border-left-color:var(--good)}
+.card header{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h3{font-size:16px;margin:8px 0 6px}.card footer{font-size:12px;margin-top:8px}
+.chip{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;background:var(--code);border-radius:999px;padding:2px 8px}
+.comp{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;color:var(--muted)}
+.badge{margin-left:auto;font-size:12px;font-weight:600;border-radius:999px;padding:2px 10px}.badge.bad{background:var(--bad-bg);color:var(--bad)}.badge.good{background:var(--good-bg);color:var(--good)}
+.should{background:var(--code);border-radius:8px;padding:8px 10px;margin:8px 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--code);border-radius:4px;padding:0 4px}
+details summary{cursor:pointer;font-size:13px;color:var(--muted)}
+.diff{background:var(--code);border-radius:8px;padding:10px 0;overflow-x:auto;font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;margin:8px 0 0}
+.diff span{display:block;padding:0 12px;white-space:pre}.diff .add{background:var(--add);color:var(--add-ink)}.diff .del{background:var(--del);color:var(--del-ink)}.diff .hunk{color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;font-size:14px}th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+tr:last-child td{border-bottom:0}.num{text-align:right;font-variant-numeric:tabular-nums}.strong{font-weight:700}.muted{color:var(--muted)}
+.barcell{width:30%}.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden}.bar span{display:block;height:100%;background:var(--muted)}
+.bar.bad span{background:var(--bad)}.bar.mid span{background:var(--mid)}.bar.good span{background:var(--good)}
+.list{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px 16px}
+.list li{list-style:none;padding:10px 0;border-bottom:1px solid var(--line)}.list li:last-child{border-bottom:0}
+.list .why{font-size:13px;color:var(--muted)}.ok{color:var(--good);font-weight:700}.warn{color:var(--mid);font-weight:700}
+.compare{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.cmp-label{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}.cmp-pct{font-size:56px;font-weight:800;line-height:1.1}
+.cmp-pct.bad{color:var(--bad)}.cmp-pct.mid{color:var(--mid)}.cmp-pct.good{color:var(--good)}.cmp-arrow{font-size:40px;color:var(--muted)}
+.newly{grid-column:1/-1;margin:4px 0 0;padding:0}.newly li{list-style:none;padding:4px 0}
+.fail{background:var(--bad-bg);color:var(--bad);border-radius:12px;padding:12px 16px;white-space:pre-wrap;font-size:13px}
+.foot{margin-top:36px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:720px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.compare{grid-template-columns:1fr}.cmp-arrow{transform:rotate(90deg)}.barcell{display:none}}
+@media print{body{background:#fff}.card,.hero,table,.list,.compare{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">Agentia <span>Mutant</span></div>
+    <div class="meta">Run r-20261006-114841 · 6 Oct 2026, 11:48 UTC · 23m 49s · lab INT-SFP ← Dev2-SFP</div>
+  </div>
+
+  
+
+  <div class="hero">
+    <svg class="dial bad" viewBox="0 0 180 180" role="img" aria-label="Mutation score 0">
+  <circle class="track" cx="90" cy="90" r="70" />
+  
+  <text x="90" y="88" class="pct">0%</text>
+  <text x="90" y="114" class="sub">caught</text>
+</svg>
+    <div>
+      <h1>Your tests caught <strong>0 of 2</strong> configuration breakages.</h1>
+      <p class="lede">Mutant deliberately broke your Salesforce configuration in INT-SFP, one change at a time, deployed each through Copado and ran your Robotic Testing suite (1 test). A breakage the tests noticed is <em>caught</em>; one they missed is a <em>blind spot</em>.</p>
+      <div class="tiles">
+        <div class="tile k"><b>0</b><span>Caught</span></div>
+        <div class="tile s"><b>2</b><span>Blind spots</span></div>
+        <div class="tile"><b>1</b><span>Not scored</span></div>
+        <div class="tile"><b>3</b><span>Mutants</span></div>
+      </div>
+      <div class="verified">✔ INT-SFP was reverted and verified identical to the baseline</div>
+    </div>
+  </div>
+
+  
+
+  <section><h2>Blind spots: breakages your tests missed (2)</h2><article class="card survivor">
+  <header>
+    <span class="chip">Validation Rule</span>
+    <span class="comp">Opportunity.Discount_Max</span>
+    <span class="badge bad">✘ survived</span>
+  </header>
+  <h3>Validation rule <code>Discount_Max</code> on Opportunity switched off</h3>
+  <p class="should"><strong>A test should check:</strong> Saving an Opportunity that breaks <code>Discount_Max</code> (Discount_Percent__c &gt; 0.40) is rejected with &quot;Discount cannot exceed 40%&quot;.</p>
+  <details open><summary>What Mutant changed <span class="muted">VR_DEACTIVATE</span></summary><pre class="diff"><span class="hunk">@@ -1,7 +1,7 @@</span><span class="ctx"> &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><span class="ctx"> &lt;ValidationRule xmlns=&quot;https://example.invalid/4&quot;&gt;</span><span class="ctx">     &lt;fullName&gt;Discount_Max&lt;/fullName&gt;</span><span class="del">-    &lt;active&gt;true&lt;/active&gt;</span><span class="add">+    &lt;active&gt;false&lt;/active&gt;</span><span class="ctx">     &lt;description&gt;Discounts above 40% are not allowed (Mutant demo app).&lt;/description&gt;</span><span class="ctx">     &lt;errorConditionFormula&gt;Discount_Percent__c &amp;gt; 0.40&lt;/errorConditionFormula&gt;</span><span class="ctx">     &lt;errorDisplayField&gt;Discount_Percent__c&lt;/errorDisplayField&gt;</span></pre></details>
+  <footer class="muted">story US-0000029 · promotion P00005 · deploy 3m 59s · tests 41s</footer>
+</article>
+<article class="card survivor">
+  <header>
+    <span class="chip">Permission Set</span>
+    <span class="comp">Sales_Discounts</span>
+    <span class="badge bad">✘ survived</span>
+  </header>
+  <h3>Permission set &quot;Sales Discounts&quot; can no longer edit Opportunity.Discount_Percent__c</h3>
+  <p class="should"><strong>A test should check:</strong> A user with &quot;Sales Discounts&quot; can change Opportunity.Discount_Percent__c and save.</p>
+  <details open><summary>What Mutant changed <span class="muted">PERMSET_FLS_REVOKE</span></summary><pre class="diff"><span class="hunk">@@ -7,7 +7,7 @@</span><span class="ctx">         &lt;readable&gt;true&lt;/readable&gt;</span><span class="ctx">     &lt;/fieldPermissions&gt;</span><span class="ctx">     &lt;fieldPermissions&gt;</span><span class="del">-        &lt;editable&gt;true&lt;/editable&gt;</span><span class="add">+        &lt;editable&gt;false&lt;/editable&gt;</span><span class="ctx">         &lt;field&gt;Opportunity.Discount_Percent__c&lt;/field&gt;</span><span class="ctx">         &lt;readable&gt;true&lt;/readable&gt;</span><span class="ctx">     &lt;/fieldPermissions&gt;</span></pre></details>
+  <footer class="muted">story US-0000030 · promotion P00006 · deploy 3m 55s · tests 41s</footer>
+</article></section>
+
+  <section>
+    <h2>By metadata type</h2>
+    <table><thead><tr><th>Type</th><th class="num">Caught</th><th class="num">Missed</th><th class="num">Not scored</th><th class="barcell"></th><th class="num">Score</th></tr></thead>
+    <tbody><tr>
+  <td>Permission Set</td>
+  <td class="num">0</td><td class="num">1</td><td class="num muted">0</td>
+  <td class="barcell"><div class="bar bad"><span style="width:0%"></span></div></td>
+  <td class="num strong">0%</td>
+</tr><tr>
+  <td>Validation Rule</td>
+  <td class="num">0</td><td class="num">1</td><td class="num muted">0</td>
+  <td class="barcell"><div class="bar bad"><span style="width:0%"></span></div></td>
+  <td class="num strong">0%</td>
+</tr><tr>
+  <td>Flow</td>
+  <td class="num">0</td><td class="num">0</td><td class="num muted">1</td>
+  <td class="barcell"><div class="bar none"><span style="width:0%"></span></div></td>
+  <td class="num strong">–</td>
+</tr></tbody></table>
+  </section>
+
+  
+
+  <section><h2>Not scored (1)</h2><ul class="list"><li><span class="warn">invalid</span> Flow &quot;Discount Approval&quot;: step &quot;Clear Approval&quot; is skipped, so Approval_Required__c is never set to false<div class="why">Promotion job a00000000000000005 finished with status Error: Metadata Deployment - Flow:Discount_Approval:Discount_Above_Threshold (Decision) - Enter a label for the default outcome.; Please check the logs for details.</div></li></ul></section>
+
+  
+
+  <div class="foot"><span>Copado runs your tests. Mutant tests your tests.</span><span>Generated by <code>agentia mutant report</code> · works offline</span></div>
+</div>
+</body>
+</html>

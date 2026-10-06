@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "runId": "r-20261006-114841",
+  "createdAt": "2026-10-06T13:14:59.549Z",
+  "suiteFile": "discount_happy_path.robot",
+  "baseSuiteSha256": "0294fef0d357cf5064660bf2f46636dda096c7af318af6474e1b9642dbe766f4",
+  "proposals": [
+    {
+      "mutantId": "VR_DEACTIVATE:ValidationRule:Opportunity.Discount_Max:active",
+      "description": "Validation rule `Discount_Max` on Opportunity switched off",
+      "file": "01-Create-opportunity-with-excessive-discount-is-rejected.robot",
+      "testNames": [
+        "Create opportunity with excessive discount is rejected"
+      ],
+      "status": "proposed",
+      "dialogueId": "00000000-0000-4000-8000-000000000006"
+    },
+    {
+      "mutantId": "PERMSET_FLS_REVOKE:PermissionSet:Sales_Discounts:Opportunity.Discount_Percent__c:edit",
+      "description": "Permission set \"Sales Discounts\" can no longer edit Opportunity.Discount_Percent__c",
+      "file": "02-Edit-discount-percent-on-existing-opportunity.robot",
+      "testNames": [
+        "Edit discount percent on existing opportunity"
+      ],
+      "status": "proposed",
+      "dialogueId": "00000000-0000-4000-8000-000000000007"
+    }
+  ],
+  "applied": {
+    "at": "2026-10-06T13:31:18.000Z",
+    "testNames": [
+      "Create opportunity with excessive discount is rejected",
+      "Edit discount percent on existing opportunity"
+    ],
+    "suiteSha256": "1896bfa0210d19942620b571e6a03b06ad5616ec8f57689768f4da4b87f2d3a0",
+    "planFile": "~/hackathon/mutant/.mutant/plans/heal-r-20261006-114841.json"
+  }
+}

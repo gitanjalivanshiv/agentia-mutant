@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "runId": "r-20261006-114841",
+  "phase": "done",
+  "createdAt": "2026-10-06T11:48:41.149Z",
+  "finishedAt": "2026-10-06T12:12:30.590Z",
+  "lab": {
+    "environment": "INT-SFP",
+    "source": "Dev2-SFP",
+    "pipeline": "Trial - Salesforce Source Format Pipeline"
+  },
+  "score": {
+    "killed": 0,
+    "survived": 2,
+    "invalid": 0,
+    "timeout": 0,
+    "error": 1,
+    "score": 0
+  },
+  "baseline": {
+    "runs": [
+      {
+        "buildId": 1001,
+        "status": "succeeded",
+        "seconds": 52,
+        "tests": [
+          {
+            "name": "Create opportunity with a small discount",
+            "classname": "Discount Approval Suite.Discount Happy Path",
+            "status": "passed"
+          }
+        ]
+      }
+    ],
+    "flaky": [],
+    "passing": [
+      "Discount Approval Suite.Discount Happy Path :: Create opportunity with a small discount"
+    ]
+  },
+  "verify": {
+    "ok": true,
+    "drifted": [],
+    "checkedAt": "2026-10-06T12:12:30.590Z"
+  },
+  "mutants": [
+    {
+      "id": "VR_DEACTIVATE:ValidationRule:Opportunity.Discount_Max:active",
+      "operator": "VR_DEACTIVATE",
+      "component": {
+        "type": "ValidationRule",
+        "apiName": "Opportunity.Discount_Max"
+      },
+      "file": "main/default/objects/Opportunity/validationRules/Discount_Max.validationRule-meta.xml",
+      "description": "Validation rule `Discount_Max` on Opportunity switched off",
+      "shouldCheck": "Saving an Opportunity that breaks `Discount_Max` (Discount_Percent__c > 0.40) is rejected with \"Discount cannot exceed 40%\".",
+      "diff": "--- a/main/default/objects/Opportunity/validationRules/Discount_Max.validationRule-meta.xml\n+++ b/main/default/objects/Opportunity/validationRules/Discount_Max.validationRule-meta.xml\n@@ -1,7 +1,7 @@\n <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n <ValidationRule xmlns=\"https://example.invalid/4\">\n     <fullName>Discount_Max</fullName>\n-    <active>true</active>\n+    <active>false</active>\n     <description>Discounts above 40% are not allowed (Mutant demo app).</description>\n     <errorConditionFormula>Discount_Percent__c &gt; 0.40</errorConditionFormula>\n     <errorDisplayField>Discount_Percent__c</errorDisplayField>\n",
+      "story": "US-0000029",
+      "promotion": "P00005",
+      "durations": {
+        "deploySeconds": 239,
+        "testSeconds": 41
+      },
+      "test": {
+        "buildId": 1002,
+        "status": "succeeded",
+        "seconds": 41,
+        "tests": [
+          {
+            "name": "Create opportunity with a small discount",
+            "classname": "Discount Approval Suite.Discount Happy Path",
+            "status": "passed"
+          }
+        ]
+      },
+      "outcome": "survived"
+    },
+    {
+      "id": "PERMSET_FLS_REVOKE:PermissionSet:Sales_Discounts:Opportunity.Discount_Percent__c:edit",
+      "operator": "PERMSET_FLS_REVOKE",
+      "component": {
+        "type": "PermissionSet",
+        "apiName": "Sales_Discounts"
+      },
+      "file": "main/default/permissionsets/Sales_Discounts.permissionset-meta.xml",
+      "description": "Permission set \"Sales Discounts\" can no longer edit Opportunity.Discount_Percent__c",
+      "shouldCheck": "A user with \"Sales Discounts\" can change Opportunity.Discount_Percent__c and save.",
+      "diff": "--- a/main/default/permissionsets/Sales_Discounts.permissionset-meta.xml\n+++ b/main/default/permissionsets/Sales_Discounts.permissionset-meta.xml\n@@ -7,7 +7,7 @@\n         <readable>true</readable>\n     </fieldPermissions>\n     <fieldPermissions>\n-        <editable>true</editable>\n+        <editable>false</editable>\n         <field>Opportunity.Discount_Percent__c</field>\n         <readable>true</readable>\n     </fieldPermissions>\n",
+      "story": "US-0000030",
+      "promotion": "P00006",
+      "durations": {
+        "deploySeconds": 235,
+        "testSeconds": 41
+      },
+      "test": {
+        "buildId": 1003,
+        "status": "succeeded",
+        "seconds": 41,
+        "tests": [
+          {
+            "name": "Create opportunity with a small discount",
+            "classname": "Discount Approval Suite.Discount Happy Path",
+            "status": "passed"
+          }
+        ]
+      },
+      "outcome": "survived"
+    },
+    {
+      "id": "FLOW_DROP_ASSIGNMENT:Flow:Discount_Approval:Clear_Approval/bypass",
+      "operator": "FLOW_DROP_ASSIGNMENT",
+      "component": {
+        "type": "Flow",
+        "apiName": "Discount_Approval"
+      },
+      "file": "main/default/flows/Discount_Approval.flow-meta.xml",
+      "description": "Flow \"Discount Approval\": step \"Clear Approval\" is skipped, so Approval_Required__c is never set to false",
+      "shouldCheck": "When the flow reaches \"Clear Approval\", Approval_Required__c becomes false.",
+      "diff": "--- a/main/default/flows/Discount_Approval.flow-meta.xml\n+++ b/main/default/flows/Discount_Approval.flow-meta.xml\n@@ -32,10 +32,6 @@\n         <label>Discount Above Threshold</label>\n         <locationX>182</locationX>\n         <locationY>290</locationY>\n-        <defaultConnector>\n-            <targetReference>Clear_Approval</targetReference>\n-        </defaultConnector>\n-        <defaultConnectorLabel>Within Limit</defaultConnectorLabel>\n         <rules>\n             <name>Needs_Approval</name>\n             <conditionLogic>and</conditionLogic>\n",
+      "story": "US-0000031",
+      "promotion": "P00007",
+      "durations": {
+        "deploySeconds": 108
+      },
+      "outcome": "invalid",
+      "reason": "Promotion job a00000000000000005 finished with status Error: Metadata Deployment - Flow:Discount_Approval:Discount_Above_Threshold (Decision) - Enter a label for the default outcome.; Please check the logs for details."
+    }
+  ]
+}

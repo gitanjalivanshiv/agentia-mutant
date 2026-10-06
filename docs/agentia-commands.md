@@ -162,3 +162,27 @@ Runner plan: `build run --json` (no wait) → poll `build get` every 10 s → on
 - Generator: `npm init @copado/agentia-plugin <dir>` → package `@copado/create-agentia-plugin@0.3.0` (exists on npm ✅).
 - Link: `agentia plugins link .` · `agentia plugins` currently reports "No plugins installed."
 - Host CLI: oclif 4, `topicSeparator: " "`, Node ≥ 18 (we have Node 24.18).
+
+---
+
+## 8. Observed in Phases 4–6 (runner, heal)
+
+| Command | Status | Shape / notes |
+|---|---|---|
+| `cicd work create --title … --project <id> --source-credential <id> --status Draft --json` | ✅ 2–9 s | `result: WorkItem { id, name: "US-…", title, status, sourceEnvironmentName, projectPipelineMainBranch, oauthSignature (never log), … }` |
+| `cicd work set <US> --json` (cwd = pipeline-repo clone) | ✅ 4–5 s | `result: { message, warnings[], git: { branch: "feature/US-…", branchCreated, fetched }, … }`; writes `.agentia/config.user.json` in the clone |
+| `cicd work publish [--full-metadata PermissionSet:X] --json` | ✅ 13–25 s | `result: { branch, push: { message, jobId }, changeListUpdate, nestedMetadata, commits, logs[] }`; async "SFDX Commit" job 20–60 s |
+| `cicd work submit --done` | ⛔ | preflight `GET /agentia/headless/work/user-stories-ahead-behind` → 404 on the test org |
+| `cicd job get <id> --json` | ✅ | `result: { id, name: "JE-…", status: Successful\|Failed\|…, steps: [{ name, status, … }], template, … }` |
+| `cicd promotion list --source-environment-name A --destination-environment-name B --status Draft --json` | ✅ | paged `data[]`, **18-char** `id`, `name: "P…"`, `status`, env names, `isBackPromotion` |
+| `cicd promotion get <id> --json` | ✅ | **15-char** `id`, `name: null`, name in `identification.promotionName`, `userStories[{ name, title, … }]`, `includedMetadata[{ type, metadataApiName, action: Add\|Full\|… }]` |
+| `cicd promotion run <18-char id> --operation merge_and_deploy --wait-timeout N --json` | ✅ 108–239 s | `result: { promotionAfter, jobMonitors[{ jobExecutionId, jobExecutionStatus, executionSteps }], … }`; a failed deploy job → error envelope "Promotion job … finished with status Error: …"; a 15-char ID is rejected before submission |
+| `cicd metadata content get --metadata-type T --api-name N --source ENVIRONMENT --pipeline-id --source-org-id --source-credential-id --output-file f --json` | ✅ 2–3 s | `result: [{ contentBase64, … }]`; decoded XML written to `--output-file`. Org copies omit `false` booleans. Works for Profile too (~390 KB). |
+| `testing test run <job> -p <proj> --wait-for-result --timeout m --no-exit-code --save-artifacts zip --xunit xml --json` | ✅ 40–120 s | `result: { finalBuild: { id, status: succeeded\|failed, … }, artifacts: { archive, xunit }, wait }`; `finalBuild.configuration` contains variable values (username in clear) — never log |
+| `testing job files <job> -p <proj> --json` | ✅ | `result: [{ path, size }]` |
+| `testing job download <job> -p <proj> -f <path> --output-dir d --json` | ✅ | `result: { files: [{ path, value }] }` |
+| `testing job upload <job> -p <proj> --replace local:remote --message m --json` | ✅ ~1 s | `result: { operations, response }` |
+| `testing variable update <id> -p <proj> --type secret --not-sensitive --json` | ✅ | variables must be type `secret` to reach Robot Framework |
+| `ai agent ask --agent test --no-stream --no-credential-sync --workspace <uuid> --timeout 240 -p … --json` | ✅ 60–140 s | `result: { content, completed, dialogueId, workspaceId, warnings[], followups[], links[], statuses[] }`; `completed: false` + warning "AI stream ended before stream_complete" even when `content` is complete |
+
+Gateway behaviour: read calls intermittently return 500 or "Unauthorized" and succeed seconds later; the Copado facade retries read-only calls (3 attempts) and never retries writes.
