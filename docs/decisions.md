@@ -44,3 +44,9 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 - **Confirmed: a promoted story moves.** After P00001, US-0000025's `sourceEnvironmentName` is `INT-SFP`. Re-submitting it would target UAT. Therefore **each mutant deploy uses a fresh `Mutant Lab –` story from Dev2-SFP**, and the runner refuses any promotion whose source ≠ Dev2-SFP or destination ≠ INT-SFP. US-0000025 is retired.
 - `promotion run` result keys: `promotionId, operation, mode, promotionBefore, promotionAfter, jobMonitors[{jobExecutionId, jobExecutionStatus, deploymentDryRun, executionSteps}], deploymentSteps, wait, run, request, resultId, context`.
 - `promotion list --name P… --json` ✅ works (paged `data[]` with `status, sourceEnvironmentName, destinationEnvironmentName, isBackPromotion, …`).
+
+## 2026-10-06 — Baseline CRT bring-up
+- CRT variables must be **type `secret`** (the default) to reach Robot Framework as `${name}`; type `config` is not injected. Non-secret values use `--type secret --not-sensitive`.
+- Run evidence: `testing test run <job> -p <proj> --wait-for-result --no-exit-code --save-artifacts <zip> --xunit <xml> --json` → 40–60 s per run for one UI test; the zip contains `screenshots/*.png` on failure; xUnit `<failure message>` is the classifier's evidence. Async `build run` + `build get` polling also works (`status: executing|failed|…`, `logReportUrl`).
+- Salesforce login pages vary (classic / username-first / email-first). The suite logs in by typing the username, pressing Enter, then typing the password and pressing Enter.
+- The demo app needs the **Opportunity page layout** (fields weren't on it). Layout fetched with `cicd metadata content get --metadata-type Layout --api-name "Opportunity-Opportunity Layout" --source ENVIRONMENT …` (2–3 s, identical in Dev2 and INT). This also enables the `LAYOUT_FIELD_REMOVE` operator.
