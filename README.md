@@ -37,7 +37,7 @@ It runs `doctor` (12 checks), `plan` (10 of 15 mutants, time estimate), `report`
 
 ## Use it on your pipeline
 
-Requirements: Node ≥ 20, the Agentia CLI with CI/CD, Robotic Testing and AI auth (`agentia setup`), a Source Format pipeline with a **disposable lab environment** that receives promotions from a source environment, a local clone of the pipeline's Git repository, and a Robotic Testing job.
+Requirements: Node ≥ 22, the Agentia CLI with CI/CD, Robotic Testing and AI auth (`agentia setup`), a Source Format pipeline with a **disposable lab environment** that receives promotions from a source environment, a local clone of the pipeline's Git repository, and a Robotic Testing job.
 
 ```sh
 npm ci && npm run build && agentia plugins link .

@@ -50,14 +50,14 @@ export async function runDoctor(options: DoctorOptions): Promise<DoctorReport> {
   const nodeVersion = options.nodeVersion ?? process.versions.node
   const major = Number(nodeVersion.split('.')[0])
   add(
-    major >= 20
+    major >= 22
       ? {id: 'node', title: 'Node.js', status: 'pass', detail: `v${nodeVersion}`}
       : {
           id: 'node',
           title: 'Node.js',
           status: 'fail',
           detail: `v${nodeVersion}`,
-          fix: 'Install Node.js 20 or newer.',
+          fix: 'Install Node.js 22 or newer.',
         },
   )
 
