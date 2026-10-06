@@ -118,4 +118,4 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 ## 2026-10-06 — Phase 8 (packaging)
 - Offline quickstart (`examples/quickstart/run.sh`): Copado calls replayed from `fixtures/doctor` (`MUTANT_FAKE`), reports from two real runs copied with the scrubber; the flow mutant of the first run was re-classified with the current rules from its recorded deploy evidence (`invalid`). Fresh clone → `npm ci` → build → quickstart: 8 s with a warm npm cache. Runs in CI.
 - `bin/run.js` runs the commands standalone (no Agentia CLI needed) for the quickstart; inside Agentia they are `agentia mutant …`.
-- A full tracked-file leak scan found real identifiers used as scrubber test inputs; replaced with invented values. **Earlier commits still contain them**: rewrite or squash history before the repo is made public.
+- A full leak scan found real identifiers used as scrubber test inputs and a private repository name in one fixture; replaced with invented values **throughout the history** (rewritten before the first push), the build brief was removed from the repository, and commits use the author's GitHub noreply address.
