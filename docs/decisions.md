@@ -66,3 +66,10 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 - Salesforce omits `false` boolean elements (e.g. `externalId`) when Copado fetches content; the baseline compare treats a missing element as `false`.
 - Record mode (`MUTANT_RECORD=<dir>`) writes scrubbed exchanges, including small text files written via `--output-file`; replay (`MUTANT_FAKE=<dir>` / `FakeAgentiaClient.fromDirectory`) matches on args with output paths normalised to `<path>`. Scrubbing: Salesforce IDs (incl. org IDs) → consistent placeholders, CRT numeric IDs (also inside paths) → placeholders, UUIDs, emails, URLs, ssh repo URIs, people's names, home directory → `~`.
 - `fixtures/doctor/` is a scrubbed recording of the first real `agentia mutant doctor` pass against INT-SFP (12/12); `test/doctor-replay.test.ts` replays it offline.
+
+## 2026-10-06 — Phase 2 (operators)
+- 11 declarative operators (the brief's 10 + `CHECKBOX_DEFAULT_FLIP`); `APEX_COND_FLIP` stays a stretch goal. See docs/operators.md (generated from the registry).
+- Operators edit XML text by offsets via a small position-aware element tree (`src/lib/xml.ts`) instead of fast-xml-parser round-trips, so diffs are minimal and formatting is untouched. fast-xml-parser is still used for validation and for the baseline compare.
+- `FLOW_DROP_ASSIGNMENT` bypasses single-item assignments (rewire or remove the connectors leading to them) because an empty assignment would not deploy. Deployability of the "remove default connector" variant (Clear_Approval) is to be confirmed in Phase 4; if Salesforce rejects it, it is classified `invalid`, not counted.
+- The unified diff slides change runs to whole XML blocks (git-style heuristic) so report diffs read cleanly.
+- Demo app yields 15 mutants; `FIELD_REQUIRED_OFF` and `PICKLIST_DEFAULT` have no targets there and are covered by invented samples in test/samples/.
