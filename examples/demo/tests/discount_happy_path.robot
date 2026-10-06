@@ -14,7 +14,7 @@ ${login_url}      https://test.salesforce.com
 Create opportunity with a small discount
     [Documentation]    A 10% discount saves and does not need approval.
     [Tags]             discount    happy-path
-    Login              ${login_url}    ${username}    ${password}
+    Login
     LaunchApp          Sales
     ClickText          Opportunities
     ClickText          New
@@ -26,3 +26,25 @@ Create opportunity with a small discount
     ClickText          Save                 partial_match=False
     UseModal           Off
     VerifyText         Mutant Demo Small Discount
+
+*** Keywords ***
+Setup Browser
+    Open Browser       about:blank    ${BROWSER}
+    SetConfig          LineBreak      ${EMPTY}
+    SetConfig          DefaultTimeout    20s
+
+Login
+    # Works with the classic, username-first and email-first Salesforce login pages.
+    GoTo               ${login_url}
+    ${email_first}=    IsText         Log In with Username    timeout=5s
+    IF    ${email_first}
+        ClickText      Log In with Username
+    END
+    TypeText           Username       ${username}    delay=1
+    PressKey           Username       {ENTER}
+    TypeSecret         Password       ${password}
+    PressKey           Password       {ENTER}
+    VerifyNoText       Log In         timeout=30s
+
+End Suite
+    Close All Browsers
