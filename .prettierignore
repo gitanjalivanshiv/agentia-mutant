@@ -1,0 +1,9 @@
+dist/
+node_modules/
+coverage/
+docs/
+examples/
+fixtures/
+package-lock.json
+CLAUDE.md
+*.md

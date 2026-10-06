@@ -1,0 +1,64 @@
+{
+  "name": "agentia-plugin-mutant",
+  "description": "Mutation testing for Salesforce configuration, driven through Copado (Agentia plugin)",
+  "version": "0.1.0",
+  "author": "Gitanjali Mishra",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": "./dist/index.js",
+  "license": "MIT",
+  "keywords": [
+    "oclif-plugin",
+    "agentia"
+  ],
+  "files": [
+    "/dist",
+    "/oclif.manifest.json",
+    "/skills"
+  ],
+  "dependencies": {
+    "@oclif/core": "^4",
+    "chalk": "^6.0.1",
+    "execa": "^10.0.1",
+    "fast-xml-parser": "^5.11.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.5",
+    "@vitest/coverage-v8": "^5.0.3",
+    "eslint": "^10.12.0",
+    "eslint-config-prettier": "^10.1.8",
+    "oclif": "^4",
+    "prettier": "^3.9.9",
+    "shx": "^0.3.3",
+    "typescript": "^5",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "^5.0.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "oclif": {
+    "bin": "agentia",
+    "dirname": "agentia-cli",
+    "commands": "./dist/commands",
+    "topics": {
+      "mutant": {
+        "description": "Mutation-test your Salesforce configuration through Copado: does your test suite notice when config breaks?"
+      }
+    }
+  },
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "shx rm -f oclif.manifest.json",
+    "prepack": "npm run build && oclif manifest",
+    "postpack": "npm run clean"
+  }
+}

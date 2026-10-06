@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "module": "Node16",
+    "moduleResolution": "node16",
+    "outDir": "dist",
+    "sourceMap": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "target": "es2022",
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+  "include": ["src/**/*", "test/**/*", "vitest.config.ts"]
+}
