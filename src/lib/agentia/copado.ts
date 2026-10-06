@@ -60,6 +60,16 @@ const PipelineConnection = z.looseObject({
 })
 export type PipelineConnection = z.infer<typeof PipelineConnection>
 
+const WorkItem = z.looseObject({
+  id: z.string(),
+  name: z.string(),
+  title: z.string().nullish(),
+  status: z.string().nullish(),
+  sourceEnvironmentName: z.string().nullish(),
+  projectPipelineMainBranch: z.string().nullish(),
+})
+export type WorkItem = z.infer<typeof WorkItem>
+
 const Repository = z.looseObject({name: z.string().nullish(), uri: z.string().nullish()})
 
 const EnvAuthStatus = z.looseObject({validated: z.boolean().nullish()})
@@ -118,6 +128,10 @@ export class Copado {
       ['cicd', 'pipeline', 'connection', 'list', '--pipeline-id', pipelineId],
       List(PipelineConnection),
     )
+  }
+
+  async workItem(idOrName: string): Promise<WorkItem> {
+    return this.run(['cicd', 'work', 'get', idOrName], WorkItem)
   }
 
   async repository(id: string) {

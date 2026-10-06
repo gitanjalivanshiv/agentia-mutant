@@ -73,3 +73,9 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 - `FLOW_DROP_ASSIGNMENT` bypasses single-item assignments (rewire or remove the connectors leading to them) because an empty assignment would not deploy. Deployability of the "remove default connector" variant (Clear_Approval) is to be confirmed in Phase 4; if Salesforce rejects it, it is classified `invalid`, not counted.
 - The unified diff slides change runs to whole XML blocks (git-style heuristic) so report diffs read cleanly.
 - Demo app yields 15 mutants; `FIELD_REQUIRED_OFF` and `PICKLIST_DEFAULT` have no targets there and are covered by invented samples in test/samples/.
+
+## 2026-10-06 — Phase 3 (planner + `mutant plan`)
+- Selection: score = 0.6 × recency (git commit time of the component file, or 1.0 inside `--story`) + 0.4 × historical survival rate of the operator (0.5 when unknown). Variety is enforced by round-robin over metadata types, preferring an unused operator, then an unused component. Deterministic.
+- `--story <US>` resolves components from the story's branch diff in the lab clone (`cicd work get` → `projectPipelineMainBranch`, `git fetch`, `git diff origin/<main>...origin/feature/<US>`); read-only.
+- Estimate models the chained, batch-promotion run (decisions 11 and option A): (N+1) × prep up front, baseline test, N × (deploy + test), final revert deploy, per-component verify. Defaults are the measured timings; later runs' `results.json` averages override them.
+- Plans store the baseline hash and each mutant's mutated-file sha256 so `mutant run` can refuse a stale plan; they are written to `.mutant/plans/` (git-ignored) plus `latest.json`.
