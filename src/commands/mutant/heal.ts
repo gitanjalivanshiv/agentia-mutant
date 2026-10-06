@@ -41,7 +41,10 @@ With --apply (after review): merges the reviewed tests into the current suite, s
       description: 'Do not ask for confirmation before uploading (required with --json)',
     }),
     only: Flags.string({description: 'Only these survivor mutant IDs (comma-separated)'}),
-    force: Flags.boolean({description: 'Ask Copado AI again even if proposals already exist'}),
+    force: Flags.boolean({
+      description:
+        'Without --apply: ask Copado AI again. With --apply: re-apply edited proposals (only if the suite is unchanged since Mutant uploaded it)',
+    }),
   }
 
   public async run(): Promise<HealState & {nextSteps: string[]}> {
@@ -86,7 +89,7 @@ With --apply (after review): merges the reviewed tests into the current suite, s
     }
 
     // --apply
-    const plan = await prepareApply(copado, config, store.dir)
+    const plan = await prepareApply(copado, config, store.dir, flags.force)
     this.log(
       chalk.bold(`Applying ${plan.added.length} reviewed test(s) to Robotic Testing`) +
         chalk.dim(` · ${plan.remote.file}\n`),

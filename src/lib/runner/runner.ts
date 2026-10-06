@@ -247,11 +247,18 @@ export class Runner {
     const deadline = this.now() + this.deps.promotionWaitMs
     const inspected = new Set<string>()
     while (missing().length) {
-      const drafts = await copado.promotions({
-        source: lab.source.name,
-        destination: lab.lab.name,
-        status: 'Draft',
-      })
+      let drafts: Awaited<ReturnType<typeof copado.promotions>> = []
+      try {
+        drafts = await copado.promotions({
+          source: lab.source.name,
+          destination: lab.lab.name,
+          status: 'Draft',
+        })
+      } catch (error) {
+        // Waiting on a human can take a while; ride out network blips and gateway hiccups.
+        if (!isTransient(error)) throw error
+        io.warn(`Could not reach Copado (${(error as Error).message}); retrying.`)
+      }
       for (const p of drafts) {
         if (inspected.has(p.id) || this.state.units.some((u) => u.promotion?.id === p.id)) continue
         let detail: PromotionDetail
@@ -500,4 +507,16 @@ export function unsafePromotion(
     return `its status is ${detail.status}`
   }
   return undefined
+}
+
+/** Network failures and gateway 5xx/429 responses that are worth retrying while polling. */
+export function isTransient(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error)
+  const status = error instanceof AgentiaError ? error.details.statusCode : undefined
+  return (
+    /ENOTFOUND|EAI_AGAIN|ECONNRESET|ECONNREFUSED|ETIMEDOUT|EPIPE|socket hang up|network|fetch failed|timed? ?out/i.test(
+      message,
+    ) ||
+    (status !== undefined && (status >= 500 || status === 429))
+  )
 }

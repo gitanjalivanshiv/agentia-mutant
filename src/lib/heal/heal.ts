@@ -190,19 +190,41 @@ export interface ApplyPlan {
   remoteChanged: boolean
 }
 
-/** Prepares --apply: merges the (possibly edited) proposals into the CURRENT remote suite. Read-only. */
-export async function prepareApply(copado: Copado, config: MutantConfig, runDir: string): Promise<ApplyPlan> {
+/**
+ * Prepares --apply: merges the (possibly edited) proposals into the CURRENT remote suite. Read-only.
+ * With `reapply`, replaces what Mutant uploaded earlier by merging into the original suite instead,
+ * but only if nobody changed the suite in Robotic Testing since.
+ */
+export async function prepareApply(
+  copado: Copado,
+  config: MutantConfig,
+  runDir: string,
+  reapply = false,
+): Promise<ApplyPlan> {
   const state = loadHealState(runDir)
   if (!state) throw new Error('No healing proposals for this run. Run `agentia mutant heal` first.')
-  if (state.applied) throw new Error(`These proposals were already applied at ${state.applied.at}.`)
+  if (state.applied && !reapply) {
+    throw new Error(
+      `These proposals were already applied at ${state.applied.at}. Use --force to re-apply edited proposals.`,
+    )
+  }
   const dir = healDir(runDir)
   const accepted = state.proposals.filter(
     (p) => p.status === 'proposed' && p.file && fs.existsSync(path.join(dir, p.file)),
   )
   if (!accepted.length) throw new Error('No usable proposals to apply.')
   const remote = await fetchSuite(copado, config, path.join(dir, 'suite-current'))
+  let base = remote.text
+  if (state.applied) {
+    if (sha256(remote.text) !== state.applied.suiteSha256) {
+      throw new Error(
+        'The suite changed in Robotic Testing since Mutant uploaded it; refusing to overwrite. Edit it there instead.',
+      )
+    }
+    base = fs.readFileSync(path.join(dir, 'suite-base', state.suiteFile), 'utf8')
+  }
   const merged = mergeIntoSuite(
-    remote.text,
+    base,
     accepted.map((p) => readProposal(dir, p)),
   )
   return {
@@ -211,7 +233,7 @@ export async function prepareApply(copado: Copado, config: MutantConfig, runDir:
     merged: merged.suite,
     added: merged.added,
     diff: unifiedDiff(remote.text, merged.suite, remote.file),
-    remoteChanged: sha256(remote.text) !== state.baseSuiteSha256,
+    remoteChanged: !state.applied && sha256(remote.text) !== state.baseSuiteSha256,
   }
 }
 

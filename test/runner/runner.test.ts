@@ -11,7 +11,7 @@ import {listComponents, matchesBaseline} from '../../src/lib/metadata.js'
 import {generateMutants} from '../../src/lib/mutants.js'
 import {buildPlan} from '../../src/lib/planner.js'
 import {RunStore} from '../../src/lib/runner/run-store.js'
-import {Runner, type RunnerIO, unsafePromotion} from '../../src/lib/runner/runner.js'
+import {isTransient, Runner, type RunnerIO, unsafePromotion} from '../../src/lib/runner/runner.js'
 import type {RunState} from '../../src/lib/runner/types.js'
 import {buildUnits, initialResults} from '../../src/lib/runner/units.js'
 import {OPERATORS} from '../../src/operators/index.js'
@@ -388,6 +388,18 @@ describe('Runner end to end (simulated lab)', () => {
     expect(sim.stories).toHaveLength(4)
   })
 
+  it('keeps polling for promotions through network errors', async () => {
+    const {state, store} = newState()
+    const orig = sim.promotions.bind(sim)
+    let failures = 2
+    sim.promotions = async () => {
+      if (failures-- > 0) throw new Error('getaddrinfo ENOTFOUND na.api.copado.com')
+      return orig()
+    }
+    expect(await runner(state, store).run()).toBe('done')
+    expect(events.filter((e) => e.startsWith('warn Could not reach Copado'))).toHaveLength(2)
+  })
+
   it('stopping (Ctrl-C) after the first mutant still reverts and verifies', async () => {
     const {state, store} = newState()
     let tested = 0
@@ -465,5 +477,17 @@ describe('unsafePromotion', () => {
     [{status: 'Completed'}, /status is Completed/],
   ])('refuses %o', (over, msg) => {
     expect(unsafePromotion({...good, ...over}, unit, lab)).toMatch(msg)
+  })
+})
+
+describe('isTransient', () => {
+  it.each([
+    'getaddrinfo ENOTFOUND na.api.copado.com',
+    'read ECONNRESET',
+    'socket hang up',
+    'Timed out after 300 s',
+  ])('retries %s', (m) => expect(isTransient(new Error(m))).toBe(true))
+  it('does not retry real errors', () => {
+    expect(isTransient(new Error('Invalid input: expected string'))).toBe(false)
   })
 })

@@ -203,6 +203,25 @@ describe('prepareApply / applyHeals', () => {
     await expect(prepareApply(stub, config, runDir)).rejects.toThrow(/already applied/)
   })
 
+  it('--force re-applies edited proposals onto the original suite, only if the remote is still what Mutant uploaded', async () => {
+    const state = await proposed()
+    await applyHeals(stub, config, runDir, await prepareApply(stub, config, runDir))
+    const file = path.join(healDir(runDir), state.proposals[0]!.file!)
+    fs.writeFileSync(
+      file,
+      fs
+        .readFileSync(file, 'utf8')
+        .replace(/(VerifyText\s+)Discount cannot exceed 40%/, '$1Discount cannot exceed 40 percent'),
+    )
+    await expect(prepareApply(stub, config, runDir)).rejects.toThrow(/already applied/)
+    const again = await prepareApply(stub, config, runDir, true)
+    expect(again.merged).toContain('Discount cannot exceed 40 percent')
+    expect(again.merged.match(/Create opportunity with an excessive discount is rejected/g)).toHaveLength(1)
+    await applyHeals(stub, config, runDir, again)
+    remoteSuite += '\n# someone edited this in CRT\n'
+    await expect(prepareApply(stub, config, runDir, true)).rejects.toThrow(/refusing to overwrite/)
+  })
+
   it('merges into the current remote suite when it changed after proposing', async () => {
     await proposed()
     remoteSuite = SUITE.replace(
