@@ -1,6 +1,8 @@
 # Mutation cycle time
 
-> **Status: NOT YET MEASURED.** The manual cycle (§4.5 of the brief) is blocked on:
+> **Status: PARTIALLY MEASURED** (seed deploy done 2026-10-06; mutant cycle pending).
+>
+> Original blockers (all resolved): The manual cycle (§4.5 of the brief) is blocked on:
 > 1. CI/CD API key not configured (`agentia auth get --cicd` → `set: false`).
 > 2. No lab environment chosen yet.
 > 3. The configured CRT org has **zero projects**, so there is no CRT job to run.
@@ -12,6 +14,11 @@
 | Step | Command | Duration |
 |---|---|---|
 | CLI cold start + CRT API call | `agentia testing project list --json` | 5.1 s *measured* |
+| Create user story | `agentia cicd work create … --json` | 9 s *measured* |
+| Activate story | `agentia cicd work set US-… --json` | 4 s *measured* |
+| Publish (push, register, merge to dev2-sfp) | `agentia cicd work publish --json` | 25 s *measured* (+ ~60 s async SFDX Commit job) |
+| `work submit --done` | — | fails in preflight (404), see decisions.md |
+| Promote + deploy Dev2 → INT (5 components) | `agentia cicd promotion run <id> --operation merge_and_deploy --json` (waits) | **169 s** *measured* (merge job ~53 s, deploy job ~94 s) |
 
 So every `agentia` spawn costs roughly 1–5 s of overhead before any real work.
 
