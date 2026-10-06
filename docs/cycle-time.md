@@ -19,6 +19,9 @@
 | Publish (push, register, merge to dev2-sfp) | `agentia cicd work publish --json` | 25 s *measured* (+ ~60 s async SFDX Commit job) |
 | `work submit --done` | — | fails in preflight (404), see decisions.md |
 | Promote + deploy Dev2 → INT (5 components) | `agentia cicd promotion run <id> --operation merge_and_deploy --json` (waits) | **169 s** *measured* (merge job ~53 s, deploy job ~94 s) |
+| Create + set + commit + publish (1 component, US-0000026) | `work create`, `work set`, `git commit`, `work publish` | 3 s + 5 s + 0 s + 13 s *measured*; async SFDX Commit job 20 s |
+| Promote + deploy Dev2 → INT (1 component, P00002) | `promotion run … merge_and_deploy` | **135 s** *measured* (merge 37 s, deploy 67 s) |
+| Baseline CRT run (1 UI test, green) | `testing test run <job> -p <proj> --wait-for-result --save-artifacts … --xunit … --json` | **50 s** *measured* (40–60 s across 6 runs) |
 
 So every `agentia` spawn costs roughly 1–5 s of overhead before any real work.
 
