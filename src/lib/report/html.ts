@@ -103,7 +103,7 @@ export function renderHtml(model: ReportModel, comparison?: Comparison): string 
   const headline =
     model.percent === undefined
       ? 'No mutant could be scored in this run.'
-      : `Your tests caught <strong>${s.killed} of ${s.killed + s.survived}</strong> configuration breakages.`
+      : `${comparison ? 'After healing, your tests catch' : 'Your tests caught'} <strong>${s.killed} of ${s.killed + s.survived}</strong> configuration breakages.`
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -189,7 +189,7 @@ tr:last-child td{border-bottom:0}.num{text-align:right;font-variant-numeric:tabu
 
   ${
     model.survivors.length
-      ? `<section><h2>Blind spots: breakages your tests missed (${model.survivors.length})</h2>${model.survivors.map(survivorCard).join('\n')}</section>`
+      ? `<section><h2>${comparison ? 'Blind spots found, and what healing fixed' : 'Blind spots: breakages your tests missed'} (${model.survivors.length})</h2>${model.survivors.map(survivorCard).join('\n')}</section>`
       : ''
   }
 

@@ -1,0 +1,16 @@
+{
+  "args": ["ai", "agent", "ask"],
+  "exitCode": 0,
+  "stdout": {
+    "status": 0,
+    "result": {
+      "agent": "test",
+      "completed": false,
+      "content": "\n\n```robot\n*** Test Cases ***\nCreate opportunity with an excessive discount is rejected\n    [Documentation]    A 45% discount violates the Discount_Max validation rule and must be\n    ...                rejected with the error \"Discount cannot exceed 40%\", and the record\n    ...                must not be saved.\n    [Tags]             discount    validation\n    Login\n    LaunchApp          Sales\n    ClickText          Opportunities\n    ClickText          New\n    UseModal           On\n    TypeText           *Opportunity Name    Mutant Demo Excessive Discount\n    PickList           *Stage               Prospecting\n    TypeText           *Close Date          12/31/2030\n    TypeText           Discount Percent     45\n    ClickText          Save                 partial_match=False\n    VerifyText          Discount cannot exceed 40%\n    ClickText          Cancel\n    UseModal           Off\n    VerifyNoText        Mutant Demo Excessive Discount\n```",
+      "warnings": ["AI stream ended before stream_complete. The response may be incomplete."],
+      "followups": [],
+      "links": [],
+      "statuses": []
+    }
+  }
+}

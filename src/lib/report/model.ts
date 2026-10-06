@@ -67,8 +67,12 @@ function group(mutants: RunResults['mutants'], keyOf: (m: MutantResult) => strin
     .sort((a, b) => (a.score ?? 2) - (b.score ?? 2) || a.group.localeCompare(b.group))
 }
 
+/** A survivor that a later run showed is now caught (after `mutant heal`) counts as caught. */
+const effective = (m: RunResults['mutants'][number]) =>
+  m.outcome === 'survived' && m.healedBy?.length ? {...m, outcome: 'killed' as const} : m
+
 export function buildReportModel(results: RunResults): ReportModel {
-  const score = computeScore(results.mutants)
+  const score = computeScore(results.mutants.map(effective))
   const is = (o: Outcome) => (m: MutantResult) => m.outcome === o
   const started = Date.parse(results.createdAt)
   const finished = results.finishedAt ? Date.parse(results.finishedAt) : undefined
@@ -85,9 +89,15 @@ export function buildReportModel(results: RunResults): ReportModel {
     flakyTests: results.baseline?.flaky ?? [],
     verified: results.verify?.ok,
     failure: results.failure,
-    byType: group(results.mutants, (m) => typeLabel(m.component.type)),
-    byComponent: group(results.mutants, (m) => `${typeLabel(m.component.type)} · ${m.component.apiName}`),
-    survivors: results.mutants.filter(is('survived')),
+    byType: group(results.mutants.map(effective), (m) => typeLabel(m.component.type)),
+    byComponent: group(
+      results.mutants.map(effective),
+      (m) => `${typeLabel(m.component.type)} · ${m.component.apiName}`,
+    ),
+    // Healed survivors keep their card (with a "now caught by" badge), listed after open blind spots.
+    survivors: results.mutants
+      .filter(is('survived'))
+      .sort((x, y) => Number(Boolean(x.healedBy?.length)) - Number(Boolean(y.healedBy?.length))),
     killed: results.mutants.filter(is('killed')),
     other: results.mutants.filter((m) => m.outcome !== 'killed' && m.outcome !== 'survived'),
     mutants: results.mutants,

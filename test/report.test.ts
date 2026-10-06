@@ -14,9 +14,9 @@ const results = JSON.parse(
 const model = buildReportModel(results)
 
 describe('buildReportModel', () => {
-  it('scores killed / (killed + survived)', () => {
-    expect(model.score).toEqual({killed: 3, survived: 4, invalid: 1, timeout: 0, error: 0, score: 3 / 7})
-    expect(model.percent).toBe(43)
+  it('scores killed / (killed + survived), counting a healed survivor as caught', () => {
+    expect(model.score).toEqual({killed: 4, survived: 3, invalid: 1, timeout: 0, error: 0, score: 4 / 7})
+    expect(model.percent).toBe(57)
     expect(model.durationSeconds).toBe(41 * 60)
   })
 
@@ -24,9 +24,9 @@ describe('buildReportModel', () => {
     expect(model.byType.map((g) => [g.group, g.killed, g.survived, g.total])).toEqual([
       ['Field', 0, 1, 1],
       ['Flow', 0, 2, 3],
-      ['Validation Rule', 1, 1, 2],
       ['Page Layout', 1, 0, 1],
       ['Permission Set', 1, 0, 1],
+      ['Validation Rule', 2, 0, 2],
     ])
   })
 
@@ -54,8 +54,8 @@ describe('renderHtml', () => {
   })
 
   it('shows the score, the counts and the verified lab', () => {
-    expect(html).toContain('>43%<')
-    expect(html).toContain('Your tests caught <strong>3 of 7</strong> configuration breakages.')
+    expect(html).toContain('>57%<')
+    expect(html).toContain('Your tests caught <strong>4 of 7</strong> configuration breakages.')
     expect(html).toContain('MutationLab was reverted and verified identical to the baseline')
   })
 
@@ -96,15 +96,15 @@ describe('renderHtml', () => {
 describe('text renderers', () => {
   it('renders Markdown with a diff block per survivor', () => {
     const md = renderMarkdown(model)
-    expect(md).toMatch(/^# Mutation test report: 43% of configuration breakages caught/)
+    expect(md).toMatch(/^# Mutation test report: 57% of configuration breakages caught/)
     expect(md.match(/```diff/g)).toHaveLength(4)
     expect(md).toContain('| Flow | 0 | 2 | 1 | 0% |')
   })
 
   it('renders a terminal summary', () => {
     const text = stripVTControlCharacters(renderTerminal(model))
-    expect(text).toContain('Mutation score 43%')
-    expect(text).toContain('✔ 3 caught')
-    expect(text).toContain('✘ 4 blind spot(s)')
+    expect(text).toContain('Mutation score 57%')
+    expect(text).toContain('✔ 4 caught')
+    expect(text).toContain('✘ 3 blind spot(s)')
   })
 })

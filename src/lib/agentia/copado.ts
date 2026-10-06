@@ -154,6 +154,20 @@ const Project = z.looseObject({
 })
 export type Project = z.infer<typeof Project>
 
+const AiAnswer = z.looseObject({
+  content: z.string().nullish(),
+  completed: z.boolean().nullish(),
+  dialogueId: z.string().nullish(),
+  warnings: z.array(z.string()).nullish(),
+})
+export type AiAnswer = z.infer<typeof AiAnswer>
+
+const CrtFiles = z.array(z.looseObject({path: z.string(), size: z.number().nullish()}))
+const CrtDownload = z.looseObject({
+  files: z.array(z.looseObject({path: z.string(), value: z.string().nullish()})),
+})
+const CrtUpload = z.looseObject({operations: z.unknown().optional(), response: z.unknown().optional()})
+
 const Repository = z.looseObject({name: z.string().nullish(), uri: z.string().nullish()})
 
 const EnvAuthStatus = z.looseObject({validated: z.boolean().nullish()})
@@ -381,5 +395,77 @@ export class Copado {
       CrtTestRun,
       (timeoutMinutes * 60 + 120) * 1000,
     )
+  }
+
+  // ---- Healing ----
+
+  /** Single-turn Copado AI prompt, buffered (no streaming) so the reply can be parsed. */
+  async aiAsk(input: {
+    prompt: string
+    agent?: string
+    workspace?: string
+    timeoutSeconds?: number
+  }): Promise<AiAnswer> {
+    const timeout = input.timeoutSeconds ?? 240
+    const args = [
+      'ai',
+      'agent',
+      'ask',
+      '--agent',
+      input.agent ?? 'test',
+      '--no-stream',
+      '--no-credential-sync',
+      '--timeout',
+      String(timeout),
+      '-p',
+      input.prompt,
+    ]
+    if (input.workspace) args.push('--workspace', input.workspace)
+    return this.run(args, AiAnswer, (timeout + 60) * 1000)
+  }
+
+  async crtJobFiles(projectId: number, jobId: number) {
+    return this.run(['testing', 'job', 'files', String(jobId), '-p', String(projectId)], CrtFiles)
+  }
+
+  /** Downloads CRT job files into an explicit directory and returns their contents. */
+  async crtDownload(projectId: number, jobId: number, files: string[], outputDir: string) {
+    const args = [
+      'testing',
+      'job',
+      'download',
+      String(jobId),
+      '-p',
+      String(projectId),
+      '--output-dir',
+      outputDir,
+    ]
+    for (const f of files) args.push('-f', f)
+    return (await this.run(args, CrtDownload)).files
+  }
+
+  /** Replaces one CRT job file with a local file (local:remote), recorded with a commit message. */
+  async crtReplace(
+    projectId: number,
+    jobId: number,
+    local: string,
+    remote: string,
+    message: string,
+    dryRun = false,
+  ) {
+    const args = [
+      'testing',
+      'job',
+      'upload',
+      String(jobId),
+      '-p',
+      String(projectId),
+      '--replace',
+      `${local}:${remote}`,
+      '--message',
+      message,
+    ]
+    if (dryRun) args.push('--dry-run')
+    return this.run(args, CrtUpload)
   }
 }
