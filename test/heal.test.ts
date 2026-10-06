@@ -266,6 +266,17 @@ describe('compareRuns', () => {
     expect(r.carriedOver).toHaveLength(6)
   })
 
+  it('credits the test heal wrote for a mutant when several tests caught it', () => {
+    const b: RunResults = {
+      ...after,
+      mutants: [{...vr, outcome: 'killed', killedBy: [{name: 'Some other test'}, {name: 'Written for VR'}]}],
+    }
+    expect(compareRuns(before, b).comparison.newlyCaught[0]!.by).toBe('Some other test')
+    expect(compareRuns(before, b, {[vr.id]: ['Written for VR']}).comparison.newlyCaught[0]!.by).toBe(
+      'Written for VR',
+    )
+  })
+
   it('annotates newly caught survivors for the report', () => {
     const r = compareRuns(before, after)
     const healed = r.after.mutants.find((m) => m.id === vr.id)!

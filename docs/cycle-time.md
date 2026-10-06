@@ -81,3 +81,13 @@ run_total(N) ≈ baseline 50 s + N × per_mutant + final revert 210 s + verify
 | **Wall clock (excluding the earlier promotion-ID retry)** | **≈ 24 min** |
 
 Deploys inside a run were slower than the earlier single-component promotions (235–239 s vs 135–169 s). `mutant plan` learns from each run's `results.json`, so estimates now use the observed averages.
+
+## Heal + survivors-only re-run (r-20261006-133159)
+
+| Step | Duration |
+|---|---|
+| `heal`: 2 Copado AI proposals (Test agent) | ≈ 4.5 min |
+| `heal --apply` (CRT upload) | ≈ 10 s |
+| Baseline with 3 tests | ≈ 2 min |
+| Prepare 3 stories | ≈ 3 min |
+| 2 × (deploy + test, 3 tests) + final revert + verify | ≈ 14 min |

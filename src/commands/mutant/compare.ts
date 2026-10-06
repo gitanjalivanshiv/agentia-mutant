@@ -5,6 +5,7 @@ import chalk from 'chalk'
 
 import {MutantCommand} from '../../lib/base-command.js'
 import {findProjectRoot} from '../../lib/config.js'
+import {loadHealState} from '../../lib/heal/heal.js'
 import {compareRuns, type CompareResult} from '../../lib/report/compare.js'
 import {renderHtml} from '../../lib/report/html.js'
 import {buildReportModel, loadResults} from '../../lib/report/model.js'
@@ -34,7 +35,9 @@ export default class MutantCompare extends MutantCommand {
     }
     const a = new RunStore(root, args.before)
     const b = new RunStore(root, args.after)
-    const result = compareRuns(loadResults(a.dir), loadResults(b.dir))
+    const heal = loadHealState(a.dir)
+    const healedTests = Object.fromEntries((heal?.proposals ?? []).map((p) => [p.mutantId, p.testNames]))
+    const result = compareRuns(loadResults(a.dir), loadResults(b.dir), healedTests)
     const reportFile = path.resolve(flags.output ?? b.path('compare.html'))
     fs.writeFileSync(reportFile, renderHtml(buildReportModel(result.after), result.comparison))
 

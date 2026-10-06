@@ -14,7 +14,12 @@ export interface CompareResult {
  * Before/after for the demo finale. Run B usually re-runs only A's survivors (after healing), so a
  * mutant B didn't run keeps A's outcome: adding tests to a suite cannot un-catch a breakage.
  */
-export function compareRuns(a: RunResults, b: RunResults): CompareResult {
+export function compareRuns(
+  a: RunResults,
+  b: RunResults,
+  /** mutantId → tests `mutant heal` wrote for it; credited first when they are among the killers. */
+  healedTests: Record<string, string[]> = {},
+): CompareResult {
   const inB = new Map(b.mutants.map((m) => [m.id, m]))
   const carriedOver: string[] = []
   const newlyCaught: Comparison['newlyCaught'] = []
@@ -25,7 +30,8 @@ export function compareRuns(a: RunResults, b: RunResults): CompareResult {
       return m
     }
     if (m.outcome === 'survived' && later.outcome === 'killed') {
-      const by = later.killedBy?.[0]?.name
+      const killers = (later.killedBy ?? []).map((k) => k.name)
+      const by = killers.find((k) => healedTests[m.id]?.includes(k)) ?? killers[0]
       newlyCaught.push({id: m.id, description: m.description, ...(by ? {by} : {})})
       return {...m, healedBy: by ? [{name: by}] : [{name: 'a new test'}]}
     }
@@ -46,6 +52,7 @@ export function compareRuns(a: RunResults, b: RunResults): CompareResult {
         survived: afterScore.survived,
       },
       newlyCaught,
+      ...(b.baseline ? {afterTests: b.baseline.passing.length} : {}),
     },
     after: {...a, mutants},
     carriedOver,

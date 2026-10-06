@@ -12,6 +12,8 @@ export interface Comparison {
   after: {runId: string; percent?: number; killed: number; survived: number}
   /** Mutants that survived before and are killed after. */
   newlyCaught: {id: string; description: string; by?: string}[]
+  /** Size of the suite in the after run (it grows when heal adds tests). */
+  afterTests?: number
 }
 
 const esc = (s: unknown) =>
@@ -95,6 +97,7 @@ function comparisonBlock(c: Comparison): string {
 export function renderHtml(model: ReportModel, comparison?: Comparison): string {
   const s = model.score
   const unscored = s.invalid + s.timeout + s.error
+  const tests = comparison?.afterTests ?? model.baselineTests
   const when = new Date(model.createdAt).toLocaleString('en-GB', {
     dateStyle: 'medium',
     timeStyle: 'short',
@@ -165,7 +168,7 @@ tr:last-child td{border-bottom:0}.num{text-align:right;font-variant-numeric:tabu
 <div class="wrap">
   <div class="top">
     <div class="brand">Agentia <span>Mutant</span></div>
-    <div class="meta">Run ${esc(model.runId)} · ${esc(when)} UTC${model.durationSeconds ? ` · ${formatDuration(model.durationSeconds)}` : ''} · lab ${esc(model.lab.environment)} ← ${esc(model.lab.source)}</div>
+    <div class="meta">${comparison ? `Before ${esc(comparison.before.runId)} → after ${esc(comparison.after.runId)}` : `Run ${esc(model.runId)} · ${esc(when)} UTC${model.durationSeconds ? ` · ${formatDuration(model.durationSeconds)}` : ''}`} · lab ${esc(model.lab.environment)} ← ${esc(model.lab.source)}</div>
   </div>
 
   ${comparison ? comparisonBlock(comparison) : ''}
@@ -174,7 +177,7 @@ tr:last-child td{border-bottom:0}.num{text-align:right;font-variant-numeric:tabu
     ${dial(model.percent, `Mutation score ${model.percent ?? 'not available'}`)}
     <div>
       <h1>${headline}</h1>
-      <p class="lede">Mutant deliberately broke your Salesforce configuration in ${esc(model.lab.environment)}, one change at a time, deployed each through Copado and ran your Robotic Testing suite (${model.baselineTests} test${model.baselineTests === 1 ? '' : 's'}). A breakage the tests noticed is <em>caught</em>; one they missed is a <em>blind spot</em>.</p>
+      <p class="lede">Mutant deliberately broke your Salesforce configuration in ${esc(model.lab.environment)}, one change at a time, deployed each through Copado and ran your Robotic Testing suite (${tests} test${tests === 1 ? '' : 's'}). A breakage the tests noticed is <em>caught</em>; one they missed is a <em>blind spot</em>.</p>
       <div class="tiles">
         <div class="tile k"><b>${s.killed}</b><span>Caught</span></div>
         <div class="tile s"><b>${s.survived}</b><span>Blind spots</span></div>
