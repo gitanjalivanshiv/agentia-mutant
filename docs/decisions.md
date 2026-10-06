@@ -114,3 +114,8 @@ Each entry: what the brief assumed, what the real CLI does, what we do.
 - `agentia mutant reset` (used by `examples/demo/seed.sh` with `--force` and `reset.sh`): drift check; if needed, ONE story deploying the whole baseline through Copado (a `reset` run kind on the same runner: promotion matching, safety checks, verify, resume); with `--suite`, restores the CRT suite file. Reset runs are named `reset-…` and are ignored by "latest run" lookups.
 - The CICD gateway is intermittently flaky (alternating 500 and "Unauthorized" within seconds, auth unchanged). The Copado facade now retries **read-only** calls (get/list/status/files/download) up to 3 times with backoff; writes are never retried automatically.
 - Drift comparison is one shared module (`src/lib/drift.ts`) used by doctor, the runner's verify step and reset.
+
+## 2026-10-06 — Phase 8 (packaging)
+- Offline quickstart (`examples/quickstart/run.sh`): Copado calls replayed from `fixtures/doctor` (`MUTANT_FAKE`), reports from two real runs copied with the scrubber; the flow mutant of the first run was re-classified with the current rules from its recorded deploy evidence (`invalid`). Fresh clone → `npm ci` → build → quickstart: 8 s with a warm npm cache. Runs in CI.
+- `bin/run.js` runs the commands standalone (no Agentia CLI needed) for the quickstart; inside Agentia they are `agentia mutant …`.
+- A full tracked-file leak scan found real identifiers used as scrubber test inputs; replaced with invented values. **Earlier commits still contain them**: rewrite or squash history before the repo is made public.
