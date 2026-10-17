@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 
 import {AgentiaError, type AuthCredential, type Copado} from './agentia/index.js'
-import {labNameProblem, type MutantConfig, resolveFromRoot} from './config.js'
+import {labNameProblem, type MutantConfig, resolveFromRoot, tildify} from './config.js'
 import {isGitRepo, remoteUrl, repoSlug, trackedChanges} from './git.js'
 import {type LabContext, resolveLab} from './lab.js'
 import {checkDrift} from './drift.js'
@@ -255,7 +255,7 @@ export async function runDoctor(options: DoctorOptions): Promise<DoctorReport> {
       id: 'lab-repo',
       title: 'Lab repository clone',
       status: 'fail',
-      detail: `${repoPath} is not a git clone`,
+      detail: `${tildify(repoPath)} is not a git clone`,
       fix: "Clone the pipeline's Git repository there.",
     })
   } else {
@@ -281,7 +281,7 @@ export async function runDoctor(options: DoctorOptions): Promise<DoctorReport> {
             detail: problems.join('; '),
             fix: 'Commit or discard changes in the lab clone and make sure it clones the pipeline repo.',
           }
-        : {id: 'lab-repo', title: 'Lab repository clone', status: 'pass', detail: repoPath},
+        : {id: 'lab-repo', title: 'Lab repository clone', status: 'pass', detail: tildify(repoPath)},
     )
   }
 

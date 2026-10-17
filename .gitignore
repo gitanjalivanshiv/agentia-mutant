@@ -12,3 +12,6 @@ coverage/
 .agents/
 .claude/skills/mutant/
 .mutant/plans/
+
+# Personal working files (video kit, notes): never published
+local/

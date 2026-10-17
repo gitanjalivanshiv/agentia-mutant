@@ -72,6 +72,12 @@ describe('config', () => {
     expect(labNameProblem(sampleConfig({labEnvironment: 'UAT', iKnowThisIsALab: true}))).toBeUndefined()
   })
 
+  it('tildifies home-folder paths for display', async () => {
+    const {tildify} = await import('../src/lib/config.js')
+    expect(tildify(path.join(os.homedir(), 'hackathon', 'lab'))).toBe(path.join('~', 'hackathon', 'lab'))
+    expect(tildify('/opt/lab')).toBe('/opt/lab')
+  })
+
   it('accepts a normal lab name', () => {
     expect(labNameProblem(sampleConfig({labEnvironment: 'INT-SFP'}))).toBeUndefined()
   })

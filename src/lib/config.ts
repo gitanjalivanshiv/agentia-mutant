@@ -48,6 +48,12 @@ export function expandHome(p: string): string {
   return p === '~' || p.startsWith('~/') ? path.join(os.homedir(), p.slice(1)) : p
 }
 
+/** `/Users/me/x` → `~/x`, so paths shown on screen never reveal the account name. */
+export function tildify(p: string): string {
+  const home = os.homedir()
+  return p === home ? '~' : p.startsWith(home + path.sep) ? '~' + p.slice(home.length) : p
+}
+
 /** Walks up from `start` to the directory that contains `.mutant/config.json`. */
 export function findProjectRoot(start: string = process.cwd()): string | undefined {
   let dir = path.resolve(start)

@@ -14,6 +14,7 @@ import {
   proposeHeals,
   recordHealPlan,
 } from '../../lib/heal/heal.js'
+import {acquireLock, readLock, releaseLock} from '../../lib/lock.js'
 import {savePlan} from '../../lib/plan-file.js'
 import {buildPlan} from '../../lib/planner.js'
 import {loadResults} from '../../lib/report/model.js'
@@ -103,7 +104,18 @@ With --apply (after review): merges the reviewed tests into the current suite, s
       this.log('Cancelled. Nothing was uploaded.')
       return {...plan.state, nextSteps: []}
     }
-    const state = await applyHeals(copado, config, store.dir, plan)
+    const lock = readLock(config.lockFile)
+    if (lock.held)
+      this.error(`The org is busy (${lock.path}):\n  ${lock.content}\nWait for it to finish, then retry.`, {
+        exit: 1,
+      })
+    acquireLock(config.lockFile, `heal --apply ${runId}`)
+    let state: HealState
+    try {
+      state = await applyHeals(copado, config, store.dir, plan)
+    } finally {
+      releaseLock(config.lockFile)
+    }
     this.log(chalk.green('✔ ') + `Uploaded: ${state.applied!.testNames.map((t) => `“${t}”`).join(', ')}`)
 
     // A plan that re-runs only the survivors that now have a test.
