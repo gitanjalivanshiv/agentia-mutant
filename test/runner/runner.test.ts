@@ -497,6 +497,16 @@ describe('Runner reset run', () => {
   })
 })
 
+describe('RunStore.list', () => {
+  it('lists mutation runs oldest first', () => {
+    for (const id of ['r-20261006-120000', 'r-20261006-100000', 'reset-20261006-110000']) {
+      fs.mkdirSync(path.join(root, '.mutant/runs', id), {recursive: true})
+      fs.writeFileSync(path.join(root, '.mutant/runs', id, 'results.json'), '{}')
+    }
+    expect(RunStore.list(root)).toEqual(['r-20261006-100000', 'r-20261006-120000'])
+  })
+})
+
 describe('RunStore.latest', () => {
   it('ignores reset runs', () => {
     for (const id of ['r-20261006-100000', 'reset-20261007-100000']) {

@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import path from 'node:path'
 import readline from 'node:readline/promises'
 import {Args, Flags} from '@oclif/core'
@@ -130,10 +131,9 @@ With --apply (after review): merges the reviewed tests into the current suite, s
     })
     const planFile = savePlan(root, reRun, path.join('.mutant', 'plans', `heal-${runId}.json`))
     recordHealPlan(store.dir, planFile)
-    const next = [
-      `agentia mutant run --plan ${rel(planFile)}`,
-      `agentia mutant compare ${runId} <new-run-id>`,
-    ]
+    // Also the "latest" plan, so the next step is simply `run --plan .mutant/plans/latest.json`.
+    fs.copyFileSync(planFile, path.join(root, '.mutant', 'plans', 'latest.json'))
+    const next = ['agentia mutant run --plan .mutant/plans/latest.json', 'agentia mutant compare']
     this.log(
       `\nRe-run only the healed survivors, then compare:\n  ${chalk.bold(next[0])}\n  ${chalk.bold(next[1])}`,
     )

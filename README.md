@@ -48,8 +48,8 @@ agentia mutant run --plan .mutant/plans/latest.json
 agentia mutant report
 agentia mutant heal        # Copado AI proposes tests → review them
 agentia mutant heal --apply
-agentia mutant run --plan .mutant/plans/heal-<run-id>.json
-agentia mutant compare <run-id> <new-run-id>
+agentia mutant run --plan .mutant/plans/latest.json
+agentia mutant compare
 ```
 
 During `run`, Mutant prepares one Copado user story per deploy and asks you to create their promotions in Pipeline Manager **in one sitting**; it then runs everything else unattended. See [examples/demo](examples/demo/README.md) for the sample "Discount Approval" app, `seed.sh` and `reset.sh`.

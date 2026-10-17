@@ -15,11 +15,14 @@ export default class MutantCompare extends MutantCommand {
   static override summary = 'Before/after mutation score of two runs (e.g. before and after `mutant heal`)'
   static override description = `Run B usually re-runs only run A's survivors after healing; mutants B did not run keep A's outcome (adding tests cannot un-catch a breakage). Writes a before/after HTML report into run B's directory.`
 
-  static override examples = ['<%= config.bin %> <%= command.id %> r-20261006-114841 r-20261007-090000']
+  static override examples = [
+    '<%= config.bin %> <%= command.id %>',
+    '<%= config.bin %> <%= command.id %> r-20261006-114841 r-20261007-090000',
+  ]
 
   static override args = {
-    before: Args.string({required: true, description: 'Run ID before healing'}),
-    after: Args.string({required: true, description: 'Run ID after healing'}),
+    before: Args.string({description: 'Run ID before healing (default: the second most recent run)'}),
+    after: Args.string({description: 'Run ID after healing (default: the most recent run)'}),
   }
 
   static override flags = {
@@ -30,11 +33,15 @@ export default class MutantCompare extends MutantCommand {
     const {args, flags} = await this.parse(MutantCompare)
     const root = findProjectRoot()
     if (!root) this.error('No .mutant/config.json found. Run this from the project folder.', {exit: 2})
-    for (const id of [args.before, args.after]) {
+    const runs = RunStore.list(root)
+    const before = args.before ?? (args.after ? undefined : runs.at(-2))
+    const after = args.after ?? runs.at(-1)
+    if (!before || !after) this.error('Need two runs to compare: pass <before> <after>.', {exit: 2})
+    for (const id of [before, after]) {
       if (!RunStore.exists(root, id)) this.error(`No run "${id}" in .mutant/runs/.`, {exit: 2})
     }
-    const a = new RunStore(root, args.before)
-    const b = new RunStore(root, args.after)
+    const a = new RunStore(root, before)
+    const b = new RunStore(root, after)
     const heal = loadHealState(a.dir)
     const healedTests = Object.fromEntries((heal?.proposals ?? []).map((p) => [p.mutantId, p.testNames]))
     const result = compareRuns(loadResults(a.dir), loadResults(b.dir), healedTests)

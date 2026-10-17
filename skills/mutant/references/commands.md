@@ -11,7 +11,7 @@ All commands accept `--json` (output: the command's result object, no envelope) 
 | `agentia mutant report [run-id]` | no | Score, blind spots, per-type breakdown; writes HTML/Markdown/JSON |
 | `agentia mutant heal [run-id]` | no | Ask Copado AI for tests that catch the survivors (proposals only) |
 | `agentia mutant heal [run-id] --apply` | **yes** (CRT job) | Upload the reviewed tests; writes a survivors-only re-run plan |
-| `agentia mutant compare <a> <b>` | no | Before/after score |
+| `agentia mutant compare [<a> <b>]` | no | Before/after score (default: the two most recent runs) |
 | `agentia mutant reset` | **yes** (lab + CRT job) | Restore the lab metadata and the test suite to the demo baseline |
 
 ## doctor
@@ -43,7 +43,7 @@ Check IDs: `node`, `config`, `lab-name`, `cicd-auth`, `pipeline`, `lab-auth`, `c
 
 `agentia mutant heal [run-id] [--only id,id] [--force]` → `{proposals: [{mutantId, file, testNames, status: proposed|failed, error?}], nextSteps}`. Uses the Copado AI **Test** agent, grounded in the live CRT suite. Proposals: `.mutant/runs/<id>/heal/*.robot` (editable) and `suite.diff`.
 
-`agentia mutant heal [run-id] --apply --yes` → uploads the reviewed tests (merged into the current suite) and writes `.mutant/plans/heal-<run-id>.json`. `--force` re-applies edited proposals if the suite is unchanged since Mutant uploaded it.
+`agentia mutant heal [run-id] --apply --yes` → uploads the reviewed tests (merged into the current suite) and writes `.mutant/plans/heal-<run-id>.json` (also copied to `.mutant/plans/latest.json`). `--force` re-applies edited proposals if the suite is unchanged since Mutant uploaded it.
 
 ## compare
 

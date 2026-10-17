@@ -50,8 +50,8 @@ Show the user each proposal (`.mutant/runs/<id>/heal/*.robot`) and `suite.diff`.
 
 ```sh
 agentia mutant heal --apply --yes --json   # uploads, writes the survivors-only plan
-agentia mutant run --plan .mutant/plans/heal-<runId>.json --yes --json
-agentia mutant compare <runId> <newRunId>
+agentia mutant run --plan .mutant/plans/latest.json --yes --json
+agentia mutant compare
 ```
 
 The re-run's baseline must pass with the new tests on the clean lab; a broken proposal stops the run before any deploy, so fix the proposal and use `heal --apply --force`.

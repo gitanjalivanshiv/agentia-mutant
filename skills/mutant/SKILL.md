@@ -31,7 +31,7 @@ Run every command from the project folder that contains `.mutant/` (Copado auth 
 - Lead with the score and the counts, then each **survivor** in plain language: what was broken (`description`), why the suite stayed green, and what a good test should check (`shouldCheck`).
 - `invalid` mutants did not deploy and `error`/`timeout` ones could not be judged; none count toward the score. Say so instead of hiding them.
 - Offer `agentia mutant heal` to have Copado AI propose tests for the survivors. Proposals land in `.mutant/runs/<id>/heal/` for **human review**.
-- **Never run `heal --apply` until the user has reviewed and approved the proposed tests.** Then re-run the survivors and finish with `agentia mutant compare <before> <after>`.
+- **Never run `heal --apply` until the user has reviewed and approved the proposed tests.** Then re-run the survivors (`agentia mutant run --plan .mutant/plans/latest.json`) and finish with `agentia mutant compare`.
 
 ## References
 

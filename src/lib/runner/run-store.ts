@@ -26,18 +26,19 @@ export class RunStore {
     return fs.existsSync(path.join(dir, 'state.json')) || fs.existsSync(path.join(dir, 'results.json'))
   }
 
+  /** Mutation run IDs, oldest first. Reset runs (`reset-…`) have no results worth reporting. */
+  static list(root: string): string[] {
+    const dir = runsDir(root)
+    if (!fs.existsSync(dir)) return []
+    return fs
+      .readdirSync(dir)
+      .filter((d) => d.startsWith('r-') && RunStore.exists(root, d))
+      .sort()
+  }
+
   /** Most recent run ID, if any. */
   static latest(root: string): string | undefined {
-    const dir = runsDir(root)
-    if (!fs.existsSync(dir)) return undefined
-    return (
-      fs
-        .readdirSync(dir)
-        // Mutation runs only (`r-…`); reset runs (`reset-…`) have no results worth reporting.
-        .filter((d) => d.startsWith('r-') && RunStore.exists(root, d))
-        .sort()
-        .pop()
-    )
+    return RunStore.list(root).pop()
   }
 
   path(...parts: string[]): string {
