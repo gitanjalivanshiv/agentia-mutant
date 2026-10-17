@@ -47,7 +47,7 @@ Check IDs: `node`, `config`, `lab-name`, `cicd-auth`, `pipeline`, `lab-auth`, `c
 
 ## compare
 
-`agentia mutant compare <before> <after>` → `{comparison: {before: {percent, killed, survived}, after: {…}, newlyCaught: [{description, by}]}, reportFile}`. Mutants the after-run did not re-run keep their earlier outcome.
+`agentia mutant compare [<before> <after>]` (default: the two most recent runs) → `{comparison: {before: {percent, killed, survived}, after: {…}, newlyCaught: [{description, by}]}, reportFile}`. Mutants the after-run did not re-run keep their earlier outcome.
 
 ## reset
 
