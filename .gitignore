@@ -4,6 +4,7 @@
 .env*
 .mutant/config.json
 .mutant/runs/
+.mutant/runs-archive/
 .sf/
 dist/
 node_modules/
@@ -15,3 +16,4 @@ coverage/
 
 # Personal working files (video kit, notes): never published
 local/
+.DS_Store

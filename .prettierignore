@@ -7,3 +7,4 @@ fixtures/
 package-lock.json
 CLAUDE.md
 *.md
+.mutant/

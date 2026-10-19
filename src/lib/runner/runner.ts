@@ -11,7 +11,7 @@ import {
 
 export {isTransient} from '../agentia/index.js'
 import type {MutantConfig} from '../config.js'
-import {git, trackedChanges} from '../git.js'
+import {git, syncBranchWithRemote, trackedChanges} from '../git.js'
 import type {LabContext} from '../lab.js'
 import {checkDrift} from '../drift.js'
 import {listComponents} from '../metadata.js'
@@ -200,6 +200,21 @@ export class Runner {
     io.info(
       `Preparing ${this.state.units.length} Copado user stories from ${lab.source.name} (one per deploy)`,
     )
+    const sourceBranch = lab.connection.sourceBranch
+    if (sourceBranch) {
+      const sync = await syncBranchWithRemote(labRepo, sourceBranch, (subject) =>
+        / Mutant Lab /.test(subject),
+      )
+      if (sync.status === 'reset')
+        io.info(
+          `  Dropped ${sync.dropped.length} unpushed Mutant commit(s) from the local ${sourceBranch} branch (left by an interrupted push)`,
+        )
+      if (sync.status === 'foreign')
+        return this.failed(
+          `The local ${sourceBranch} branch in the lab clone has commits that are not on GitHub and not Mutant's:\n  ${sync.commits.join('\n  ')}\n` +
+            `Push or remove them (git -C ${labRepo} log origin/${sourceBranch}..${sourceBranch}), then retry. Nothing has been deployed.`,
+        )
+    }
     for (const unit of this.state.units) {
       if (!unit.story) {
         const item = await copado.workCreate({
