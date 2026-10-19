@@ -82,6 +82,13 @@ class SimCopado {
     return {git: {branch: `feature/${story}`}}
   }
 
+  excluded: string[] = []
+  async workExclude(id: string) {
+    this.calls.push(`exclude ${id}`)
+    this.excluded.push(id)
+    return {}
+  }
+
   async workSetNone() {
     this.current = undefined
     return {}
@@ -349,6 +356,28 @@ describe('Runner end to end (simulated lab)', () => {
     expect(state.mutants.map((m) => m.outcome)).toEqual(['survived', 'invalid', 'killed'])
     expect(state.score).toMatchObject({killed: 1, survived: 1, invalid: 1, score: 0.5})
     expect(labMatchesBaseline()).toBe(true)
+    // Only the failed mutant's story leaves the pipeline; the others were promoted normally.
+    expect(sim.excluded).toEqual([sim.stories[1]!.id])
+    expect(state.units[1]!.deploy).toMatchObject({ok: false, excludedFromPipeline: true})
+  })
+
+  it('only warns when a failed story cannot be taken out of the pipeline', async () => {
+    const {state, store} = newState()
+    const origCreate = sim.workCreate.bind(sim)
+    sim.workCreate = async (input) => {
+      const s = await origCreate(input)
+      if (sim.stories.length === 2) sim.failDeployOf.add(s.name)
+      return s
+    }
+    sim.workExclude = async () => {
+      throw new Error('gateway unavailable')
+    }
+    expect(await runner(state, store).run()).toBe('done')
+    expect(state.mutants.map((m) => m.outcome)).toEqual(['survived', 'invalid', 'killed'])
+    expect(
+      events.some((e) => e.startsWith(`warn Could not take ${sim.stories[1]!.name} out of the pipeline`)),
+    ).toBe(true)
+    expect(labMatchesBaseline()).toBe(true)
   })
 
   it('counts a deploy job that ran and failed (CLI error envelope) as invalid', async () => {
@@ -370,6 +399,7 @@ describe('Runner end to end (simulated lab)', () => {
       reason: expect.stringContaining('default outcome'),
     })
     expect(labMatchesBaseline()).toBe(true)
+    expect(sim.excluded).toEqual([sim.stories[1]!.id])
   })
 
   it('pauses when promotions are not created in time, and resumes later', async () => {

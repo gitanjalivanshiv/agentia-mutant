@@ -390,7 +390,31 @@ export class Runner {
         ...(timedOut ? {timedOut: true} : {}),
       }
     }
+    if (!unit.deploy.ok && unit.mutantId) await this.excludeFailedStory(unit)
     this.save()
+  }
+
+  /**
+   * A mutant whose deploy failed leaves its story waiting in Pipeline Manager, where someone could
+   * promote it by mistake. Take it out of the pipeline. Later units carry the full baseline, so
+   * nothing depends on it. Best effort: a failure here only warns.
+   */
+  private async excludeFailedStory(unit: DeployUnit) {
+    const {copado, io} = this.deps
+    if (!unit.story || !unit.deploy) return
+    try {
+      await copado.workExclude(unit.story.id)
+      unit.deploy.excludedFromPipeline = true
+      io.info(
+        `  ${unit.story.name} taken out of the pipeline (its deploy failed), so it can't be promoted by mistake`,
+      )
+    } catch (error) {
+      const message = error instanceof AgentiaError ? error.message : String(error)
+      io.warn(
+        `Could not take ${unit.story.name} out of the pipeline (${message}). ` +
+          `In Copado, set "Exclude from pipeline" on it so it is not promoted by mistake.`,
+      )
+    }
   }
 
   private async runTests(

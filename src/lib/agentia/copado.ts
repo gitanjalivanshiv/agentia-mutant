@@ -333,6 +333,11 @@ export class Copado {
     )
   }
 
+  /** Takes a story out of Pipeline Manager ("Exclude from pipeline"); nothing is deployed or deleted. */
+  async workExclude(storyId: string) {
+    return this.run(['cicd', 'work', 'update', storyId, '--excluded-from-cbm'], z.unknown())
+  }
+
   async workSet(story: string, labRepo: string) {
     return this.run(['cicd', 'work', 'set', story], WorkSet, undefined, labRepo)
   }

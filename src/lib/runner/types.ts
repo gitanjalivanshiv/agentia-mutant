@@ -52,6 +52,8 @@ export interface DeployUnit {
     message?: string
     jobIds: string[]
     timedOut?: boolean
+    /** A failed mutant's story was taken out of the pipeline, so nobody promotes it by mistake. */
+    excludedFromPipeline?: boolean
   }
 }
 

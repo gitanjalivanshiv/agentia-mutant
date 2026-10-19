@@ -79,6 +79,7 @@ Readiness rule for `mutant doctor`: CRT → `ready === true`; CICD → `set === 
 | `cicd work get [ID] --json` | read story (ID optional after `work set`) |
 | `cicd work create --title … [--project <id>] [--source-environment <id> \| --source-credential <id>] [--status] --json` | create lab story |
 | `cicd work update [ID] [--status] [--source-credential] … --json` | adjust story |
+| `cicd work update <ID> --excluded-from-cbm --json` ✅ | take a failed mutant's story out of Pipeline Manager ("Exclude from pipeline"); `result.excludedFromCbm: true`; undo with `--no-excluded-from-cbm` |
 | `cicd work set <ID\|name> [--base-branch] [--none] --json` | activate, checks out `feature/<story-name>`; writes `.agentia/config.user.json` (`lastWorkItemId`, `lastBaseBranch`, `lastDevOrgBranch`, …). `status:"warning"` ⇒ story misconfigured, stop |
 | `cicd work status [ID] [--metadata-list-only] --json` | story + related job executions |
 
