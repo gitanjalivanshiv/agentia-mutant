@@ -402,6 +402,65 @@ describe('Runner end to end (simulated lab)', () => {
     expect(sim.excluded).toEqual([sim.stories[1]!.id])
   })
 
+  it('retries a publish that GitHub rejects with a server error', async () => {
+    const {state, store} = newState()
+    const orig = sim.workPublish.bind(sim)
+    let failures = 0
+    sim.workPublish = async (repo: string, fullMetadata: string[]) => {
+      if (sim.stories.length === 2 && failures === 0) {
+        failures++
+        throw new Error(
+          'Command failed: git push origin dev2-sfp\nremote: Internal Server Error\n ! [remote rejected] dev2-sfp -> dev2-sfp (Internal Server Error)',
+        )
+      }
+      return orig(repo, fullMetadata)
+    }
+    expect(await runner(state, store).run()).toBe('done')
+    expect(failures).toBe(1)
+    expect(
+      events.some((e) => e.startsWith('warn Publishing US-0000101 failed') && e.includes('retrying')),
+    ).toBe(true)
+    expect(state.mutants.map((m) => m.outcome)).toEqual(['survived', 'killed', 'killed'])
+  })
+
+  it('stops in "prepare" when a publish keeps failing, and resume reuses the commit already made', async () => {
+    const {state, store} = newState()
+    const orig = sim.workPublish.bind(sim)
+    sim.workPublish = async (repo: string, fullMetadata: string[]) => {
+      if (sim.stories.length === 2) throw new Error('Command failed: git push\nremote: Internal Server Error')
+      return orig(repo, fullMetadata)
+    }
+    expect(await runner(state, store).run()).toBe('failed')
+    expect(state.phase).toBe('prepare')
+    expect(state.failure).toMatch(/Nothing has been deployed[\s\S]*--resume r-test/)
+    expect(sim.deployed).toHaveLength(0)
+    const head = await execa('git', ['log', '-1', '--format=%s'], {cwd: labRepo})
+    expect(head.stdout).toMatch(/^US-0000101 /)
+
+    // GitHub is back. Like `work set` on an existing local branch, keep the commit made before the failure.
+    sim.workPublish = orig
+    sim.workSet = async (story: string, repo: string) => {
+      sim.current = story
+      const exists = await execa('git', ['rev-parse', '--verify', '-q', `feature/${story}`], {
+        cwd: repo,
+        reject: false,
+      })
+      await execa(
+        'git',
+        exists.exitCode === 0
+          ? ['checkout', '-q', `feature/${story}`]
+          : ['checkout', '-q', '-B', `feature/${story}`, 'base'],
+        {cwd: repo},
+      )
+      return {git: {branch: `feature/${story}`}}
+    }
+    const resumed = store.load()
+    expect(await runner(resumed, store).run()).toBe('done')
+    expect(sim.stories).toHaveLength(4) // no story re-created
+    expect(resumed.mutants.map((m) => m.outcome)).toEqual(['survived', 'killed', 'killed'])
+    expect(labMatchesBaseline()).toBe(true)
+  })
+
   it('pauses when promotions are not created in time, and resumes later', async () => {
     sim.createPromotionsAfterPolls = 1_000
     const {state, store} = newState()

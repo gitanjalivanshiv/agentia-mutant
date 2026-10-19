@@ -127,9 +127,17 @@ Writes ONLY to the configured labEnvironment, holds the shared org lock while ru
             'The failed attempt never started a deploy, so the lab is untouched: retrying with the same stories.',
           ),
         )
+      } else if (state.phase === 'failed' && nothingDeployed) {
+        // Failed while preparing stories (e.g. a push the remote rejected): carry on from there.
+        delete state.failure
+        delete state.score
+        delete state.finishedAt
+        state.phase = 'prepare'
+        this.log(chalk.dim('The failed attempt never started a deploy, so the lab is untouched: continuing.'))
       } else if (state.phase === 'done' || state.phase === 'failed') {
         this.error(`Run ${runId} already finished (${state.phase}). Start a new run instead.`, {exit: 2})
       }
+      if (state.phase === 'prepare') delete state.failure
       this.log(chalk.bold(`Resuming ${runId}`) + chalk.dim(` from phase "${state.phase}"`))
     } else {
       this.log(

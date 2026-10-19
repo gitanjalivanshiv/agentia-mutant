@@ -53,10 +53,28 @@ export type RunOutcome = 'done' | 'failed' | 'awaiting-promotions'
 
 const sleepReal = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
 
+const PUBLISH_ATTEMPTS = 3
+
+/** A push the remote failed to accept for its own reasons (e.g. GitHub "Internal Server Error"), worth retrying. */
+export function isTransientPush(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error)
+  return (
+    isTransient(error) ||
+    /Internal Server Error|Bad Gateway|Service Unavailable|Gateway Time-?out|remote: .*\b50[0234]\b|RPC failed|early EOF|unable to access|Could not resolve host/i.test(
+      message,
+    )
+  )
+}
+
+const firstLine = (error: unknown) =>
+  (error instanceof Error ? error.message : String(error)).split('\n').find((l) => l.trim()) ??
+  'unknown error'
+
 export class Runner {
   private readonly sleep: (ms: number) => Promise<void>
   private readonly now: () => number
   private readonly pollMs: number
+  private readonly publishRetryMs: number
 
   constructor(
     private readonly state: RunState,
@@ -65,6 +83,7 @@ export class Runner {
     this.sleep = deps.sleep ?? sleepReal
     this.now = deps.now ?? Date.now
     this.pollMs = deps.pollMs ?? 15_000
+    this.publishRetryMs = Math.max(this.pollMs, 1) * 2
   }
 
   private save() {
@@ -97,7 +116,18 @@ export class Runner {
       if (!ok) return 'failed'
     }
     if (s.phase === 'prepare') {
-      const ok = await this.prepare()
+      let ok: boolean
+      try {
+        ok = await this.prepare()
+      } catch (error) {
+        // Stay in "prepare": nothing was deployed, and --resume picks up from the unit that broke.
+        const message = error instanceof Error ? error.message : String(error)
+        s.failure =
+          `Stopped while preparing the stories: ${message}\nNothing has been deployed. ` +
+          `Retry with: agentia mutant run --resume ${s.runId}`
+        this.save()
+        return 'failed'
+      }
       if (!ok) return 'failed'
     }
     if (s.phase === 'awaiting-promotions') {
@@ -190,6 +220,14 @@ export class Runner {
         // so any tracked change here is Mutant's own uncommitted work).
         if ((await trackedChanges(labRepo)).length) await git(labRepo, ['reset', '-q', '--hard', 'HEAD'])
         await copado.workSet(unit.story.name, labRepo)
+        const message = `${unit.story.name} ${unit.title}`
+        // An earlier attempt may have committed this unit and then failed to publish (e.g. GitHub
+        // returned a 500 on push). The story's branch already holds the commit: publish it as is.
+        const head = await git(labRepo, ['log', '-1', '--format=%s'])
+        if (head.ok && head.stdout.trim() === message) {
+          await this.publish(unit)
+          continue
+        }
         for (const [file, content] of Object.entries(unit.files)) {
           const target = path.join(labRepo, config.labPackageDirectory, file)
           fs.mkdirSync(path.dirname(target), {recursive: true})
@@ -209,15 +247,9 @@ export class Runner {
               : `${unit.story.name}: only ${stagedCount} of ${expected} files differ from the base branch, so Copado would not deploy them all.`,
           )
         }
-        const commit = await git(labRepo, ['commit', '-q', '-m', `${unit.story.name} ${unit.title}`])
+        const commit = await git(labRepo, ['commit', '-q', '-m', message])
         if (!commit.ok) return this.failed(`git commit failed in the lab clone for ${unit.story.name}.`)
-        const permsets = unit.components.filter((c) => c.startsWith('PermissionSet:'))
-        const published = await copado.workPublish(labRepo, permsets)
-        if (!published.push?.jobId)
-          return this.failed(`Publishing ${unit.story.name} returned no commit job.`)
-        unit.commitJobId = published.push.jobId
-        this.save()
-        io.info(`  ${unit.story.name}  ${unit.title}`)
+        if (!(await this.publish(unit))) return false
       }
     }
     // Commit jobs run asynchronously in Copado; wait for all of them together.
@@ -233,6 +265,29 @@ export class Runner {
     this.state.phase = 'awaiting-promotions'
     this.save()
     return true
+  }
+
+  /** `work publish` with a few retries: GitHub and the gateway sometimes answer a push with a 5xx. */
+  private async publish(unit: DeployUnit): Promise<boolean> {
+    const {copado, labRepo, io} = this.deps
+    const permsets = unit.components.filter((c) => c.startsWith('PermissionSet:'))
+    for (let attempt = 1; ; attempt++) {
+      try {
+        const published = await copado.workPublish(labRepo, permsets)
+        if (!published.push?.jobId)
+          return this.failed(`Publishing ${unit.story!.name} returned no commit job.`)
+        unit.commitJobId = published.push.jobId
+        this.save()
+        io.info(`  ${unit.story!.name}  ${unit.title}`)
+        return true
+      } catch (error) {
+        if (attempt >= PUBLISH_ATTEMPTS || !isTransientPush(error)) throw error
+        io.warn(
+          `Publishing ${unit.story!.name} failed (${firstLine(error)}); retrying in ${this.publishRetryMs / 1000} s (${attempt + 1}/${PUBLISH_ATTEMPTS}).`,
+        )
+        await this.sleep(this.publishRetryMs)
+      }
+    }
   }
 
   private failed(reason: string): false {
