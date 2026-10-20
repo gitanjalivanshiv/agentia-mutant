@@ -48,3 +48,19 @@ The skill's "Start Here" step 1 is `doctor`, which stops on a failing check. Dur
 > 5. Report the score: how many breakages your tests caught and how many slipped through. For each one that slipped through, I'll explain in plain language what was broken and what a good test should have checked.
 >
 > Let me know once the lab credential is fixed, or tell me the user story ID and I'll run the readiness check again.
+
+## Second session: doctor passes, the agent plans and asks
+
+**Date:** 2026-10-18 · **Agent:** Claude Code (headless, `claude -p`), same setup: build brief moved out, skill installed, read-only Mutant commands allowed; `run`, `reset` and `init` denied.
+
+**Prompt (no mention of Mutant):**
+
+> We're releasing the new discount rules on Friday. Before we do: how good are our tests, really?
+
+**What the agent did:** `Skill` (`mutant`) → `agentia mutant doctor --json` → `agentia mutant plan --json` → answer. 5 turns, 52 s, no permission denials, nothing written to Copado.
+
+**Its answer, in short:** all 12 checks pass and the lab matches the baseline; a table of the planned breakages by area (Discount Approval flow, `Discount_Max` validation rule, `Sales Discounts` permission set, Opportunity layout, `Approval_Required__c` field); which of them survived earlier runs; the cost ("about 60 minutes, with 11 promotions and 11 test runs") and the promotions the user must create; then *"should I run it?"* with three options (run as planned, a larger plan, or scope it to the release's user story).
+
+**Follow-up:** "Let's do a quick version for today: just the three in `.mutant/plans/demo.json`. Felix will run it." The agent read the plan file, ran nothing, summarised the three mutants (4 promotions, about 22 minutes, what a good test would check for each), pointed out that the plan has no flow mutants so its score says nothing about the flow logic, and handed over a step-by-step for the person running it, ending with "Don't run `heal --apply` until someone has reviewed the proposed tests." 13.5 s.
+
+The demo video uses the same two prompts in an interactive Claude Code session.

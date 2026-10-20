@@ -1,6 +1,23 @@
 {
   "name": "agentia-plugin-mutant",
   "description": "Mutation testing for Salesforce configuration, driven through Copado (Agentia plugin)",
+  "keywords": [
+    "oclif-plugin",
+    "agentia",
+    "agentia-plugin",
+    "copado",
+    "salesforce",
+    "mutation-testing",
+    "robotic-testing"
+  ],
+  "homepage": "https://github.com/gitanjalivanshiv/agentia-mutant#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gitanjalivanshiv/agentia-mutant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gitanjalivanshiv/agentia-mutant/issues"
+  },
   "version": "0.1.0",
   "author": "Gitanjali Mishra",
   "type": "module",
@@ -8,10 +25,6 @@
   "types": "dist/index.d.ts",
   "exports": "./dist/index.js",
   "license": "MIT",
-  "keywords": [
-    "oclif-plugin",
-    "agentia"
-  ],
   "files": [
     "/dist",
     "/oclif.manifest.json",

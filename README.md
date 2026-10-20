@@ -1,5 +1,7 @@
 # Agentia Mutant
 
+[![CI](https://github.com/gitanjalivanshiv/agentia-mutant/actions/workflows/ci.yml/badge.svg)](https://github.com/gitanjalivanshiv/agentia-mutant/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 **Copado runs your tests. Mutant tests your tests.**
 
 Mutant is an [Agentia CLI](https://www.npmjs.com/package/@copado/agentia-cli) plugin that measures how good your tests really are at catching broken **Salesforce configuration**. It deliberately breaks one validation rule, flow, field, permission or layout at a time in a lab environment *through Copado*, runs your Copado Robotic Testing suite, reports which breakages your tests missed, and has Copado AI write the missing tests.
@@ -7,6 +9,8 @@ Mutant is an [Agentia CLI](https://www.npmjs.com/package/@copado/agentia-cli) pl
 ![Before/after report: 0% → 100% after healing](docs/images/compare-report.png)
 
 *A real run on a Copado playground: the happy-path suite missed both deployable breakages; the Copado AI Test agent wrote two tests (one fixed in human review); the survivors were re-run and caught. Open [the report](examples/demo/sample-report.html) and [the before/after page](examples/demo/sample-compare.html) — single files, no external resources.*
+
+The demo video shows a second real pair of runs on the same playground: the first run caught 1 of 3 breakages (**33%**); after healing, the re-run of the two survivors caught both (**33% → 100%**). Both times the lab was verified identical to the baseline afterwards.
 
 ## Why
 
@@ -28,7 +32,7 @@ A finding from our own first run: with edit access to a field revoked, Salesforc
 Every Copado call is replayed from a scrubbed recording of the real lab, and the reports use two real, scrubbed runs:
 
 ```sh
-git clone <this repo> && cd <repo>
+git clone https://github.com/gitanjalivanshiv/agentia-mutant.git && cd agentia-mutant
 npm ci && npm run build
 examples/quickstart/run.sh
 ```
@@ -108,6 +112,8 @@ Mutant is a plugin: it adds the `agentia mutant` commands and drives Copado excl
 
 ## Development
 
+245 tests (vitest) cover the operators, planner, runner and healer against a simulated Copado and lab, plus recorded, scrubbed fixtures; CI runs lint, type check, build, tests and the offline quickstart on Node 22 and 24, and never talks to Copado.
+
 ```sh
 npm ci
 npm run build && npm test && npm run lint
@@ -115,4 +121,4 @@ MUTANT_RECORD=fixtures/new agentia mutant doctor   # record scrubbed fixtures fr
 MUTANT_FAKE=fixtures/doctor bin/run.js mutant doctor
 ```
 
-MIT licence ([LICENSE](LICENSE)); open-source components are listed in [NOTICE.md](NOTICE.md). Built for the Copado Agentia™ Headless Virtual Hackathon.
+MIT licence ([LICENSE](LICENSE)); open-source components are listed in [NOTICE.md](NOTICE.md). Built for the Copado Agentia™ Headless Virtual Hackathon, with Claude Code as AI coding assistant (commits are co-authored).

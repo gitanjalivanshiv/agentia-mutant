@@ -28,7 +28,7 @@ beforeEach(async () => {
     ['user.email', 't@example.com'],
     ['user.name', 'T'],
     ['commit.gpgsign', 'false'],
-  ])
+  ] as const)
     await g(clone, 'config', k, v)
   await commit(clone, 'a.txt', 'base')
   await g(clone, 'push', '-q', 'origin', 'main')
